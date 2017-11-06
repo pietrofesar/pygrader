@@ -14,6 +14,8 @@ Todo:
     
 Author: Rocco Pietofesa
 Date: 3/9/17
+Please give credit to author if you decide to use/modify this program. 
+Please consider a donation through PayPal to pietrofesar@gmail.com
 
 """
 from colorama import Fore, Style
