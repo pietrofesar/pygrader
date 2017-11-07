@@ -3,19 +3,23 @@
     This program will autocheck student programs made for the python_padawan curriculum
     The problem sets are defined in the curriculum docs and the routines are matched to each problem set
 
-    http://pexpect.sourceforge.net/pexpect.html
+    http://pexpect.sourceforge.net/pexpect.html - only works in Linux environment
     
     :param app_name: the python file passed as a command line argument 
     
     :return None: each routine has a side effect, it prints the output and wether or not they were successful 
 
 Todo:
-    * design the app
+    * implement the color variables and remove the colorama dependence
+    * implement the Exception thrown by try-except so that user can see it better
+    * code review and streamline earlier functions
+    * modulize grader into pset graders
     
 Author: Rocco Pietofesa
 Date: 3/9/17
-Please give credit to author if you decide to use/modify this program. 
-Please consider a donation through PayPal to pietrofesar@gmail.com
+
+Please credit author for any use/modification of this base program
+Please send donation to pietrofesar@gmail.com via PayPal if you find this useful
 
 """
 from colorama import Fore, Style
@@ -595,28 +599,41 @@ def validate(app_name):
     # creates the app instance
     app = pexpect.spawn('python3 {}'.format(app_name))  
     ok = 0
-    data = [3, 9.0, -6, - 8.9, '$', '\r', 'pickles', 'C']
+    data = [3, -6, - 8.9, '$', '\r', 'pickles', 'C']
     for i, each in enumerate(data):
         app.sendline('{}'.format(data[i]))
         # check the correctness of submission
         if each == 'C':
-            try:
-                app.expect_exact('\r\nYou have been validated!\r\n', timeout=1.5)
-                # pass
-                print(Fore.GREEN, '{}'.format(app.match.decode("utf-8")))
-            except:
-                print('error')
-                print(Fore.RED + '{}'.format(app.before.decode("utf-8")))
+            print(Fore.GREEN + '{}{}'.format(app.match.decode("utf-8"), each))
+            print(Fore.YELLOW + 'Alpha validation passed!\n')
+            app.before = ''.encode("utf-8")
+            data.reverse()
+            for i, each in enumerate(data):
+                app.sendline(str(data[i]))
+                if type(each) != str and 0 < each < 10:
+                    print(Fore.GREEN + '{}{}'.format(app.match.decode("utf-8"), each))
+                    print(Fore.YELLOW + 'Numeric validation passed!\n')
+                    print(Fore.GREEN + ': ) {} == passed!'.format(app_name))
+                    
+                else:
+                    try:
+                        app.expect_exact('Enter a positive number: ', timeout=1.5)
+                        # pass
+                        print(Fore.GREEN + '{}{}'.format(app.match.decode("utf-8"), data[i]))
+                    except Exception as e:
+                        print(Fore.RED + 'Numeric Validation Error\n\n {}'.format(e))
+                        break    
         else:
             try:
                 app.expect_exact('Enter a letter: ', timeout=1.5)
                 # pass
-                print(Fore.GREEN, '{}'.format(app.match.decode("utf-8")))
-                print(data[i])
+                print(Fore.GREEN + '{}{}'.format(app.match.decode("utf-8"), data[i]))
             # fail
             except:
-                print(Fore.RED + 'not: {}'.format(app.before.decode("utf-8")))
-
+                print(Fore.RED + 'Alpha Validation Error\n\n {}'.format(app.before.decode("utf-8")))
+                break
+        
+    
 
 def validate_functions(app_name):
     """validate_functions.py autograder """
