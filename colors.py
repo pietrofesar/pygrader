@@ -1,4 +1,6 @@
-# text color
+"""
+This script demonstrates the possible text color combinations you can use in Python
+"""
 
 # http://ascii-table.com/ansi-escape-sequences.php
 # http://kishorelive.com/2011/12/05/printing-colors-in-the-terminal/
