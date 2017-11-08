@@ -22,3 +22,5 @@ for each in range(30, 47):
 print(X)
 
 print('{}This is an example.{}'.format(G, X))
+
+print('\033[33mThis is an example\033[0m')
