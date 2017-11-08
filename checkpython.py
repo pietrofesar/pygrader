@@ -13,6 +13,7 @@ Todo:
     * implement the color variables and remove the colorama dependence
     * implement the Exception thrown by try-except so that user can see it better
     * code review and streamline earlier functions
+    * convert older functions to use pexpect.run
     * modulize grader into pset graders
     
 Author: Rocco Pietofesa
