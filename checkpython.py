@@ -87,10 +87,7 @@ def app_selector(option):
         return validate(sys.argv[1])
     if option == 'validate_functions.py':
         return validate_functions(sys.argv[1])
-    '''
-    if option == 'temp_convert.py': 
-        return temp_convert(sys.argv[1]) 
-    '''
+
 
 def slices(app_name):
     """
@@ -110,10 +107,8 @@ def slices(app_name):
     except:
         print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( slices.py == failed{}'
         .format(BY, R, phrase, BY, R, app.before, BY, X))
-     
-     
-        
 
+     
 def madlib(app_name):
         """
         :param app_name: the python file passed as a command line argument 
@@ -130,7 +125,6 @@ def madlib(app_name):
                  'Will you <verb3> out with me?\r\n' \
                  'Don\'t let your parents discourage you, <pronouns> are just jealous.\r\n' \
                  'Yours forever, <author> :)\r\n'
-        
         # creates the app instance
         app = pexpect.spawnu('python3 {}'.format(app_name))
         # enters the words
@@ -147,8 +141,8 @@ def madlib(app_name):
         except:
             print('\n{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}{}:( slices.py == failed{}'
             .format(BY, R, phrase, BY, R, app.before, BY, X))
-           
 
+           
 def hypotenuse(app_name):
     """
     :param app_name: the python file passed as a command line argument 
@@ -187,6 +181,7 @@ def average(app_name):
     app.sendline(nums[1])
     app.sendline(nums[2])
     app.sendline(nums[3])
+    app.before = ''
     # check the correctness of submission
     try:
         app.expect_exact('The average is 87')
@@ -707,7 +702,7 @@ def binary_search(app_name):
 def main():
     if len(sys.argv) == 2:
         try:
-            with open('my_settings.dat') as file:
+            with open(sys.argv[1]) as file:
                 pass
                 app_selector(sys.argv[1])
         except IOError as e:
