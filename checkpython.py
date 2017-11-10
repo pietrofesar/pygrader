@@ -187,14 +187,14 @@ def average(app_name):
         app.expect_exact('The average is 87')
         # pass
         print('{}Output is correct!\n\n{}{}{}\n\n{}:) average.py == passed{}'
-        .format(BY, G, app.before, app.match, B, X))
+        .format(BY, G, app.before, app.match, BY, X))
     # fail
     except:
-        print('{}Expected output of: {}'.format(BY, R))
+        print('{}Expected output of:{}\n'.format(BY, R))
         for i, each in enumerate(grade):
             print('Enter the {} grade: {}'.format(grade[i], nums[i]))
         print('The average is 87')
-        print('\n{}Actual output was: \n{}{}\n{}:( average.py == failed{}'.format(BY, R, app.before, BY, X))
+        print('\n{}Actual output was:\n\n{}{}\n{}:( average.py == failed{}'.format(BY, R, app.before, BY, X))
 
 
 def polygon(app_name):
@@ -203,24 +203,19 @@ def polygon(app_name):
     :return None: 
     test suite for average.py
     """
-    # text color shorcuts
-    green = '\033[38;5;70m'
-    bold = '\033[38;5;11m'
-    red = '\033[38;5;09m'
-    reset = '\033[0m' 
     # creates the app instance
-    app = pexpect.spawn('python3 {}'.format(app_name))
+    app = pexpect.spawnu('python3 {}'.format(app_name))
     app.sendline('6')
     # check the correctness of submission
     try:
         app.expect_exact('The interior angles are 120.0 degrees.')
         # pass
-        print('{}Output is correct!\n\n{}{}{}\n\n{}:) polygon.py == passed'
-        .format(bold, green, app.before.decode("utf-8"), app.match.decode("utf-8"), bold))
+        print('{}Output is correct!\n\n{}{}{}\n\n{}:) polygon.py == passed{}'
+        .format(BY, G, app.before, app.match, BY, X))
     # fail
     except:
-        print('{}Expected output of:\n{}Enter the number of sides: 6\nThe interior angles are 120.0 degrees.\n'.format(bold, red))
-        print('{}Actual output was:\n{}{}\n{}:( polygon.py == failed'.format(bold, red, app.before.decode("utf-8"), bold))
+        print('{}Expected output of:\n\n{}Enter the number of sides: 6\nThe interior angles are 120.0 degrees.\n'.format(BY, R))
+        print('{}Actual output was:\n\n{}{}\n{}:( polygon.py == failed{}'.format(BY, R, app.before, BY, X))
 
 
 def fahrenheit(app_name):
@@ -229,28 +224,22 @@ def fahrenheit(app_name):
     :return None: 
     test suite for fahrenheit.py
     """
-    # text color shorcuts
-    green = '\033[38;5;70m'
-    bold = '\033[38;5;11m'
-    red = '\033[38;5;09m'
-    reset = '\033[0m' 
-    
     data = [['0', '0.0'], ['100', '100.0'], ['32', '32.0'], ['212', '212.0']]
     phrase = ['Hai! Enter the temperature in degrees Fahrenheit: ', '{} degrees Fahrenheit is approximately {} degrees Celsius.']
     
     # creates the app instance
-    app = pexpect.spawn('python3 {}'.format(app_name))
+    app = pexpect.spawnu('python3 {}'.format(app_name))
     app.sendline(data[3][0])
     # check the correctness of submission
     try:
         app.expect_exact(phrase[1].format(data[3][1], data[1][1]))
         # pass
-        print('\n{}Output is correct!\n{}{}{}\n{}:) fahrenheit.py == passed\n'
-        .format(bold, green, app.before.decode("utf-8"), app.match.decode("utf-8"), bold))
+        print('{}Output is correct!\n\n{}{}{}\n\n{}:) fahrenheit.py == passed{}'
+        .format(BY, G, app.before, app.match, BY, X))
     # fail
     except:
-        print('\n{}Expected output of:\n{}{}{}\n{}\n{}Actual output was:\n{}{}{}:( fahrenheit.py == failed\n'
-        .format(bold, red, phrase[0], data[3][0], phrase[1].format(data[3][1], data[1][1]), bold, red, app.before.decode("utf-8"), bold))
+        print('{}Expected output of:\n\n{}{}{}\n{}\n{}\nActual output was:\n\n{}{}{}\n:( fahrenheit.py == failed{}'
+        .format(BY, R, phrase[0], data[3][0], phrase[1].format(data[3][1], data[1][1]), BY, R, app.before, BY, X))
 
 
 def report_card(app_name):
@@ -700,10 +689,12 @@ def binary_search(app_name):
 
 
 def main():
+    # validate arguments
     if len(sys.argv) == 2:
         try:
             with open(sys.argv[1]) as file:
                 pass
+                # call grader routine
                 app_selector(sys.argv[1])
         except IOError as e:
             print('{}ERROR\n{}{}{} doesn\'t exist or is incorrectly named'.format(BR, Y, sys.argv[1], X))
