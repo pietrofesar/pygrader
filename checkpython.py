@@ -13,7 +13,6 @@ Todo:
     * implement the color variables and remove the colorama dependence
     * implement the Exception thrown by try-except so that user can see it better
     * code review and streamline earlier functions
-    * convert older functions to use pexpect.run
     * modulize grader into pset graders
     
 Author: Rocco Pietofesa
@@ -26,6 +25,22 @@ Please send donation to pietrofesar@gmail.com via PayPal if you find this useful
 from colorama import Fore, Style
 import pexpect
 import sys
+
+
+# text color constants
+R = '\033[0;31m'    # red
+BR = '\033[1;31m'   # bold red
+G = '\033[0;32m'    # green
+BG = '\033[1;32m'   # bold green
+Y = '\033[0;33m'    # yellow
+BY = '\033[1;33m'   # bold yellow
+B = '\033[0;34m'    # blue
+BB = '\033[1;34m'   # bold blue
+P = '\033[0;35m'    # purple
+BP = '\033[1;35m'   # bold purple
+A = '\033[0;36m'    # aqua
+BA = '\033[1;36m'   # bold aqua
+X = '\033[0m'       # reset
 
 
 def app_selector(option):
@@ -70,7 +85,8 @@ def app_selector(option):
         return binary_search(sys.argv[1])
     if option == 'validate.py':
         return validate(sys.argv[1])
-        
+    if option == 'validate_functions.py':
+        return validate_functions(sys.argv[1])
     '''
     if option == 'temp_convert.py': 
         return temp_convert(sys.argv[1]) 
@@ -82,24 +98,18 @@ def slices(app_name):
     :return None: 
         test suite for slices.py
     """
-     # text color shorcuts
-    green = '\033[38;5;70m'
-    bold = '\033[38;5;11m'
-    red = '\033[38;5;09m'
-    reset = '\033[0m'
-    
     # creates the app instance
-    app = pexpect.spawn('python3 {}'.format(app_name))
+    app = pexpect.spawnu('python3 {}'.format(app_name))
     phrase = 'Be\r\nyourself\r\neveryone\r\nelse\r\nis\r\nalready\r\ntaken\r\n'
     # check the correctness of the submission
     try:
         app.expect_exact(phrase)
         # pass
-        print('{}Output is correct!\n\n{}{}\n{}:) slices.py == passed!{}'.format(bold, green, phrase, bold, reset))
+        print('{}Output is correct!\n\n{}{}\n{}:) slices.py == passed!{}'.format(BY, G, phrase, BY, X))
     # fail
     except:
-        print('{}Expected output of:\n{}{}\n{}Actual output was:\n{}{}\n{}:( slices.py == failed{}'
-        .format(bold, red, phrase, bold, red, app.before.decode("utf-8"), bold, reset))
+        print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( slices.py == failed{}'
+        .format(BY, R, phrase, BY, R, app.before, BY, X))
      
      
         
@@ -110,12 +120,6 @@ def madlib(app_name):
         :return None: 
         test suite for madlib.py
         """
-        # text color shorcuts
-        green = '\033[38;5;70m'
-        bold = '\033[38;5;11m'
-        red = '\033[38;5;09m'
-        reset = '\033[0m' 
-        
         # words to enter
         words = ['<to>', '<adj>', '<verb1>', '<body_part>', '<num>', '<noun>', '<adverb>', '<verb2>', '<verb3>',
                 '<pronouns>', '<author>']
@@ -128,7 +132,7 @@ def madlib(app_name):
                  'Yours forever, <author> :)\r\n'
         
         # creates the app instance
-        app = pexpect.spawn('python3 {}'.format(app_name))
+        app = pexpect.spawnu('python3 {}'.format(app_name))
         # enters the words
         for each in words:
             app.sendline(each)
@@ -138,11 +142,11 @@ def madlib(app_name):
             
             # pass
             print('\n{}Output is correct!\n\n{}{}\n{}:) slices.py == passed!{}'
-            .format(bold, green, phrase, bold, reset))
+            .format(BY, G, phrase, BY, X))
         # fail
         except:
-            print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}{}:( slices.py == failed{}'
-            .format(bold, red, phrase, bold, red, app.before.decode("utf-8"), bold, reset))
+            print('\n{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}{}:( slices.py == failed{}'
+            .format(BY, R, phrase, BY, R, app.before, BY, X))
            
 
 def hypotenuse(app_name):
@@ -151,28 +155,22 @@ def hypotenuse(app_name):
     :return None: 
     test suite for hypotenuse.py
     """
-    # text color shorcuts
-    green = '\033[38;5;70m'
-    bold = '\033[38;5;11m'
-    red = '\033[38;5;09m'
-    reset = '\033[0m' 
-    
     phrase = ['Enter the side length:', 'The hypotenuse is ']
     data = ['3.1', '4.1', '5.14']
     # creates the app instance
-    app = pexpect.spawn('python3 {}'.format(app_name))
+    app = pexpect.spawnu('python3 {}'.format(app_name))
     app.sendline(data[0])
     app.sendline(data[1])
     # check the correctness of submission
     try:
         app.expect_exact(phrase[1] + data[2])
         # pass
-        print('{}Output is correct!\n\n{}{}{}\n\n{}:) hypotenuse.py == passed'
-        .format(bold, green, app.before.decode("utf-8"), app.match.decode("utf-8"), bold))
+        print('{}Output is correct!\n\n{}{}{}\n\n{}:) hypotenuse.py == passed{}'
+        .format(BY, G, app.before, app.match, BY, X))
     # fail
     except:
-        print('{}Expected output of:\n{}{}{}\n{}{}\n{}{}\n\n{}Actual output was:\n{}{}\n{}:( slices.py == failed'
-        .format(bold, red, phrase[0], data[0], phrase[0], data[1], phrase[1], data[2], bold, red, app.before.decode("utf-8"), bold))
+        print('{}Expected output of:\n\n{}{}{}\n{}{}\n{}{}\n\n{}Actual output was:\n\n{}{}\n{}:( slices.py == failed{}'
+        .format(BY, R, phrase[0], data[0], phrase[0], data[1], phrase[1], data[2], BY, R, app.before, BY, X))
 
 
 def average(app_name):
@@ -181,16 +179,10 @@ def average(app_name):
     :return None: 
     test suite for hypotenuse.py
     """
-    # text color shorcuts
-    green = '\033[38;5;70m'
-    bold = '\033[38;5;11m'
-    red = '\033[38;5;09m'
-    reset = '\033[0m' 
-    
     grade = ['first', 'second', 'third', 'fourth']
     nums = ['78', '97', '86', '88', '87']
     # creates the app instance
-    app = pexpect.spawn('python3 {}'.format(app_name))
+    app = pexpect.spawnu('python3 {}'.format(app_name))
     app.sendline(nums[0])
     app.sendline(nums[1])
     app.sendline(nums[2])
@@ -199,15 +191,15 @@ def average(app_name):
     try:
         app.expect_exact('The average is 87')
         # pass
-        print('{}Output is correct!\n\n{}{}{}\n\n{}:) average.py == passed'
-        .format(bold, green, app.before.decode("utf-8"), app.match.decode("utf-8"), bold))
+        print('{}Output is correct!\n\n{}{}{}\n\n{}:) average.py == passed{}'
+        .format(BY, G, app.before, app.match, B, X))
     # fail
     except:
-        print('{}Expected output of: {}'.format(bold, red))
+        print('{}Expected output of: {}'.format(BY, R))
         for i, each in enumerate(grade):
             print('Enter the {} grade: {}'.format(grade[i], nums[i]))
         print('The average is 87')
-        print('\n{}Actual output was: \n{}{}\n{}:( average.py == failed'.format(bold, red, app.before.decode("utf-8"), bold))
+        print('\n{}Actual output was: \n{}{}\n{}:( average.py == failed{}'.format(BY, R, app.before, BY, X))
 
 
 def polygon(app_name):
@@ -633,41 +625,26 @@ def validate(app_name):
             except:
                 print(Fore.RED + 'Alpha Validation Error\n\n {}'.format(app.before.decode("utf-8")))
                 break
-        
-    
 
 def validate_functions(app_name):
     """validate_functions.py autograder """
     # creates the app instance
-    # app = pexpect.spawn('python3 {}'.format(app_name))  
-    app.sendline('python3')
+    app = pexpect.spawn('python3')
     app.sendline('from validate_functions import *')
+    app.sendline('temp = test()')
+    app.sendline('print(temp)')
+    try:
+        app.expect('test printed')
+        print('yes the test has passed')
+    except Exception as e:
+        print(e)
+    # print(app.before.decode("utf-8")) 
+    print(app.after.decode("utf-8"))           
+    '''
+    pexpect.run('python3', timeout=3, events={'(?i)Python 3.4.3 (default, Nov 17 2016, 01:08:31)\n[GCC 4.8.4] on linux\nType "help",\
+                                    "copyright", "credits" or "license" for more information.':'quit()'})
+    '''
     
-    ok = 0
-    data = [3, 9.0, -6, - 8.9, '$', '\r', 'pickles', 'C']
-    for i, each in enumerate(data):
-        app.sendline('{}'.format(data[i]))
-        # check the correctness of submission
-        if each == 'C':
-            try:
-                app.expect_exact('\r\nYou have been validated!\r\n', timeout=1.5)
-                # pass
-                print(Fore.GREEN, '{}'.format(app.match.decode("utf-8")))
-            except:
-                print('error')
-                print(Fore.RED + '{}'.format(app.before.decode("utf-8")))
-        else:
-            try:
-                app.expect_exact('Enter a letter: ', timeout=1.5)
-                # pass
-                print(Fore.GREEN, '{}'.format(app.match.decode("utf-8")))
-                print(data[i])
-            # fail
-            except:
-                print(Fore.RED + 'not: {}'.format(app.before.decode("utf-8")))
-    
-
-
 
 def binary_search(app_name):
     """ binary_search.py autograder """
@@ -727,10 +704,16 @@ def binary_search(app_name):
         print(':( {} failed'.format(app_name))
 
 
-
-app_selector(sys.argv[1])
-
-
-
+def main():
+    if len(sys.argv) == 2:
+        try:
+            with open('my_settings.dat') as file:
+                pass
+                app_selector(sys.argv[1])
+        except IOError as e:
+            print('{}ERROR\n{}{}{} doesn\'t exist or is incorrectly named'.format(BR, Y, sys.argv[1], X))
+    else:
+        print('{}ERROR\n{}Expected 2 arguments\n{}<terminal>{}$ python3 grader.py filename.py'.format(BR, X, BB, X))
         
-      
+if __name__ == "__main__":
+    main()
