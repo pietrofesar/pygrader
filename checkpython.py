@@ -2,11 +2,9 @@
 
     This program will autocheck student programs made for the python_padawan curriculum
     The problem sets are defined in the curriculum docs and the routines are matched to each problem set
-
     http://pexpect.sourceforge.net/pexpect.html - only works in Linux environment
     
     :param app_name: the python file passed as a command line argument 
-    
     :return None: each routine has a side effect, it prints the output and wether or not they were successful 
 
 Todo:
@@ -107,7 +105,9 @@ def slices(app_name):
     except:
         print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( slices.py == failed{}'
         .format(BY, R, phrase, BY, R, app.before, BY, X))
-
+    if app.isalive:
+            app.kill(2)
+     
      
 def madlib(app_name):
         """
@@ -141,7 +141,9 @@ def madlib(app_name):
         except:
             print('\n{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}{}:( slices.py == failed{}'
             .format(BY, R, phrase, BY, R, app.before, BY, X))
-
+        if app.isalive:
+            app.kill(2)
+            
            
 def hypotenuse(app_name):
     """
@@ -165,6 +167,8 @@ def hypotenuse(app_name):
     except:
         print('{}Expected output of:\n\n{}{}{}\n{}{}\n{}{}\n\n{}Actual output was:\n\n{}{}\n{}:( slices.py == failed{}'
         .format(BY, R, phrase[0], data[0], phrase[0], data[1], phrase[1], data[2], BY, R, app.before, BY, X))
+    if app.isalive:
+            app.kill(2)
 
 
 def average(app_name):
@@ -181,7 +185,6 @@ def average(app_name):
     app.sendline(nums[1])
     app.sendline(nums[2])
     app.sendline(nums[3])
-    app.before = ''
     # check the correctness of submission
     try:
         app.expect_exact('The average is 87')
@@ -195,6 +198,8 @@ def average(app_name):
             print('Enter the {} grade: {}'.format(grade[i], nums[i]))
         print('The average is 87')
         print('\n{}Actual output was:\n\n{}{}\n{}:( average.py == failed{}'.format(BY, R, app.before, BY, X))
+    if app.isalive:
+            app.kill(2)
 
 
 def polygon(app_name):
@@ -216,7 +221,9 @@ def polygon(app_name):
     except:
         print('{}Expected output of:\n\n{}Enter the number of sides: 6\nThe interior angles are 120.0 degrees.\n'.format(BY, R))
         print('{}Actual output was:\n\n{}{}\n{}:( polygon.py == failed{}'.format(BY, R, app.before, BY, X))
-
+    if app.isalive:
+            app.kill(2)
+            
 
 def fahrenheit(app_name):
     """
@@ -240,7 +247,9 @@ def fahrenheit(app_name):
     except:
         print('{}Expected output of:\n\n{}{}{}\n{}\n{}\nActual output was:\n\n{}{}{}\n:( fahrenheit.py == failed{}'
         .format(BY, R, phrase[0], data[3][0], phrase[1].format(data[3][1], data[1][1]), BY, R, app.before, BY, X))
-
+    if app.isalive:
+            app.kill(2)
+            
 
 def report_card(app_name):
         """
@@ -248,11 +257,6 @@ def report_card(app_name):
         :return None: 
         test suite for fahrenheit.py
         """
-        # text color shorcuts
-        green = '\033[38;5;70m'
-        bold = '\033[38;5;11m'
-        red = '\033[38;5;09m'
-        reset = '\033[0m' 
         # words to enter
         data = ['Einstein', '99.8', '98.7', '95.3', '81.4', '75.0', '68.5']
 
@@ -264,10 +268,8 @@ def report_card(app_name):
          '{}\'s average is now 90.0.\r\n\r\n'.format(data[0], data[6], data[5], data[4], data[3], data[2], data[1],
                                                      data[0], data[1], data[6], data[0], data[5],
                                                      data[4], data[3], data[2], data[1], data[0])
-
-
         # creates the app instance
-        app = pexpect.spawn('python3 {}'.format(app_name))
+        app = pexpect.spawnu('python3 {}'.format(app_name))
         # enters the words
         for each in data:
             app.sendline(each)
@@ -275,13 +277,15 @@ def report_card(app_name):
         try:
             app.expect_exact(phrase)
             # pass
-            print('\n{}Output is correct!\n{}{}\n{}{}:) report_card.py == passed\n'
-            .format(bold, green, app.before.decode("utf-8"), app.match.decode("utf-8"), bold))
+            print('\n{}Output is correct!\n{}{}\n{}{}:) report_card.py == passed\n{}'
+            .format(BY, G, app.before, app.match, BY, X))
         # fail
         except:
             print(app.before)
-            print('\n{}Expected output of:\n{}{}\n{}Actual output was:\n{}{}{}:( report_card.py == failed'
-            .format(bold, red, phrase, bold, red, app.before.decode("utf-8"), bold))
+            print('\n{}Expected output of:\n{}{}\n{}Actual output was:\n{}{}{}:( report_card.py == failed{}'
+            .format(BY, R, phrase, BY, R, app.before[225:], BY, X))
+        if app.isalive:
+            app.kill(2)
             
 
 def even_odd(app_name):
@@ -290,31 +294,28 @@ def even_odd(app_name):
     :return None: 
     test suite for even_odd.py
     """
-    # text color shorcuts
-    green = '\033[38;5;70m'
-    bold = '\033[38;5;11m'
-    red = '\033[38;5;09m'
-    reset = '\033[0m' 
     ok = 0
     test_data = [['2', 'even'], ['3', 'odd'], ['-1', 'odd'], ['-2', 'even']]
     for i in range(4):
         # creates the app instance
-        app = pexpect.spawn('python3 {}'.format(app_name))
+        app = pexpect.spawnu('python3 {}'.format(app_name))
         app.sendline('{}'.format(test_data[i][0]))
         # check the correctness of submission
         try:
             app.expect_exact('{} is an {} number.'.format(test_data[i][0], test_data[i][1]))
             # pass
-            print('{}{}'.format(green, app.match.decode("utf-8")))
+            print('{}{}'.format(G, app.match))
             ok += 1
         # fail
         except:
-            print('\n{}Expected output of:\n{}{} is an {} number\n{}Actual output was:\n{}{}'
-            .format(bold, red, test_data[i][0], test_data[i][1], bold, red, app.before.decode("utf-8")))
+            print('\n{}Expected output of:\n{}{} is an {} number\n{}Actual output was:\n{}{}{}'
+            .format(BY, R, test_data[i][0], test_data[i][1], BY, R, app.before[19:], X))
+        if app.isalive:
+            app.kill(2)
     if ok == 4:
-        print('{}:) even_odd.py == passed\n'.format(bold))
+        print('{}:) even_odd.py == passed{}'.format(BY, X))
     else:
-        print('{} even_odd.py == failed\n'.format(bold))
+        print('{} even_odd.py == failed{}'.format(BY, X))
 
 
 def birth_month(app_name):
@@ -325,22 +326,25 @@ def birth_month(app_name):
             ['8', 'August'], ['9', 'September'], ['10', 'October'], ['11', 'November'], ['12', 'December']]
     for i in range(checks):
         # creates the app instance
-        app = pexpect.spawn('python3 {}'.format(app_name))     
+        app = pexpect.spawnu('python3 {}'.format(app_name))     
         app.sendline('{}'.format(data[i][0]))
         # check the correctness of submission
         try:
             app.expect_exact('You were born in {}.'.format(data[i][1]))
             # pass
-            print(Fore.GREEN, '{}:){}'.format(app.before.decode("utf-8"), app.match.decode("utf-8")))
+            print('{}{}{}{}'.format(app.before, G, app.match, X))
             ok += 1
         # fail
         except:
-            print(Fore.YELLOW + ':( Expected: You were born in {}.'.format(data[i][1]))
-            print(Fore.RED + 'not {}'.format(app.before.decode("utf-8")))
+            print(app.before[:53])
+            print('{}:( Expected output of:\n{}You were born in {}.{}'.format(BY, R, data[i][1], X))
+            print('{}Actual output was:{}{}{}'.format(BY, R, app.before[53:len(app.before)-2], X))
+        if app.isalive:
+            app.kill(2)
     if ok == checks:
-        print(Fore.GREEN + ':){} passed'.format(app_name))
+        print('{}\n:) {} == passed{}'.format(BY, app_name, X))
     else:
-        print(Fore.RED + ':({} failed'.format(app_name))
+        print('{}\n:( {} == failed{}'.format(BY, app_name, X))
 
 
 def grade_book(app_name):
@@ -350,24 +354,27 @@ def grade_book(app_name):
     data = [['92', 'A'], ['84', 'B'], ['76', 'C'], ['65', 'D'], ['64', 'F']]
     for i in range(checks):
         # creates the app instance
-        app = pexpect.spawn('python3 {}'.format(app_name))     
+        app = pexpect.spawnu('python3 {}'.format(app_name))     
         app.sendline('{}'.format(data[i][0]))
         # check the correctness of submission
         try:
             app.expect_exact('{} is your letter grade.'.format(data[i][1]))
             # pass
-            print(Fore.GREEN, '{}:){}'.format(app.before.decode("utf-8"), app.match.decode("utf-8")))
+            print('{}{}{}{}'.format(app.before, G, app.match, X))
             ok += 1
         # fail
         except:
-            print(Fore.YELLOW + ':( Expected: {} is your letter grade.'.format(data[i][1]))
-            print(Fore.RED + 'not {}'.format(app.before.decode("utf-8")))
+            print(app.before[:27])
+            print('{}Expected output of:\n{}{} is your letter grade.{}'.format(BY, R, data[i][1], X))
+            print('{}Actual output was:\n{}{}{}'.format(BY, R, app.before[29:len(app.before)-2], X))
+        if app.isalive:
+            app.kill(2)
     if ok == checks:
-        print(Fore.GREEN + ':){} passed'.format(app_name))
+        print('\n{}:) {} == passed{}'.format(BY, app_name, X))
     else:
-        print(Fore.RED + ':({} failed'.format(app_name))
+        print('\n{}:( {} == failed{}'.format(BY, app_name, X))
 
-    
+  # -----------------------------------------------  
 def temperature(app_name):
     """ temperature.py autograder """
     ok = 0
@@ -566,10 +573,14 @@ def pyramid_hacker(app_name):
         except:
             print(Fore.YELLOW + ':( Expected: \n{}'.format(data[i][1]))
             print(Fore.RED + 'not: {}'.format(app.before.decode("utf-8")))
+        if app.isalive:
+            app.kill(2)
     if ok == checks:
         print(Fore.GREEN + ':) {} passed'.format(app_name))
     else:
         print(Fore.RED + ':({} failed'.format(app_name))
+    
+        
         
 def validate(app_name):
     """validate.py autograder """
