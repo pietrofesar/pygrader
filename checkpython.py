@@ -8,10 +8,13 @@
     :return None: each routine has a side effect, it prints the output and wether or not they were successful 
 
 Todo:
-    * implement the color variables and remove the colorama dependence
     * implement the Exception thrown by try-except so that user can see it better
-    * code review and streamline earlier functions
     * modulize grader into pset graders
+    * string slicing relies on hypothetical app.before strings; look for bugs while piloting grader, could produce exceptions
+    * binary_search.py(beta status)
+    * validate_functions.py(alpha status)
+    * validate.py(beta status)
+    
     
 Author: Rocco Pietofesa
 Date: 3/9/17
@@ -20,7 +23,6 @@ Please credit author for any use/modification of this base program
 Please send donation to pietrofesar@gmail.com via PayPal if you find this useful
 
 """
-from colorama import Fore, Style
 import pexpect
 import sys
 
@@ -39,6 +41,33 @@ BP = '\033[1;35m'   # bold purple
 A = '\033[0;36m'    # aqua
 BA = '\033[1;36m'   # bold aqua
 X = '\033[0m'       # reset
+
+def find_nth(haystack, needle, n):
+    """
+    substring helper 
+    :param haystack: string to be searched
+    :param needle:   substring to find
+    :param n:        desired occurence location of substring  
+    :return i:       the index of the nth substring occurence 
+    """
+    parts= haystack.split(needle, n+1)
+    if len(parts)<=n+1:
+        return -1
+    return len(haystack)-len(parts[-1])-len(needle)
+    
+
+def b_sanitize(before):
+    """
+    substring helper
+    :param before:  app.before->string type
+    :return parts:  a list of the lines or an empty list if error occured
+    """
+    parts = []
+    try:
+        parts = str(before).strip("b'").split('\r\n')
+    except:
+        pass
+    return parts
 
 
 def app_selector(option):
@@ -67,18 +96,9 @@ def app_selector(option):
         return temperature(sys.argv[1]) 
     if option == 'initials.py':
         return initials(sys.argv[1])
-    if option == 'left_stack.py': 
-        return left_stack(sys.argv[1])
-    if option == 'left_stacks.py': 
-        return left_stacks(sys.argv[1])
-    if option == 'right_stack.py': 
-        return right_stack(sys.argv[1])
-    if option == 'right_stacks.py': 
-        return right_stacks(sys.argv[1])
-    if option == 'pyramid.py': 
-        return pyramid(sys.argv[1])
-    if option == 'pyramid_hacker.py': 
-        return pyramid_hacker(sys.argv[1])
+    options = ('left_stack', 'right_stack', 'pyramid')
+    if any(routine in option for routine in options):
+        return pyramid_stacks(sys.argv[1])
     if option == 'binary_search.py': 
         return binary_search(sys.argv[1])
     if option == 'validate.py':
@@ -133,7 +153,6 @@ def madlib(app_name):
         # check the correctness of submission
         try:
             app.expect_exact(phrase)
-            
             # pass
             print('\n{}Output is correct!\n\n{}{}\n{}:) slices.py == passed!{}'
             .format(BY, G, phrase, BY, X))
@@ -374,32 +393,36 @@ def grade_book(app_name):
     else:
         print('\n{}:( {} == failed{}'.format(BY, app_name, X))
 
-  # -----------------------------------------------  
-def temperature(app_name): # not updated
+
+def temperature(app_name): 
     """ temperature.py autograder """
     ok = 0
     checks = 4
     data = [['C', '212', '100.0'], ['C', '32', '0.0'], ['F', '100', '212.0'], ['F', '0', '32.0']]
     for i in range(checks):
         # creates the app instance
-        app = pexpect.spawn('python3 {}'.format(app_name))     
+        app = pexpect.spawnu('python3 {}'.format(app_name))     
         app.sendline('{}'.format(data[i][0]))
         app.sendline('{}'.format(data[i][1]))
         # check the correctness of submission
         try:
             app.expect_exact('{}'.format(data[i][2]))
             # pass
-            print(Fore.GREEN, '{}:) {}'.format(app.before.decode("utf-8"), app.match.decode("utf-8")))
+            print('{}{}{}{}'.format(app.before, G, app.match, X))
             ok += 1
         # fail
         except:
-            print(Fore.YELLOW + ':( Expected: {}'.format(data[i][2]))
-            print(Fore.RED + 'not {}'.format(app.before.decode("utf-8")))
+            before = b_sanitize(app.before)
+            print('{}\n{}'.format(before[0], before[1]))
+            print('{}Expected output of:\n{}{}'.format(BY, R, data[i][2]))
+            print('{}Actual output was:\n{}{}{}'.format(BY, R, before[2], X))
+        if app.isalive:
+            app.kill(2)
     if ok == checks:
-        print(Fore.GREEN + ':){} passed'.format(app_name))
+        print('{}:) {} == passed{}'.format(BY, app_name, X))
     else:
-        print(Fore.RED + ':({} failed'.format(app_name))
-# -----------------------------------------------  
+        print('{}:( {} == failed{}'.format(BY, app_name, X))
+  
 
 def initials(app_name): # updated
     """initials.py autograder """
@@ -428,203 +451,99 @@ def initials(app_name): # updated
         print('{}:) {} == passed{}'.format(BY, app_name, X))
     else:
         print('{}:( {} == failed{}'.format(BY, app_name, X))
-# -----------------------------------------------  
 
-def left_stack(app_name):
-    """left_stack.py autograder """
+
+def pyramid_stacks(app_name):
+    """pyramid_stacks.py autograder """
     ok = 0
     checks = 2
-    data = [[3, '#\r\n##\r\n###\r\n'], [6, '#\r\n##\r\n###\r\n####\r\n#####\r\n######\r\n']]
-    for i in range(checks):
-        # creates the app instance
-        app = pexpect.spawn('python3 {}'.format(app_name))     
-        app.sendline('{}'.format(data[i][0]))
-        # check the correctness of submission
-        try:
-            app.expect_exact('{}'.format(data[i][1]))
-            # pass
-            print(Fore.GREEN, '{}{}'.format(app.before.decode("utf-8"), app.match.decode("utf-8")))
-            ok += 1
-        # fail
-        except:
-            print(Fore.YELLOW + ':( Expected: \n{}'.format(data[i][1]))
-            print(Fore.RED + 'not: {}'.format(app.before.decode("utf-8")))
-    if ok == checks:
-        print(Fore.GREEN + ':) {} passed'.format(app_name))
-    else:
-        print(Fore.RED + ':({} failed'.format(app_name))
-  
-   
-def left_stacks(app_name):
-    """left_stacks.py autograder """
-    ok = 0
-    checks = 2
-    data = [[3, '##\r\n###\r\n####\r\n'], [6, '##\r\n###\r\n####\r\n#####\r\n######\r\n#######\r\n']]
-    for i in range(checks):
-        # creates the app instance
-        app = pexpect.spawn('python3 {}'.format(app_name))     
-        app.sendline('{}'.format(data[i][0]))
-        # check the correctness of submission
-        try:
-            app.expect_exact('{}'.format(data[i][1]))
-            # pass
-            print(Fore.GREEN, '{}{}'.format(app.before.decode("utf-8"), app.match.decode("utf-8")))
-            ok += 1
-        # fail
-        except:
-            print(Fore.YELLOW + ':( Expected: \n{}'.format(data[i][1]))
-            print(Fore.RED + 'not: {}'.format(app.before.decode("utf-8")))
-    if ok == checks:
-        print(Fore.GREEN + ':) {} passed'.format(app_name))
-    else:
-        print(Fore.RED + ':({} failed'.format(app_name))
     
-
-def right_stack(app_name):
-    """right_stack.py autograder """
-    ok = 0
-    checks = 2
-    data = [[3, '  #\r\n ##\r\n###\r\n'], [6, '     #\r\n    ##\r\n   ###\r\n  ####\r\n #####\r\n######\r\n']]
+    if app_name == 'left_stack.py':
+        data = [[3, '#\r\n##\r\n###\r\n'], [6, '#\r\n##\r\n###\r\n####\r\n#####\r\n######\r\n']]
+    if app_name == 'left_stacks.py': 
+        data = [[3, '##\r\n###\r\n####\r\n'], [6, '##\r\n###\r\n####\r\n#####\r\n######\r\n#######\r\n']]
+    if app_name == 'right_stack.py':
+        data = [[3, '  #\r\n ##\r\n###\r\n'], [6, '     #\r\n    ##\r\n   ###\r\n  ####\r\n #####\r\n######\r\n']]
+    if app_name == 'right_stacks.py':
+        data = [[3, '  ##\r\n ###\r\n####\r\n'], [6, '     ##\r\n    ###\r\n   ####\r\n  #####\r\n ######\r\n#######\r\n']]
+    if app_name == 'pyramid.py':
+        data = [[3, '  ##\r\n ####\r\n######\r\n'], [6, '     ##\r\n    ####\r\n   ######\r\n  ########\r\n ##########\r\n############\r\n']]
+    if app_name == 'pyramid_hacker.py':
+        data = [[3, '  /\\\r\n /  \\\r\n/____\\\r\n'], [6, '     /\\\r\n    /  \\\r\n   /    \\\r\n  /      \\\r\n /        \\\r\n/__________\\\r\n']]
+    
     for i in range(checks):
         # creates the app instance
-        app = pexpect.spawn('python3 {}'.format(app_name))     
+        app = pexpect.spawnu('python3 {}'.format(app_name))     
         app.sendline('{}'.format(data[i][0]))
         # check the correctness of submission
         try:
             app.expect_exact('{}'.format(data[i][1]))
             # pass
-            print(Fore.GREEN, '{}{}'.format(app.before.decode("utf-8"), app.match.decode("utf-8")))
+            print('{}{}{}{}'.format(app.before, G, app.match, X))
             ok += 1
         # fail
         except:
-            print(Fore.YELLOW + ':( Expected: \n{}'.format(data[i][1]))
-            print(Fore.RED + 'not: {}'.format(app.before.decode("utf-8")))
-            print(app.before)
-    if ok == checks:
-        print(Fore.GREEN + ':) {} passed'.format(app_name))
-    else:
-        print(Fore.RED + ':({} failed'.format(app_name))
-
-
-def right_stacks(app_name):
-    """right_stacks.py autograder """
-    ok = 0
-    checks = 2
-    data = [[3, '  ##\r\n ###\r\n####\r\n'], [6, '     ##\r\n    ###\r\n   ####\r\n  #####\r\n ######\r\n#######\r\n']]
-    for i in range(checks):
-        # creates the app instance
-        app = pexpect.spawn('python3 {}'.format(app_name))     
-        app.sendline('{}'.format(data[i][0]))
-        # check the correctness of submission
-        try:
-            app.expect_exact('{}'.format(data[i][1]))
-            # pass
-            print(Fore.GREEN, '{}{}'.format(app.before.decode("utf-8"), app.match.decode("utf-8")))
-            ok += 1
-        # fail
-        except:
-            print(Fore.YELLOW + ':( Expected: \n{}'.format(data[i][1]))
-            print(Fore.RED + 'not: {}'.format(app.before.decode("utf-8")))
-            print(app.before)
-    if ok == checks:
-        print(Fore.GREEN + ':) {} passed'.format(app_name))
-    else:
-        print(Fore.RED + ':({} failed'.format(app_name))
-
-
-def pyramid(app_name):
-    """pyramid.py autograder """
-    ok = 0
-    checks = 2
-    data = [[3, '  ##\r\n ####\r\n######\r\n'], [6, '     ##\r\n    ####\r\n   ######\r\n  ########\r\n ##########\r\n############\r\n']]
-    for i in range(checks):
-        # creates the app instance
-        app = pexpect.spawn('python3 {}'.format(app_name))     
-        app.sendline('{}'.format(data[i][0]))
-        # check the correctness of submission
-        try:
-            app.expect_exact('{}'.format(data[i][1]))
-            # pass
-            print(Fore.GREEN, '{}{}'.format(app.before.decode("utf-8"), app.match.decode("utf-8")))
-            ok += 1
-        # fail
-        except:
-            print(Fore.YELLOW + ':( Expected: \n{}'.format(data[i][1]))
-            print(Fore.RED + 'not: {}'.format(app.before.decode("utf-8")))
-            print(app.before)
-    if ok == checks:
-        print(Fore.GREEN + ':) {} passed'.format(app_name))
-    else:
-        print(Fore.RED + ':({} failed'.format(app_name))
-
-
-def pyramid_hacker(app_name):
-    """pyramid_hacker.py autograder """
-    ok = 0
-    checks = 2
-    data = [[3, '  /\\\r\n /  \\\r\n/____\\\r\n'], [6, '     /\\\r\n    /  \\\r\n   /    \\\r\n  /      \\\r\n /        \\\r\n/__________\\\r\n']]
-    for i in range(checks):
-        # creates the app instance
-        app = pexpect.spawn('python3 {}'.format(app_name))     
-        app.sendline('{}'.format(data[i][0]))
-        # check the correctness of submission
-        try:
-            app.expect_exact('{}'.format(data[i][1]))
-            # pass
-            print(Fore.GREEN, '{}{}'.format(app.before.decode("utf-8"), app.match.decode("utf-8")))
-            ok += 1
-        # fail
-        except:
-            print(Fore.YELLOW + ':( Expected: \n{}'.format(data[i][1]))
-            print(Fore.RED + 'not: {}'.format(app.before.decode("utf-8")))
+            print(app.before[:find_nth(app.before, '\r\n', 0)])
+            print('{}Expected output of:\n{}{}{}'.format(BY, R, data[i][1], X))
+            print('{}Acutal output was:\n{}{}{}'.format(BY, R, '\n'.join(b_sanitize(app.before)[1:]), X))
         if app.isalive:
             app.kill(2)
     if ok == checks:
-        print(Fore.GREEN + ':) {} passed'.format(app_name))
+        print('{}:) {} == passed{}'.format(BY, app_name, X))
     else:
-        print(Fore.RED + ':({} failed'.format(app_name))
-    
-        
+        print('{}:( {} == failed{}'.format(BY, app_name, X))
+
         
 def validate(app_name):
-    """validate.py autograder """
+    """validate.py autograder 
+    this needs to be gone over with test cases, still in beta
+    """
     # creates the app instance
-    app = pexpect.spawn('python3 {}'.format(app_name))  
+    app = pexpect.spawnu('python3 {}'.format(app_name))  
     ok = 0
     data = [3, -6, - 8.9, '$', '\r', 'pickles', 'C']
     for i, each in enumerate(data):
-        app.sendline('{}'.format(data[i]))
-        # check the correctness of submission
+        app.sendline(str(data[i]))
+        # checking alpha validation
         if each == 'C':
-            print(Fore.GREEN + '{}{}'.format(app.match.decode("utf-8"), each))
-            print(Fore.YELLOW + 'Alpha validation passed!\n')
-            app.before = ''.encode("utf-8")
+            # alpha passed
+            print('{}{}{}{}'.format(app.match, BG, each, X))
+            print('{}Alpha validation passed!\n{}'.format(G, X))
             data.reverse()
+            # checking for numeric validation
             for i, each in enumerate(data):
                 app.sendline(str(data[i]))
                 if type(each) != str and 0 < each < 10:
-                    print(Fore.GREEN + '{}{}'.format(app.match.decode("utf-8"), each))
-                    print(Fore.YELLOW + 'Numeric validation passed!\n')
-                    print(Fore.GREEN + ': ) {} == passed!'.format(app_name))
-                    
+                    #numeric passed
+                    print('{}{}{}{}'.format(app.match, BG, each, X))
+                    print('{}Numeric validation passed!\n{}'.format(G, X))
+                    print('{}:) {} == passed!{}'.format(BY, app_name, X))
+                # cycle numeric data test   
                 else:
                     try:
                         app.expect_exact('Enter a positive number: ', timeout=1.5)
                         # pass
-                        print(Fore.GREEN + '{}{}'.format(app.match.decode("utf-8"), data[i]))
+                        print('{}{}'.format(app.match, data[i]))
+                    #fail
                     except Exception as e:
-                        print(Fore.RED + 'Numeric Validation Error\n\n {}'.format(e))
+                        print('{}Numeric Validation Error\n\n{}{}{}'.format(BR, R, e, X))
+                        print('{}:( {} == failed!{}'.format(BY, app_name, X))
                         break    
+        # cycle alpha data test
         else:
             try:
                 app.expect_exact('Enter a letter: ', timeout=1.5)
                 # pass
-                print(Fore.GREEN + '{}{}'.format(app.match.decode("utf-8"), data[i]))
+                print('{}{}'.format(app.match, data[i]))
             # fail
             except:
-                print(Fore.RED + 'Alpha Validation Error\n\n {}'.format(app.before.decode("utf-8")))
+                print('{}Alpha Validation Error\n\n{}{}{}'.format(BR, R, app.before, X))
+                print('{}:( {} == failed!{}'.format(BY, app_name, X))
                 break
-
+    if app.isalive:
+            app.kill(2)
+            
+            
 def validate_functions(app_name):
     """validate_functions.py autograder """
     # creates the app instance
@@ -643,7 +562,6 @@ def validate_functions(app_name):
     pexpect.run('python3', timeout=3, events={'(?i)Python 3.4.3 (default, Nov 17 2016, 01:08:31)\n[GCC 4.8.4] on linux\nType "help",\
                                     "copyright", "credits" or "license" for more information.':'quit()'})
     '''
-    
 
 def binary_search(app_name):
     """ binary_search.py autograder """
@@ -654,11 +572,8 @@ def binary_search(app_name):
         end = 1000
         middle = 500
         # creates the app instance
-        app = pexpect.spawn('python3 {}'.format(app_name), timeout=5) 
-        print(Fore.WHITE, end='')
-        print('Test run number {}'.format(i + 1))
-        print(Fore.GREEN, end='')
-        print('Guess a number between 1 and 1000: 500')
+        app = pexpect.spawnu('python3 {}'.format(app_name), timeout=5) 
+        print('Test run number {}\nGuess a number between 1 and 1000: 500'.format(i + 1))
         while True:
             app.sendline(str(middle))
             # check the correctness of submission
@@ -679,28 +594,20 @@ def binary_search(app_name):
             # number has been guessed                
             elif index == 2:
                 ok += 1
-                print(':) {}\n'.format(app.match.decode("utf-8")))
+                print('{}{}{}\n'.format(G, app.match, X))
                 break 
             # exception raised
-            elif index == 3:
-                print(Fore.RED, end='')
-                print('errors in your code')
-                break
-            # exception raised
-            elif index ==4:
-                print(Fore.RED, end='')
-                print('errors in your code')
+            elif index == 3 or 4:
+                print('{}errors in your code{}'.format(R, X))
                 break
             else:
-                print('error in code')
+                print('{}error in code{}'.format(R, X))
                 break
             
     if ok == checks:
-        print(Fore.GREEN, end='')
-        print(':) {} passed'.format(app_name))
+        print('{}:) {} == passed{}'.format(BY, app_name, X))
     else:
-        print(Fore.RED, end='')
-        print(':( {} failed'.format(app_name))
+        print('{}:( {} == failed{}'.format(BY, app_name, X))
 
 
 def main():
