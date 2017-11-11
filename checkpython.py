@@ -375,7 +375,7 @@ def grade_book(app_name):
         print('\n{}:( {} == failed{}'.format(BY, app_name, X))
 
   # -----------------------------------------------  
-def temperature(app_name):
+def temperature(app_name): # not updated
     """ temperature.py autograder """
     ok = 0
     checks = 4
@@ -399,32 +399,36 @@ def temperature(app_name):
         print(Fore.GREEN + ':){} passed'.format(app_name))
     else:
         print(Fore.RED + ':({} failed'.format(app_name))
+# -----------------------------------------------  
 
-
-def initials(app_name):
+def initials(app_name): # updated
     """initials.py autograder """
     ok = 0
     checks = 3
     data = [['albert percival wulfric brian dumbledore', 'APWBD'], ['ben franklin', 'BF'], ['broomhilda von shaft', 'BVS']]
     for i in range(checks):
         # creates the app instance
-        app = pexpect.spawn('python3 {}'.format(app_name))     
+        app = pexpect.spawnu('python3 {}'.format(app_name))     
         app.sendline('{}'.format(data[i][0]))
         # check the correctness of submission
         try:
             app.expect_exact('{}'.format(data[i][1]))
             # pass
-            print(Fore.GREEN, '{}:) {}'.format(app.before.decode("utf-8"), app.match.decode("utf-8")))
+            print('{}{}{}{}'.format(app.before, G, app.match, X))
             ok += 1
         # fail
         except:
-            print(Fore.YELLOW + ':( Expected: {}'.format(data[i][1]))
-            print(Fore.RED + 'not {}'.format(app.before.decode("utf-8")))
+            index = str(app.before.encode('utf-8')).index(chr(92)) # finds first \r in app.before for slice
+            print('{}'.format(app.before[:index-1]))
+            print('{}Expected output of:\n{}{}{}'.format(BY, R, data[i][1], X))
+            print('{}Actual output was:\n{}{}{}'.format(BY, R, app.before[index:len(app.before)-2], X))
+        if app.isalive:
+            app.kill(2)
     if ok == checks:
-        print(Fore.GREEN + ':){} passed'.format(app_name))
+        print('{}:) {} == passed{}'.format(BY, app_name, X))
     else:
-        print(Fore.RED + ':({} failed'.format(app_name))
-
+        print('{}:( {} == failed{}'.format(BY, app_name, X))
+# -----------------------------------------------  
 
 def left_stack(app_name):
     """left_stack.py autograder """
