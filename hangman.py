@@ -1,5 +1,8 @@
 """ hangman.py docstring
     Python 3.5 platform independent
+    
+    Dependency: words.txt
+    add/remove words and definitions to words.txt to modify the game 
 
     TODO:
       * modularize portions
