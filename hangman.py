@@ -5,9 +5,10 @@
     add/remove words and definitions to words.txt to modify the game 
 
     TODO:
-      * modularize portions
-      * clean up the exit process
-      * divide modules into class assignments
+        * make game loop until user wants to exit, used words will be removed from bank of randoms
+        * modularize portions
+        * clean up the exit process
+        * divide modules into class assignments
 
     author: Rocco Pietrofesa
     date: 11/17/2017
