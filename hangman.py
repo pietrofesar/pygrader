@@ -1,17 +1,15 @@
 """ hangman.py docstring
     Python 3.5 platform independent
-    
-    Dependency: words.txt
-    add/remove words and definitions to words.txt to modify the game 
+
+    list dependencies, notes, and info here
 
     TODO:
-        * make game loop until user wants to exit, used words will be removed from bank of randoms
-        * modularize portions
-        * clean up the exit process
-        * divide modules into class assignments
-
-    author: Rocco Pietrofesa
-    date: 11/17/2017
+        * stuff1
+        * stuff2
+        * stuff3
+        
+    author: name
+    date: date
 """
 import os
 import random
@@ -46,29 +44,6 @@ def get_words(text_file):
 
 def set_secret(words):
     return words[random.randint(0, len(words) - 1)]
-
-
-def get_guess(guessed):
-    print('step1')
-    while True:
-        print('step2')
-        letter = input('Guess a letter: ')
-        print('step3')
-        if letter in guessed:
-            print('step4')
-            pass
-        if len(letter) != 1:
-            print('step5')
-            pass
-        if not letter.isalpha():
-            print('step6')
-            pass
-        else:
-            print('step7')
-            return letter
-        del letter
-    print('step8')
-
 
 def set_pic(_turns):
     # hangman pics
