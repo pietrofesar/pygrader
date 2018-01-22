@@ -1,5 +1,6 @@
 """
 this script computes the damage done between two opposing cards using the Iorveth duel mechanic within the Witcher Card Game
+https://www.gwentdb.com/cards/50365-iorveth-meditation
 """
 
 b = int(input('Enter the greater power: '))
