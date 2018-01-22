@@ -1,0 +1,78 @@
+<!-- Learn about this code on MDN: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/A_first_splash -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Iorveth Meditation</title>
+    <style>
+        html {
+            font-family: sans-serif;
+        }
+        body {
+            width: 50%;
+            max-width: 800px;
+            min-width: 480px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Iorveth Mediation Calculator</h1>
+    <div class="form"> 
+    <p>This app will determine the total damage inflicted and resulting unit strength after an Iorveth Meditation</p>
+      
+    <label for="greater">Target Value(greater): </label>
+    <input type="number" id="greater" class="greater"> 
+      
+    <label for="lower">Attack Value(lesser): </label>
+    <input type="number" id="lesser" class="lesser"> 
+    
+    <input type="submit" value="Begin Meditation" class="compute">
+    
+    </div>
+    <div class="resultParas">
+      <p class="results">Enter some values</p>
+    </div>
+</body>
+
+<script>
+    // Your JavaScript goes here
+    var compute = document.querySelector('.compute');
+    
+    function meditation(){
+        var a = document.getElementById('lesser').value;
+        var b = document.getElementById('greater').value;
+        var c = 0;
+        var d = 0;
+        console.log(a, b, c, d)
+        
+        function iorveth(a, b){
+            if(a <= 0){
+                return a;
+            }
+            else{
+                console.log(b + ' minus ' + a)
+                if(a < b){
+                    c += a;
+                }
+                else{
+                    c += b;
+                }
+                b -= a;
+                d = a;
+                if(b <= 0){
+                    b = 0;
+                return iorveth(b, a);
+                }
+            }
+        }
+        console.log(iorveth(a, b));
+        document.querySelector('.results').innerHTML = 'The remaining power of a unit is = ' + d + ', and the total damage was ' + c;
+    }
+    compute.addEventListener('click', meditation);
+    
+</script>
+</html>
