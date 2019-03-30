@@ -21,6 +21,8 @@ I am working on converting the problem sets to PDF which I can host here as well
 
 Students can game the system if they can understand the source code. I am OK with that. IMO if they can do that then they are A+ students.
 
+Here is an example page of work my students have created. https://cacsd.github.io/apcsp/student_work.html
+
 Email me if you have any questions or would like a demo. 
 pietrofesar@gmail.com
 Rocco Pietrofesa
