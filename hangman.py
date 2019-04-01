@@ -8,8 +8,8 @@
         * stuff2
         * stuff3
         
-    author: name
-    date: date
+    author: Rocco Pietrofesa
+    date: 11/5/17
 """
 import os
 import random
