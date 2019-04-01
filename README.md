@@ -17,7 +17,7 @@ I want to check "greedy.py"
 I would type "python3 grader.py greedy.py"
 python3 calls the interpreter, grader.py the first argument calls the grader file, greedy.py the second argument is passed to grader to evaluate
 
-I am working on converting the problem sets to PDF which I can host here as well. 
+I am working on converting the problem sets to PDF which I can host here as well. The numbered problems have been from Y. Daniel Liang's book "Introduction to Programming Using Python". I like this book and plan to use it with my CSP course.
 
 Students can game the system if they can understand the source code. I am OK with that. IMO if they can do that then they are A+ students.
 
