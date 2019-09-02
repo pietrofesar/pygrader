@@ -798,9 +798,9 @@ def quad_form_test():
 
 def main():
     # validate arguments
+    print(len(sys.argv))
     print(sys.argv[0])
     print(sys.argv[1])
-    print(sys.argv[2])
 
     if len(sys.argv) == 2:
         try:
