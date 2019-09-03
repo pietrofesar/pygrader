@@ -799,10 +799,11 @@ def quad_form_test():
 
 def main():
     # validate arguments
+    print(len(sys.argv))
     if len(sys.argv) == 2:
         try:
             # find and store the file
-            print(sys.argv[])
+            print(sys.argv[1])
             student_file = findInSubdirectory(sys.argv[1])
             print(student_file)
             app_selector(sys.argv[1], student_file)
