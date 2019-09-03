@@ -803,7 +803,7 @@ def main():
         try:
             # find and store the file
             student_file = findInSubdirectory(sys.argv[1])
-            # print(student_file)
+            print(student_file)
             app_selector(sys.argv[1], student_file)
             
         except IOError as e:
