@@ -17,6 +17,7 @@ Todo:
     * binary_search.py(beta status)
     * validate_functions.py(alpha status)
     * validate.py(beta status)
+    * troubleshoot line 60
     
     
 Author: Rocco Pietofesa
@@ -56,7 +57,7 @@ def findInSubdirectory(filename, subdirectory=''):
     for root, dirs, names in os.walk(path):
         if filename in names:
             return os.path.join(root, filename)
-    raise 'File not found'
+    # raise 'File not found'
 
 
 def find_nth(haystack, needle, n):
