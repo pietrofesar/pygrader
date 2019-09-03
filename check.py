@@ -50,6 +50,7 @@ X = '\033[0m'       # reset
 
 # searches for a file in the tree
 def findInSubdirectory(filename, subdirectory=''):
+    print('the filenmane is '+filename)
     if subdirectory:
         path = subdirectory
     else:
@@ -805,7 +806,7 @@ def main():
             # find and store the file
             print(sys.argv[1])
             student_file = findInSubdirectory(sys.argv[1])
-            print(student_file)
+            print('student file is ' + student_file)
             app_selector(sys.argv[1], student_file)
             
         except IOError as e:
