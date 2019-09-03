@@ -802,6 +802,7 @@ def main():
     if len(sys.argv) == 2:
         try:
             # find and store the file
+            print(sys.argv[])
             student_file = findInSubdirectory(sys.argv[1])
             print(student_file)
             app_selector(sys.argv[1], student_file)
