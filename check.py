@@ -50,16 +50,14 @@ X = '\033[0m'       # reset
 
 # searches for a file in the tree
 def findInSubdirectory(filename, subdirectory=''):
-    print('the filenmane is '+filename)
     if subdirectory:
         path = subdirectory
     else:
         path = os.getcwd()
-    print('path is '+ path)
     for root, dirs, names in os.walk(path):
         if filename in names:
             return os.path.join(root, filename)
-    # raise 'File not found'
+    raise 'File not found'
 
 
 def find_nth(haystack, needle, n):
