@@ -799,28 +799,13 @@ def quad_form_test():
 
 def main():
     # validate arguments
-    print(len(sys.argv))
-    print(sys.argv[0])
-    print(sys.argv[1])
-
     if len(sys.argv) == 2:
         try:
             # find and store the file
             student_file = findInSubdirectory(sys.argv[1])
             # print(student_file)
             app_selector(sys.argv[1], student_file)
-            '''
-            with open(student_file) as file:
-                pass
-                # call grader routine
-                app_selector(sys.argv[1], student_file)
-                '''
-            ''' original
-            with open(sys.argv[1]) as file:
-                pass
-                # call grader routine
-                app_selector(sys.argv[1])
-            '''
+            
         except IOError as e:
             print('{}ERROR\n{}{}{} doesn\'t exist or is incorrectly named'.format(BR, Y, sys.argv[1], X))
             
