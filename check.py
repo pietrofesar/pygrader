@@ -57,7 +57,8 @@ def findInSubdirectory(filename, subdirectory=''):
     for root, dirs, names in os.walk(path):
         if filename in names:
             return os.path.join(root, filename)
-    raise 'File not found'
+    #raise 'File not found'
+    break
 
 
 def find_nth(haystack, needle, n):
