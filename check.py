@@ -1,6 +1,5 @@
 #!/usr/bin/env python3.5
 """ check1.py docstring
-
     This program will autocheck student problem sets for the python curriculum I've designed
     The problem sets are taken from numerous coureses and texts, I don't claim they are original.
     http://pexpect.sourceforge.net/pexpect.html - only works in Linux environment
@@ -10,7 +9,6 @@
     
     :param file: the python file passed as a command line argument 
     :return None: each routine has a side effect, it prints the output and wether or not they were successful 
-
 Todo:
     * implement the Exception thrown by try-except so that user can see it better
     * string slicing relies on hypothetical app.before strings; look for bugs while piloting grader, could produce exceptions
@@ -21,11 +19,9 @@ Todo:
     
     
 Author: Rocco Pietofesa
-Date: 1/7/19
-
+Date: 9/10/19
 Please credit author for any use/modification of this base program
 Please send donation to pietrofesar@gmail.com via PayPal if you find this useful
-
 """
 import pexpect
 import sys
@@ -102,6 +98,8 @@ def app_selector(option, file):
         return ch1_4(file)
     if option == 'ch1_5.py':
         return ch1_5(file)
+    if option == 'ch1_6.py':
+        return ch1_6(file)
     if option == 'slices.py':
         return slices(file)
     if option == 'madlib.py':
@@ -210,6 +208,22 @@ def ch1_4(file):
 def ch1_5(file):
     app = pexpect.spawn('python3 {}'.format(file))
     phrase = str((9.5 *4.5-2.5*3)/(45.5-3.5))
+    # check the correctness of the submission
+    try:
+        app.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n{}:) ch1_5.py == passed!{}'.format(BY, G, phrase, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch1_5.py == failed{}'
+        .format(BY, R, phrase, BY, R, app.before, BY, X))
+    if app.isalive:
+            app.kill(2)
+            
+
+def ch1_6(file):
+    app = pexpect.spawn('python3 {}'.format(file))
+    phrase = 'area is {0:.2f}\r\nperimeter is {1:.2f}\r\n'.format(4.5 * 7.9, (2 * 4.5 + 2 * 7.9))
     # check the correctness of the submission
     try:
         app.expect_exact(phrase)
