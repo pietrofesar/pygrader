@@ -228,7 +228,7 @@ def ch1_6(file):
     try:
         app.expect_exact(phrase)
         # pass
-        print('{}Output is correct!\n\n{}{}\n{}:) ch1_5.py == passed!{}'.format(BY, G, phrase, BY, X))
+        print('{}Output is correct!\n\n{}{}\n{}:) ch1_6.py == passed!{}'.format(BY, G, phrase, BY, X))
     # fail
     except:
         print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch1_5.py == failed{}'
