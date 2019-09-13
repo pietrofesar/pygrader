@@ -1,5 +1,6 @@
-#!/usr/bin/env python3.5
-""" check1.py docstring
+#!/usr/bin/env python3.6
+""" check.py docstring
+    check.py version 2.0
     This program will autocheck student problem sets for the python curriculum I've designed
     The problem sets are taken from numerous coureses and texts, I don't claim they are original.
     http://pexpect.sourceforge.net/pexpect.html - only works in Linux environment
@@ -19,7 +20,7 @@ Todo:
     
     
 Author: Rocco Pietofesa
-Date: 9/10/19
+Date: 9/13/19
 Please credit author for any use/modification of this base program
 Please send donation to pietrofesar@gmail.com via PayPal if you find this useful
 """
