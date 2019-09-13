@@ -150,7 +150,7 @@ def ch1_1(file):
     # fail
     except:
         print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch1_1.py == failed{}'
-        .format(BY, R, phrase, BY, R, app.before, BY, X))
+        .format(BY, R, phrase, BY, R, app.before.decode("utf-8"), BY, X))
     if app.isalive:
             app.kill(2)
     
