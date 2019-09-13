@@ -140,7 +140,7 @@ def app_selector(option, file):
 
 
 def ch1_1(file):
-    app = pexpect.spawn('python3 {}'.format(file))
+    app = pexpect.spawnu('python3 {}'.format(file))
     phrase = 'Welcome to Python\r\nWelcome to Computer Science\r\nProgramming is fun\r\n'
     # check the correctness of the submission
     try:
@@ -150,7 +150,7 @@ def ch1_1(file):
     # fail
     except:
         print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch1_1.py == failed{}'
-        .format(BY, R, phrase, BY, R, app.before.decode("utf-8"), BY, X))
+        .format(BY, R, phrase, BY, R, app.before, BY, X))
     if app.isalive:
             app.kill(2)
     
