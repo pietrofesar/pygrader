@@ -156,7 +156,7 @@ def ch1_1(file):
     
 
 def ch1_2(file):
-    app = pexpect.spawn('python3 {}'.format(file))
+    app = pexpect.spawnu('python3 {}'.format(file))
     phrase = 'FFFF  U    U  N    N\r\nF     U    U  NN   N\r\nFFFF  U    U  N N  N\r\nF     U    U  N  N N\r\nF      UUUU   N   NN\r\n'
     # check the correctness of the submission
     try:
@@ -172,7 +172,7 @@ def ch1_2(file):
 
 
 def ch1_3(file):
-    app = pexpect.spawn('python3 {}'.format(file))
+    app = pexpect.spawnu('python3 {}'.format(file))
     phrase = ' ---------\r\n|  O   O  |\r\n|    U    |\r\n|  \___/  |\r\n|         |\r\n ---------'
     # check the correctness of the submission
     try:
@@ -188,7 +188,7 @@ def ch1_3(file):
 
 
 def ch1_4(file):
-    app = pexpect.spawn('python3 {}'.format(file))
+    app = pexpect.spawnu('python3 {}'.format(file))
     phrase = '{0:7s}{1:7s}{2:s}\r\n'.format('a', 'a^2', 'a^3') + '{0:<7d}{1:<7d}{2:d}\r\n'.format(1, 1, 1) +\
                 '{0:<7d}{1:<7d}{2:d}\r\n'.format(2, 4, 16) + '{0:<7d}{1:<7d}{2:d}\r\n'.format(3, 9, 27) + \
                 '{0:<7d}{1:<7d}{2:d}\r\n'.format(4, 16, 64)
@@ -206,7 +206,7 @@ def ch1_4(file):
  
  
 def ch1_5(file):
-    app = pexpect.spawn('python3 {}'.format(file))
+    app = pexpect.spawnu('python3 {}'.format(file))
     phrase = str((9.5 *4.5-2.5*3)/(45.5-3.5))
     # check the correctness of the submission
     try:
@@ -222,7 +222,7 @@ def ch1_5(file):
             
 
 def ch1_6(file):
-    app = pexpect.spawn('python3 {}'.format(file))
+    app = pexpect.spawnu('python3 {}'.format(file))
     phrase = 'area is {0:.2f}\r\nperimeter is {1:.2f}\r\n'.format(4.5 * 7.9, (2 * 4.5 + 2 * 7.9))
     # check the correctness of the submission
     try:
