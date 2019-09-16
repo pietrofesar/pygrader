@@ -12,7 +12,7 @@
     :return None: each routine has a side effect, it prints the output and wether or not they were successful 
 Todo:
     * implement the Exception thrown by try-except so that user can see it better
-    * string slicing relies on hypothetical app.before strings; look for bugs while piloting grader, could produce exceptions
+    * string slicing relies on hypothetical child.before strings; look for bugs while piloting grader, could produce exceptions
     * binary_search.py(beta status)
     * validate_functions.py(alpha status)
     * validate.py(beta status)
@@ -27,6 +27,7 @@ Please send donation to pietrofesar@gmail.com via PayPal if you find this useful
 import pexpect
 import sys
 import os
+import random
 from subprocess import Popen, PIPE, STDOUT
 
 
@@ -73,7 +74,7 @@ def find_nth(haystack, needle, n):
 def b_sanitize(before):
     """
     substring helper
-    :param before:  app.before->string type
+    :param before:  child.before->string type
     :return parts:  a list of the lines or an empty list if error occured
     """
     parts = []
@@ -84,7 +85,7 @@ def b_sanitize(before):
     return parts
 
 
-def app_selector(option, file):
+def child_selector(option, file):
     """ input is name of program to grade, output is call to relevant autograde function
     :param option   : the name of the file entered into command line
     :param file     : absolute path to the file to be tested 
@@ -101,6 +102,32 @@ def app_selector(option, file):
         return ch1_5(file)
     if option == 'ch1_6.py':
         return ch1_6(file)
+    if option == 'ch2_1.py':
+        return ch2_1(file)
+    if option == 'ch2_2.py':
+        return ch2_2(file)
+    if option == 'ch2_3.py':
+        return ch2_3(file)
+    if option == 'ch2_4.py':
+        return ch2_4(file)
+    if option == 'ch2_5.py':
+        return ch2_5(file)
+    if option == 'ch2_6.py':
+        return ch2_6(file)
+    if option == 'ch2_7.py':
+        return ch2_7(file)
+    if option == 'ch2_8.py':
+        return ch2_8(file)
+    if option == 'ch2_9.py':
+        return ch2_9(file)
+    if option == 'ch2_10.py':
+        return ch2_10(file)
+    if option == 'ch2_13.py':
+        return ch2_13(file)
+    if option == 'ch2_14.py':
+        return ch2_14(file)
+    if option == 'ch2_15.py':
+        return ch2_15(file)
     if option == 'slices.py':
         return slices(file)
     if option == 'madlib.py':
@@ -139,104 +166,384 @@ def app_selector(option, file):
     if option == 'quad_form.py':
         return quad_form_test()
 
-
+#++++++++++++++++++++++++++++ chapter 1 ++++++++++++++++++++++++
 def ch1_1(file):
-    app = pexpect.spawnu('python3 {}'.format(file))
+    child = pexpect.spawnu('python3 {}'.format(file))
     phrase = 'Welcome to Python\r\nWelcome to Computer Science\r\nProgramming is fun\r\n'
     # check the correctness of the submission
     try:
-        app.expect_exact(phrase)
+        child.expect_exact(phrase)
         # pass
         print('{}Output is correct!\n\n{}{}\n{}:) ch1_1.py == passed!{}'.format(BY, G, phrase, BY, X))
     # fail
     except:
         print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch1_1.py == failed{}'
-        .format(BY, R, phrase, BY, R, app.before, BY, X))
-    if app.isalive:
-            app.kill(2)
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)
     
 
 def ch1_2(file):
-    app = pexpect.spawnu('python3 {}'.format(file))
+    child = pexpect.spawnu('python3 {}'.format(file))
     phrase = 'FFFF  U    U  N    N\r\nF     U    U  NN   N\r\nFFFF  U    U  N N  N\r\nF     U    U  N  N N\r\nF      UUUU   N   NN\r\n'
     # check the correctness of the submission
     try:
-        app.expect_exact(phrase)
+        child.expect_exact(phrase)
         # pass
         print('{}Output is correct!\n\n{}{}\n{}:) ch1_2.py == passed!{}'.format(BY, G, phrase, BY, X))
     # fail
     except:
         print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch1_2.py == failed{}'
-        .format(BY, R, phrase, BY, R, app.before, BY, X))
-    if app.isalive:
-            app.kill(2)
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)
 
 
 def ch1_3(file):
-    app = pexpect.spawnu('python3 {}'.format(file))
+    child = pexpect.spawnu('python3 {}'.format(file))
     phrase = ' ---------\r\n|  O   O  |\r\n|    U    |\r\n|  \___/  |\r\n|         |\r\n ---------'
     # check the correctness of the submission
     try:
-        app.expect_exact(phrase)
+        child.expect_exact(phrase)
         # pass
         print('{}Output is correct!\n\n{}{}\n{}:) ch1_3.py == passed!{}'.format(BY, G, phrase, BY, X))
     # fail
     except:
         print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch1_3.py == failed{}'
-        .format(BY, R, phrase, BY, R, app.before, BY, X))
-    if app.isalive:
-            app.kill(2)
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)
 
 
 def ch1_4(file):
-    app = pexpect.spawnu('python3 {}'.format(file))
+    child = pexpect.spawnu('python3 {}'.format(file))
     phrase = '{0:7s}{1:7s}{2:s}\r\n'.format('a', 'a^2', 'a^3') + '{0:<7d}{1:<7d}{2:d}\r\n'.format(1, 1, 1) +\
                 '{0:<7d}{1:<7d}{2:d}\r\n'.format(2, 4, 16) + '{0:<7d}{1:<7d}{2:d}\r\n'.format(3, 9, 27) + \
                 '{0:<7d}{1:<7d}{2:d}\r\n'.format(4, 16, 64)
     # check the correctness of the submission
     try:
-        app.expect_exact(phrase)
+        child.expect_exact(phrase)
         # pass
         print('{}Output is correct!\n\n{}{}\n{}:) ch1_4.py == passed!{}'.format(BY, G, phrase, BY, X))
     # fail
     except:
         print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch1_4.py == failed{}'
-        .format(BY, R, phrase, BY, R, app.before, BY, X))
-    if app.isalive:
-            app.kill(2)
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)
  
  
 def ch1_5(file):
-    app = pexpect.spawnu('python3 {}'.format(file))
+    child = pexpect.spawnu('python3 {}'.format(file))
     phrase = str((9.5 *4.5-2.5*3)/(45.5-3.5))
     # check the correctness of the submission
     try:
-        app.expect_exact(phrase)
+        child.expect_exact(phrase)
         # pass
         print('{}Output is correct!\n\n{}{}\n{}:) ch1_5.py == passed!{}'.format(BY, G, phrase, BY, X))
     # fail
     except:
         print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch1_5.py == failed{}'
-        .format(BY, R, phrase, BY, R, app.before, BY, X))
-    if app.isalive:
-            app.kill(2)
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)
             
 
 def ch1_6(file):
-    app = pexpect.spawnu('python3 {}'.format(file))
+    child = pexpect.spawnu('python3 {}'.format(file))
     phrase = 'area is {0:.2f}\r\nperimeter is {1:.2f}\r\n'.format(4.5 * 7.9, (2 * 4.5 + 2 * 7.9))
     # check the correctness of the submission
     try:
-        app.expect_exact(phrase)
+        child.expect_exact(phrase)
         # pass
         print('{}Output is correct!\n\n{}{}\n{}:) ch1_6.py == passed!{}'.format(BY, G, phrase, BY, X))
     # fail
     except:
-        print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch1_5.py == failed{}'
-        .format(BY, R, phrase, BY, R, app.before, BY, X))
-    if app.isalive:
-            app.kill(2)
+        print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch1_6.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)
+
+#++++++++++++++++++++++ chapter 2 ++++++++++++++++++++++++++++++++++++++
+
+def ch2_1(file):
+    
+    child = pexpect.spawnu('python3 {}'.format(file))
+    phrase = '24 Celsius is 75.2 Fahrenheit'
+    child.sendline('24')
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n{}:) ch2_1.py == passed!{}'.format(BY, G, phrase, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch2_1.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)
+
+
+def ch2_2(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    PI = 3.14159
+    radius = round(random.uniform(8, 1), 1)
+    length = round(random.uniform(15, 1), 1)
+    child.sendline('{}, {}'.format(radius, length))
+    phrase = 'The area is {}\r\nThe volume is {}'.format(PI * radius**2, PI * radius**2 * length)
+    
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n{}:) ch2_2.py == passed!{}'.format(BY, G, child.after, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch2_2.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)
  
+ 
+def ch2_3(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    feet = round(random.uniform(30, 1), 2)
+    child.sendline(str(feet))
+    phrase = '{} feet is {} meters'.format(feet, feet * .305)
+    
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n{}:) ch2_3.py == passed!{}'.format(BY, G, phrase, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch2_3.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)
+            
+
+def ch2_4(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    pounds = round(random.uniform(200, 1), 2)
+    child.sendline(str(pounds))
+    phrase = '{} pounds is {} kilograms'.format(pounds, pounds * .454)
+    
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n{}:) ch2_4.py == passed!{}'.format(BY, G, phrase, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch2_4.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)    
+
+
+def ch2_5(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    subtotal = round(random.uniform(80, 1), 2)
+    rate = round(random.uniform(20, 10))
+    child.sendline('{}, {}'.format(subtotal, rate))
+    phrase = 'The gratuity is {0:.2f} and the total is {1:.2f}'.format(subtotal * (rate/100), subtotal * (1 + (rate/100)))
+    
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n{}:) ch2_5.py == passed!{}'.format(BY, G, phrase, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch2_5.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2) 
+            
+            
+def ch2_6(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    num = random.randint(0, 1000)
+    child.sendline(str(num))
+    phrase = 'The sum of the digits is {}'.format((num % 10) + ((num // 10) % 10) + ((num // 100) % 10))
+    
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n{}:) ch2_6.py == passed!{}'.format(BY, G, phrase, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( ch2_6.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2) 
+            
+
+def ch2_7(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    minutes = random.randint(0, 1000000000)
+    child.sendline(str(minutes))
+    phrase = '{} minutes is approximately {} years and {} days'.format(minutes, minutes // 525600, (minutes % 525600) // 1440)
+    
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n\n{}:) ch2_7.py == passed!{}'.format(BY, G, phrase, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n\n{}Actual output was:\n\n{}{}\n{}:( ch2_7.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2) 
+
+
+def ch2_8(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    data = [round(random.uniform(100,20), 1), round(random.uniform(20,1), 1), round(random.uniform(20,1), 1)]
+    for each in data:
+        child.sendline(str(each))
+    phrase = 'The energy needed is {:.1f}'.format(data[0] * (data[2] - data[1]) * 4184)
+    
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n\n{}:) ch2_8.py == passed!{}'.format(BY, G, phrase, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n\n{}Actual output was:\n\n{}{}\n{}:( ch2_8.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2) 
+            
+            
+def ch2_9(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    t = round(random.uniform(41, -58), 1)
+    v = random.randint(2, 80)
+    child.sendline(str(t))
+    child.sendline(str(v))
+    phrase = 'The wind chill index is {:.5f}'.format(35.74 + 0.6215 * t - 35.75 * v**0.16 + 0.4275 * t * v**0.16)
+    
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n\n{}:) ch2_9.py == passed!{}'.format(BY, G, phrase, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n\n{}Actual output was:\n\n{}{}\n{}:( ch2_9.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2) 
+
+
+def ch2_10(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    v = round(random.uniform(210, 80), 1)
+    a = round(random.uniform(10, 3), 1)
+    child.sendline('{}, {}'.format(v, a))
+    phrase = 'The minimum runway length for this airplane is {:.3f} meters'.format((v**2)/(2*a))
+    
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n\n{}:) ch2_10.py == passed!{}'.format(BY, G, phrase, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n\n{}Actual output was:\n\n{}{}\n{}:( ch2_10.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2) 
+
+
+def ch2_13(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    n = random.randint(1111, 9999)
+    F = 1000
+    child.sendline(str(n))
+    data =[]
+    data.append(n // 1000)
+    n %= 1000
+    data.append(n // 100)
+    n %= 100
+    data.append(n // 10)
+    n%= 10
+    data.append(n)
+    phrase = '{}\r\n{}\r\n{}\r\n{}'.format(data[0], data[1], data[2], data[3])
+    
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n\n{}:) ch2_13.py == passed!{}'.format(BY, G, phrase, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n\n{}Actual output was:\n\n{}{}\n{}:( ch2_13.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2) 
+
+def ch2_14(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    data = []
+    for each in range(6):
+        data.append(round(random.uniform(10,-10), 1))
+    child.sendline('{}, {}, {}, {}, {}, {}'.format(data[0], data[1], data[2], data[3], data[4], data[5]))
+    phrase = '{}\r\n{}\r\n{}\r\n{}'.format(data[0], data[1], data[2], data[3])
+    s1 = ((data[0] - data[2])**2 + (data[1] - data[3])**2)**.5
+    s2 = ((data[2] - data[4])**2 + (data[3] - data[5])**2)**.5
+    s3 = ((data[4] - data[0])**2 + (data[5] - data[1])**2)**.5
+    s = (s1 + s2 + s3) / 2
+    area = (s * (s - s1) * (s - s2) * (s - s3))**.5
+    phrase = 'The area of the triange is {:.1f}'.format(area)
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n\n{}:) ch2_14.py == passed!{}'.format(BY, G, phrase, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n\n{}Actual output was:\n\n{}{}\n{}:( ch2_14.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)  
+            
+
+def ch2_15(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    s = round(random.uniform(15, 5), 1)
+    child.sendline(str(s))
+    phrase = 'The area of the hexagon is {0:.2f}'.format(((3*3**.5) / 2) * s**2)
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n\n{}:) ch2_15.py == passed!{}'.format(BY, G, phrase, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n\n{}Actual output was:\n\n{}{}\n{}:( ch2_15.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)  
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
 def slices(file):
     """
@@ -244,22 +551,22 @@ def slices(file):
     :return None: 
         test suite for slices.py
     """
-    # creates the app instance
-    app = pexpect.spawnu('python3 {}'.format(file))
+    # creates the child instance
+    child = pexpect.spawnu('python3 {}'.format(file))
     phrase = 'Be\r\nyourself\r\neveryone\r\nelse\r\nis\r\nalready\r\ntaken\r\n'
     # check the correctness of the submission
     try:
-        app.expect_exact(phrase)
+        child.expect_exact(phrase)
         # pass
         print('{}Output is correct!\n\n{}{}\n{}:) slices.py == passed!{}'.format(BY, G, phrase, BY, X))
     # fail
     except:
         print('{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}\n{}:( slices.py == failed{}'
-        .format(BY, R, phrase, BY, R, app.before, BY, X))
-    if app.isalive:
-            app.kill(2)
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)
      
-     
+
 def madlib(file):
         """
         :param file: the python file passed as a command line argument 
@@ -276,23 +583,23 @@ def madlib(file):
                  'Will you <verb3> out with me?\r\n' \
                  'Don\'t let your parents discourage you, <pronouns> are just jealous.\r\n' \
                  'Yours forever, <author> :)\r\n'
-        # creates the app instance
-        app = pexpect.spawnu('python3 {}'.format(file))
+        # creates the child instance
+        child = pexpect.spawnu('python3 {}'.format(file))
         # enters the words
         for each in words:
-            app.sendline(each)
+            child.sendline(each)
         # check the correctness of submission
         try:
-            app.expect_exact(phrase)
+            child.expect_exact(phrase)
             # pass
             print('\n{}Output is correct!\n\n{}{}\n{}:) slices.py == passed!{}'
             .format(BY, G, phrase, BY, X))
         # fail
         except:
             print('\n{}Expected output of:\n\n{}{}\n{}Actual output was:\n\n{}{}{}:( slices.py == failed{}'
-            .format(BY, R, phrase, BY, R, app.before, BY, X))
-        if app.isalive:
-            app.kill(2)
+            .format(BY, R, phrase, BY, R, child.before, BY, X))
+        if child.isalive:
+            child.kill(2)
 
 
 def greedy(file):
@@ -301,25 +608,25 @@ def greedy(file):
     :return None: 
     test suite for greedy.py
     """
-    # creates the app instance
+    # creates the child instance
     data_in = [3.84,  1.10, .30, .04]
     data_out = ['15 quarters, 0 dimes, 1 nickels, 4 pennies', '4 quarters, 1 dimes, 0 nickels, 0 pennies', '1 quarters, 0 dimes, 1 nickels, 0 pennies', '0 quarters, 0 dimes, 0 nickels, 4 pennies']
     
     for i, each in enumerate(data_in):
-        app = pexpect.spawnu('python3 {}'.format(file))
-        app.sendline(str(each))
+        child = pexpect.spawnu('python3 {}'.format(file))
+        child.sendline(str(each))
         # check the correctness of submission
         try:
-            app.expect_exact('{}'.format(data_out[i]))
+            child.expect_exact('{}'.format(data_out[i]))
             # pass
             print('{}Output is correct!\n\n{}{}{}\n\n{}:) greedy.py == passed{}'
-            .format(BY, G, app.before, app.match, BY, X))
+            .format(BY, G, child.before, child.match, BY, X))
         # fail
         except:
             print('{}Expected output of:\n\n{}{}\n'.format(BY, R, data_out[i]))
-            print('{}Actual output was:\n\n{}{}\n{}:( greedy.py == failed{}'.format(BY, R, app.before, BY, X))
-        if app.isalive:
-                app.kill(2) 
+            print('{}Actual output was:\n\n{}{}\n{}:( greedy.py == failed{}'.format(BY, R, child.before, BY, X))
+        if child.isalive:
+                child.kill(2) 
 
            
 def hypotenuse(file):
@@ -330,22 +637,22 @@ def hypotenuse(file):
     """
     phrase = ['Enter the side length:', 'The hypotenuse is ']
     data = ['3.1', '4.1', '5.14']
-    # creates the app instance
-    app = pexpect.spawnu('python3 {}'.format(file))
-    app.sendline(data[0])
-    app.sendline(data[1])
+    # creates the child instance
+    child = pexpect.spawnu('python3 {}'.format(file))
+    child.sendline(data[0])
+    child.sendline(data[1])
     # check the correctness of submission
     try:
-        app.expect_exact(phrase[1] + data[2])
+        child.expect_exact(phrase[1] + data[2])
         # pass
         print('{}Output is correct!\n\n{}{}{}\n\n{}:) hypotenuse.py == passed{}'
-        .format(BY, G, app.before, app.match, BY, X))
+        .format(BY, G, child.before, child.match, BY, X))
     # fail
     except:
         print('{}Expected output of:\n\n{}{}{}\n{}{}\n{}{}\n\n{}Actual output was:\n\n{}{}\n{}:( slices.py == failed{}'
-        .format(BY, R, phrase[0], data[0], phrase[0], data[1], phrase[1], data[2], BY, R, app.before, BY, X))
-    if app.isalive:
-            app.kill(2)
+        .format(BY, R, phrase[0], data[0], phrase[0], data[1], phrase[1], data[2], BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)
 
 
 def average(file):
@@ -356,27 +663,27 @@ def average(file):
     """
     grade = ['first', 'second', 'third', 'fourth']
     nums = ['78', '97', '86', '88', '87']
-    # creates the app instance
-    app = pexpect.spawnu('python3 {}'.format(file))
-    app.sendline(nums[0])
-    app.sendline(nums[1])
-    app.sendline(nums[2])
-    app.sendline(nums[3])
+    # creates the child instance
+    child = pexpect.spawnu('python3 {}'.format(file))
+    child.sendline(nums[0])
+    child.sendline(nums[1])
+    child.sendline(nums[2])
+    child.sendline(nums[3])
     # check the correctness of submission
     try:
-        app.expect_exact('The average is 87')
+        child.expect_exact('The average is 87')
         # pass
         print('{}Output is correct!\n\n{}{}{}\n\n{}:) average.py == passed{}'
-        .format(BY, G, app.before, app.match, BY, X))
+        .format(BY, G, child.before, child.match, BY, X))
     # fail
     except:
         print('{}Expected output of:{}\n'.format(BY, R))
         for i, each in enumerate(grade):
             print('Enter the {} grade: {}'.format(grade[i], nums[i]))
         print('The average is 87')
-        print('\n{}Actual output was:\n\n{}{}\n{}:( average.py == failed{}'.format(BY, R, app.before, BY, X))
-    if app.isalive:
-            app.kill(2)
+        print('\n{}Actual output was:\n\n{}{}\n{}:( average.py == failed{}'.format(BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)
 
 
 def polygon(file):
@@ -385,21 +692,21 @@ def polygon(file):
     :return None: 
     test suite for average.py
     """
-    # creates the app instance
-    app = pexpect.spawnu('python3 {}'.format(file))
-    app.sendline('6')
+    # creates the child instance
+    child = pexpect.spawnu('python3 {}'.format(file))
+    child.sendline('6')
     # check the correctness of submission
     try:
-        app.expect_exact('The interior angles are 120.0 degrees.')
+        child.expect_exact('The interior angles are 120.0 degrees.')
         # pass
         print('{}Output is correct!\n\n{}{}{}\n\n{}:) polygon.py == passed{}'
-        .format(BY, G, app.before, app.match, BY, X))
+        .format(BY, G, child.before, child.match, BY, X))
     # fail
     except:
         print('{}Expected output of:\n\n{}Enter the number of sides: 6\nThe interior angles are 120.0 degrees.\n'.format(BY, R))
-        print('{}Actual output was:\n\n{}{}\n{}:( polygon.py == failed{}'.format(BY, R, app.before, BY, X))
-    if app.isalive:
-            app.kill(2)
+        print('{}Actual output was:\n\n{}{}\n{}:( polygon.py == failed{}'.format(BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)
             
 
 def fahrenheit(file):
@@ -409,23 +716,23 @@ def fahrenheit(file):
     test suite for fahrenheit.py
     """
     data = [['0', '0.0'], ['100', '100.0'], ['32', '32.0'], ['212', '212.0']]
-    phrase = ['Hai! Enter the temperature in degrees Fahrenheit: ', '{} degrees Fahrenheit is approximately {} degrees Celsius.']
+    phrase = ['Hai! Enter the temperature in degrees Fahrenheit: ', '{} degrees Fahrenheit is childroximately {} degrees Celsius.']
     
-    # creates the app instance
-    app = pexpect.spawnu('python3 {}'.format(file))
-    app.sendline(data[3][0])
+    # creates the child instance
+    child = pexpect.spawnu('python3 {}'.format(file))
+    child.sendline(data[3][0])
     # check the correctness of submission
     try:
-        app.expect_exact(phrase[1].format(data[3][1], data[1][1]))
+        child.expect_exact(phrase[1].format(data[3][1], data[1][1]))
         # pass
         print('{}Output is correct!\n\n{}{}{}\n\n{}:) fahrenheit.py == passed{}'
-        .format(BY, G, app.before, app.match, BY, X))
+        .format(BY, G, child.before, child.match, BY, X))
     # fail
     except:
         print('{}Expected output of:\n\n{}{}{}\n{}\n{}\nActual output was:\n\n{}{}{}\n:( fahrenheit.py == failed{}'
-        .format(BY, R, phrase[0], data[3][0], phrase[1].format(data[3][1], data[1][1]), BY, R, app.before, BY, X))
-    if app.isalive:
-            app.kill(2)
+        .format(BY, R, phrase[0], data[3][0], phrase[1].format(data[3][1], data[1][1]), BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)
             
 
 def report_card(file):
@@ -445,24 +752,24 @@ def report_card(file):
          '{}\'s average is now 90.0.\r\n\r\n'.format(data[0], data[6], data[5], data[4], data[3], data[2], data[1],
                                                      data[0], data[1], data[6], data[0], data[5],
                                                      data[4], data[3], data[2], data[1], data[0])
-        # creates the app instance
-        app = pexpect.spawnu('python3 {}'.format(file))
+        # creates the child instance
+        child = pexpect.spawnu('python3 {}'.format(file))
         # enters the words
         for each in data:
-            app.sendline(each)
+            child.sendline(each)
         # check the correctness of submission
         try:
-            app.expect_exact(phrase)
+            child.expect_exact(phrase)
             # pass
             print('\n{}Output is correct!\n{}{}\n{}{}:) report_card.py == passed\n{}'
-            .format(BY, G, app.before, app.match, BY, X))
+            .format(BY, G, child.before, child.match, BY, X))
         # fail
         except:
-            print(app.before)
+            print(child.before)
             print('\n{}Expected output of:\n{}{}\n{}Actual output was:\n{}{}{}:( report_card.py == failed{}'
-            .format(BY, R, phrase, BY, R, app.before[225:], BY, X))
-        if app.isalive:
-            app.kill(2)
+            .format(BY, R, phrase, BY, R, child.before[225:], BY, X))
+        if child.isalive:
+            child.kill(2)
             
 
 def even_odd(file):
@@ -474,21 +781,21 @@ def even_odd(file):
     ok = 0
     test_data = [['2', 'even'], ['3', 'odd'], ['-1', 'odd'], ['-2', 'even']]
     for i in range(4):
-        # creates the app instance
-        app = pexpect.spawnu('python3 {}'.format(file))
-        app.sendline('{}'.format(test_data[i][0]))
+        # creates the child instance
+        child = pexpect.spawnu('python3 {}'.format(file))
+        child.sendline('{}'.format(test_data[i][0]))
         # check the correctness of submission
         try:
-            app.expect_exact('{} is an {} number.'.format(test_data[i][0], test_data[i][1]))
+            child.expect_exact('{} is an {} number.'.format(test_data[i][0], test_data[i][1]))
             # pass
-            print('{}{}'.format(G, app.match))
+            print('{}{}'.format(G, child.match))
             ok += 1
         # fail
         except:
             print('\n{}Expected output of:\n{}{} is an {} number\n{}Actual output was:\n{}{}{}'
-            .format(BY, R, test_data[i][0], test_data[i][1], BY, R, app.before[19:], X))
-        if app.isalive:
-            app.kill(2)
+            .format(BY, R, test_data[i][0], test_data[i][1], BY, R, child.before[19:], X))
+        if child.isalive:
+            child.kill(2)
     if ok == 4:
         print('{}:) even_odd.py == passed{}'.format(BY, X))
     else:
@@ -502,22 +809,22 @@ def birth_month(file):
     data = [['1', 'January'], ['2', 'February'], ['3', 'March'], ['4', 'April'], ['5', 'May'], ['6', 'June'], ['7', 'July'],
             ['8', 'August'], ['9', 'September'], ['10', 'October'], ['11', 'November'], ['12', 'December']]
     for i in range(checks):
-        # creates the app instance
-        app = pexpect.spawnu('python3 {}'.format(file))     
-        app.sendline('{}'.format(data[i][0]))
+        # creates the child instance
+        child = pexpect.spawnu('python3 {}'.format(file))     
+        child.sendline('{}'.format(data[i][0]))
         # check the correctness of submission
         try:
-            app.expect_exact('You were born in {}.'.format(data[i][1]))
+            child.expect_exact('You were born in {}.'.format(data[i][1]))
             # pass
-            print('{}{}{}{}'.format(app.before, G, app.match, X))
+            print('{}{}{}{}'.format(child.before, G, child.match, X))
             ok += 1
         # fail
         except:
-            print(app.before[:53])
+            print(child.before[:53])
             print('{}:( Expected output of:\n{}You were born in {}.{}'.format(BY, R, data[i][1], X))
-            print('{}Actual output was:{}{}{}'.format(BY, R, app.before[53:len(app.before)-2], X))
-        if app.isalive:
-            app.kill(2)
+            print('{}Actual output was:{}{}{}'.format(BY, R, child.before[53:len(child.before)-2], X))
+        if child.isalive:
+            child.kill(2)
     if ok == checks:
         print('{}\n:) {} == passed{}'.format(BY, file, X))
     else:
@@ -530,22 +837,22 @@ def grade_book(file):
     checks = 5
     data = [['92', 'A'], ['84', 'B'], ['76', 'C'], ['65', 'D'], ['64', 'F']]
     for i in range(checks):
-        # creates the app instance
-        app = pexpect.spawnu('python3 {}'.format(file))     
-        app.sendline('{}'.format(data[i][0]))
+        # creates the child instance
+        child = pexpect.spawnu('python3 {}'.format(file))     
+        child.sendline('{}'.format(data[i][0]))
         # check the correctness of submission
         try:
-            app.expect_exact('{} is your letter grade.'.format(data[i][1]))
+            child.expect_exact('{} is your letter grade.'.format(data[i][1]))
             # pass
-            print('{}{}{}{}'.format(app.before, G, app.match, X))
+            print('{}{}{}{}'.format(child.before, G, child.match, X))
             ok += 1
         # fail
         except:
-            print(app.before[:27])
+            print(child.before[:27])
             print('{}Expected output of:\n{}{} is your letter grade.{}'.format(BY, R, data[i][1], X))
-            print('{}Actual output was:\n{}{}{}'.format(BY, R, app.before[29:len(app.before)-2], X))
-        if app.isalive:
-            app.kill(2)
+            print('{}Actual output was:\n{}{}{}'.format(BY, R, child.before[29:len(child.before)-2], X))
+        if child.isalive:
+            child.kill(2)
     if ok == checks:
         print('\n{}:) {} == passed{}'.format(BY, file, X))
     else:
@@ -558,24 +865,24 @@ def temperature(file):
     checks = 4
     data = [['C', '212', '100.0'], ['C', '32', '0.0'], ['F', '100', '212.0'], ['F', '0', '32.0']]
     for i in range(checks):
-        # creates the app instance
-        app = pexpect.spawnu('python3 {}'.format(file))     
-        app.sendline('{}'.format(data[i][0]))
-        app.sendline('{}'.format(data[i][1]))
+        # creates the child instance
+        child = pexpect.spawnu('python3 {}'.format(file))     
+        child.sendline('{}'.format(data[i][0]))
+        child.sendline('{}'.format(data[i][1]))
         # check the correctness of submission
         try:
-            app.expect_exact('{}'.format(data[i][2]))
+            child.expect_exact('{}'.format(data[i][2]))
             # pass
-            print('{}{}{}{}'.format(app.before, G, app.match, X))
+            print('{}{}{}{}'.format(child.before, G, child.match, X))
             ok += 1
         # fail
         except:
-            before = b_sanitize(app.before)
+            before = b_sanitize(child.before)
             print('{}\n{}'.format(before[0], before[1]))
             print('{}Expected output of:\n{}{}'.format(BY, R, data[i][2]))
             print('{}Actual output was:\n{}{}{}'.format(BY, R, before[2], X))
-        if app.isalive:
-            app.kill(2)
+        if child.isalive:
+            child.kill(2)
     if ok == checks:
         print('{}:) {} == passed{}'.format(BY, file, X))
     else:
@@ -588,23 +895,23 @@ def initials(file): # updated
     checks = 3
     data = [['albert percival wulfric brian dumbledore', 'APWBD'], ['ben franklin', 'BF'], ['broomhilda von shaft', 'BVS']]
     for i in range(checks):
-        # creates the app instance
-        app = pexpect.spawnu('python3 {}'.format(file))     
-        app.sendline('{}'.format(data[i][0]))
+        # creates the child instance
+        child = pexpect.spawnu('python3 {}'.format(file))     
+        child.sendline('{}'.format(data[i][0]))
         # check the correctness of submission
         try:
-            app.expect_exact('{}'.format(data[i][1]))
+            child.expect_exact('{}'.format(data[i][1]))
             # pass
-            print('{}{}{}{}'.format(app.before, G, app.match, X))
+            print('{}{}{}{}'.format(child.before, G, child.match, X))
             ok += 1
         # fail
         except:
-            index = str(app.before.encode('utf-8')).index(chr(92)) # finds first \r in app.before for slice
-            print('{}'.format(app.before[:index-1]))
+            index = str(child.before.encode('utf-8')).index(chr(92)) # finds first \r in child.before for slice
+            print('{}'.format(child.before[:index-1]))
             print('{}Expected output of:\n{}{}{}'.format(BY, R, data[i][1], X))
-            print('{}Actual output was:\n{}{}{}'.format(BY, R, app.before[index:len(app.before)-2], X))
-        if app.isalive:
-            app.kill(2)
+            print('{}Actual output was:\n{}{}{}'.format(BY, R, child.before[index:len(child.before)-2], X))
+        if child.isalive:
+            child.kill(2)
     if ok == checks:
         print('{}:) {} == passed{}'.format(BY, file, X))
     else:
@@ -630,22 +937,22 @@ def pyramid_stacks(file):
         data = [[3, '  /\\\r\n /  \\\r\n/____\\\r\n'], [6, '     /\\\r\n    /  \\\r\n   /    \\\r\n  /      \\\r\n /        \\\r\n/__________\\\r\n']]
     
     for i in range(checks):
-        # creates the app instance
-        app = pexpect.spawnu('python3 {}'.format(file))     
-        app.sendline('{}'.format(data[i][0]))
+        # creates the child instance
+        child = pexpect.spawnu('python3 {}'.format(file))     
+        child.sendline('{}'.format(data[i][0]))
         # check the correctness of submission
         try:
-            app.expect_exact('{}'.format(data[i][1]))
+            child.expect_exact('{}'.format(data[i][1]))
             # pass
-            print('{}{}{}{}'.format(app.before, G, app.match, X))
+            print('{}{}{}{}'.format(child.before, G, child.match, X))
             ok += 1
         # fail
         except:
-            print(app.before[:find_nth(app.before, '\r\n', 0)])
+            print(child.before[:find_nth(child.before, '\r\n', 0)])
             print('{}Expected output of:\n{}{}{}'.format(BY, R, data[i][1], X))
-            print('{}Acutal output was:\n{}{}{}'.format(BY, R, '\n'.join(b_sanitize(app.before)[1:]), X))
-        if app.isalive:
-            app.kill(2)
+            print('{}Acutal output was:\n{}{}{}'.format(BY, R, '\n'.join(b_sanitize(child.before)[1:]), X))
+        if child.isalive:
+            child.kill(2)
     if ok == checks:
         print('{}:) {} == passed{}'.format(BY, file, X))
     else:
@@ -656,32 +963,32 @@ def validate(file):
     """validate.py autograder 
     this needs to be gone over with test cases, still in beta
     """
-    # creates the app instance
-    app = pexpect.spawnu('python3 {}'.format(file))  
+    # creates the child instance
+    child = pexpect.spawnu('python3 {}'.format(file))  
     ok = 0
     data = [3, -6, - 8.9, '$', '\r', 'pickles', 'C']
     for i, each in enumerate(data):
-        app.sendline(str(data[i]))
+        child.sendline(str(data[i]))
         # checking alpha validation
         if each == 'C':
             # alpha passed
-            print('{}{}{}{}'.format(app.match, BG, each, X))
+            print('{}{}{}{}'.format(child.match, BG, each, X))
             print('{}Alpha validation passed!\n{}'.format(G, X))
             data.reverse()
             # checking for numeric validation
             for i, each in enumerate(data):
-                app.sendline(str(data[i]))
+                child.sendline(str(data[i]))
                 if type(each) != str and 0 < each < 10:
                     #numeric passed
-                    print('{}{}{}{}'.format(app.match, BG, each, X))
+                    print('{}{}{}{}'.format(child.match, BG, each, X))
                     print('{}Numeric validation passed!\n{}'.format(G, X))
                     print('{}:) {} == passed!{}'.format(BY, file, X))
                 # cycle numeric data test   
                 else:
                     try:
-                        app.expect_exact('Enter a positive number: ', timeout=1.5)
+                        child.expect_exact('Enter a positive number: ', timeout=1.5)
                         # pass
-                        print('{}{}'.format(app.match, data[i]))
+                        print('{}{}'.format(child.match, data[i]))
                     #fail
                     except Exception as e:
                         print('{}Numeric Validation Error\n\n{}{}{}'.format(BR, R, e, X))
@@ -690,32 +997,32 @@ def validate(file):
         # cycle alpha data test
         else:
             try:
-                app.expect_exact('Enter a letter: ', timeout=1.5)
+                child.expect_exact('Enter a letter: ', timeout=1.5)
                 # pass
-                print('{}{}'.format(app.match, data[i]))
+                print('{}{}'.format(child.match, data[i]))
             # fail
             except:
-                print('{}Alpha Validation Error\n\n{}{}{}'.format(BR, R, app.before, X))
+                print('{}Alpha Validation Error\n\n{}{}{}'.format(BR, R, child.before, X))
                 print('{}:( {} == failed!{}'.format(BY, file, X))
                 break
-    if app.isalive:
-            app.kill(2)
+    if child.isalive:
+            child.kill(2)
             
             
 def validate_functions(file):
     """validate_functions.py autograder """
-    # creates the app instance
-    app = pexpect.spawn('python3')
-    app.sendline('from validate_functions import *')
-    app.sendline('temp = test()')
-    app.sendline('print(temp)')
+    # creates the child instance
+    child = pexpect.spawn('python3')
+    child.sendline('from validate_functions import *')
+    child.sendline('temp = test()')
+    child.sendline('print(temp)')
     try:
-        app.expect('test printed')
+        child.expect('test printed')
         print('yes the test has passed')
     except Exception as e:
         print(e)
-    # print(app.before.decode("utf-8")) 
-    print(app.after.decode("utf-8"))           
+    # print(child.before.decode("utf-8")) 
+    print(child.after.decode("utf-8"))           
     '''
     pexpect.run('python3', timeout=3, events={'(?i)Python 3.4.3 (default, Nov 17 2016, 01:08:31)\n[GCC 4.8.4] on linux\nType "help",\
                                     "copyright", "credits" or "license" for more information.':'quit()'})
@@ -729,14 +1036,14 @@ def binary_search(file):
         start = 0
         end = 1000
         middle = 500
-        # creates the app instance
-        app = pexpect.spawnu('python3 {}'.format(file), timeout=5) 
+        # creates the child instance
+        child = pexpect.spawnu('python3 {}'.format(file), timeout=5) 
         print('Test run number {}\nGuess a number between 1 and 1000: 500'.format(i + 1))
         while True:
-            app.sendline(str(middle))
+            child.sendline(str(middle))
             # check the correctness of submission
             # print(start, end, middle)
-            index = app.expect_exact(['too low, try again; guess-->', 'too high, try again; guess-->',
+            index = child.expect_exact(['too low, try again; guess-->', 'too high, try again; guess-->',
                                     'You guessed it, the secret number was {}'.format(middle), pexpect.EOF, pexpect.TIMEOUT])
             # too low
             if index == 0:
@@ -752,7 +1059,7 @@ def binary_search(file):
             # number has been guessed                
             elif index == 2:
                 ok += 1
-                print('{}{}{}\n'.format(G, app.match, X))
+                print('{}{}{}\n'.format(G, child.match, X))
                 break 
             # exception raised
             elif index == 3 or 4:
@@ -817,7 +1124,7 @@ def main():
         try:
             # find and store the file
             student_file = findInSubdirectory(sys.argv[1])
-            app_selector(sys.argv[1], student_file)
+            child_selector(sys.argv[1], student_file)
             
         except IOError as e:
             print('{}ERROR\n{}{}{} doesn\'t exist or is incorrectly named'.format(BR, Y, sys.argv[1], X))
