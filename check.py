@@ -435,7 +435,7 @@ def ch2_9(file):
     v = random.randint(2, 80)
     child.sendline(str(t))
     child.sendline(str(v))
-    phrase = 'The wind chill index is {:.5f}'.format(35.74 + 0.6215 * t - 35.75 * v**0.16 + 0.4275 * t * v**0.16)
+    phrase = 'The wind chill index is {:.5f}'.format(35.74 + 0.621 * t - 35.75 * v**0.16 + 0.4275 * t * v**0.16)
     
     # check the correctness of the submission
     try:
