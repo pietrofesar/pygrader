@@ -28,6 +28,8 @@ import pexpect
 import sys
 import os
 import random
+import math
+
 from subprocess import Popen, PIPE, STDOUT
 
 
@@ -128,6 +130,20 @@ def child_selector(option, file):
         return ch2_14(file)
     if option == 'ch2_15.py':
         return ch2_15(file)
+    if option == 'ch3_1.py':
+        return ch3_1(file)
+    if option == 'ch3_2.py':
+        return ch3_2(file)
+    if option == 'ch3_4.py':
+        return ch3_4(file)
+    if option == 'ch3_5.py':
+        return ch3_5(file)
+    if option == 'ch3_6.py':
+        return ch3_6(file)
+    if option == 'ch3_7.py':
+        return ch3_7(file)
+    if option == 'ch3_11.py':
+        return ch3_11(file)
     if option == 'slices.py':
         return slices(file)
     if option == 'madlib.py':
@@ -543,8 +559,164 @@ def ch2_15(file):
         .format(BY, R, phrase, BY, R, child.before, BY, X))
     if child.isalive:
             child.kill(2)  
+            
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
+def ch3_1(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    s = round(random.uniform(15, 1), 1)
+    child.sendline(str(s))
+    side = 2 * s * math.sin((math.pi / 5))
+    area = (3 * math.sqrt(3) / 2) * math.pow(side, 2)
+    phrase = f"The area of the pentagon is {area:.2f}"
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n\n{}:) ch3_1.py == passed!{}'.format(BY, G, phrase, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n\n{}Actual output was:\n\n{}{}\n{}:( ch3_1.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)  
+
+def ch3_2(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    data = []
+    for i in range(4):
+        data.append(round(random.uniform(100, -100), 1))
+   
+    child.sendline(f"{data[0]}, {data[1]}")
+    child.sendline(f"{data[2]}, {data[3]}")
+    
+    for i, each in enumerate(data):
+        data[i] = math.radians(data[i])
+  
+    d = 6371.01 * math.acos(math.sin(data[0]) * math.sin(data[2]) + math.cos(data[0]) * math.cos(data[2]) * math.cos(data[1] - data[3]))
+
+    phrase = f"The distance between two points is {d:.4f} km"
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print(f"{BY}Output is correct!\n\n{G}{phrase}\n\n{BY}:) ch3_2.py == passed!{X}")
+    # fail
+    except:
+        print(f"{BY}Expected output of:\n\n{R}{phrase}\n\n{BY}Actual output was:\n\n{R}{child.before}\n{BY}:( ch3_2.py == failed{X}")
+    if child.isalive:
+            child.kill(2)  
+    
+    
+def ch3_4(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    s = round(random.uniform(15, 1), 1)
+
+    child.sendline(str(s))
+    area = (5 * s**2) / (4 * math.tan((math.pi / 5)))
+
+    phrase = f"The area of a pentagon is {area:.2f}"
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print(f"{BY}Output is correct!\n\n{G}{phrase}\n\n{BY}:) ch3_4.py == passed!{X}")
+    # fail
+    except:
+        print(f"{BY}Expected output of:\n\n{R}{phrase}\n\n{BY}Actual output was:\n\n{R}{child.before}\n{BY}:( ch3_4.py == failed{X}")
+    if child.isalive:
+            child.kill(2)  
+    
+
+def ch3_5(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    n = round(random.uniform(15, 1), 1)
+    s = round(random.uniform(15, 1), 1)
+
+    child.sendline(str(n))
+    child.sendline(str(s))
+
+    area = (n * s**2) / (4 * math.tan((math.pi / n)))
+
+    phrase = f"The area of a pentagon is {area:.2f}"
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print(f"{BY}Output is correct!\n\n{G}{phrase}\n\n{BY}:) ch3_5.py == passed!{X}")
+    # fail
+    except:
+        print(f"{BY}Expected output of:\n\n{R}{phrase}\n\n{BY}Actual output was:\n\n{R}{child.before}\n{BY}:( ch3_5.py == failed{X}")
+    if child.isalive:
+            child.kill(2)  
+
+
+def ch3_6(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    n = random.randint(0, 127)
+    
+    child.sendline(str(n))
+    
+    phrase = f"The character is {chr(n)}"
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print(f"{BY}Output is correct!\n\n{G}{phrase}\n\n{BY}:) ch3_6.py == passed!{X}")
+    # fail
+    except:
+        print(f"{BY}Expected output of:\n\n{R}{phrase}\n\n{BY}Actual output was:\n\n{R}{child.before}\n{BY}:( ch3_6.py == failed{X}")
+    if child.isalive:
+            child.kill(2)      
+            
+            
+def ch3_7(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    
+    child.expect(pexpect.EOF)
+    if child.before.strip() in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+        # pass
+        print(f"{BY}Output is correct!\n\n{G}{child.before}\n{BY}:) ch3_7.py == passed!{X}")
+    # fail
+    else:
+        print(f"{BY}Expected output of:\n\n{R}{'a capital letter'}\n{BY}Actual output was:\n\n{R}{child.before}\n{BY}:( ch3_7.py == failed{X}")
+    if child.isalive:
+            child.kill(2)      
+            
+
+def ch3_11(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    n = random.randint(0, 9999)
+    
+    child.sendline(str(n))
+    
+    thousands = n // 1000
+    remainder = n % 1000
+    hundreds = remainder // 100
+    remainder = n % 100
+    tens = remainder // 10
+    ones = remainder % 10
+    
+    phrase = f"{n} reversed is {ones}{tens}{hundreds}{thousands}"
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print(f"{BY}Output is correct!\n\n{G}{phrase}\n\n{BY}:) ch3_11.py == passed!{X}")
+    # fail
+    except:
+        print(f"{BY}Expected output of:\n\n{R}{phrase}\n\n{BY}Actual output was:\n\n{R}{child.before}\n{BY}:( ch3_11.py == failed{X}")
+    if child.isalive:
+            child.kill(2)      
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 def slices(file):
     """
     :param file: the python file passed as a command line argument 
