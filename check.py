@@ -29,6 +29,7 @@ import sys
 import os
 import random
 import math
+import time
 
 from subprocess import Popen, PIPE, STDOUT
 
@@ -130,6 +131,8 @@ def child_selector(option, file):
         return ch2_14(file)
     if option == 'ch2_15.py':
         return ch2_15(file)
+    if option == 'ch2_18.py':
+        return ch2_18(file)
     if option == 'ch3_1.py':
         return ch3_1(file)
     if option == 'ch3_2.py':
@@ -528,7 +531,7 @@ def ch2_14(file):
     s3 = ((data[4] - data[0])**2 + (data[5] - data[1])**2)**.5
     s = (s1 + s2 + s3) / 2
     area = (s * (s - s1) * (s - s2) * (s - s3))**.5
-    phrase = 'The area of the triangle is {:.1f}'.format(area)
+    phrase = 'The area of the triange is {:.1f}'.format(area)
     # check the correctness of the submission
     try:
         child.expect_exact(phrase)
@@ -560,6 +563,41 @@ def ch2_15(file):
     if child.isalive:
             child.kill(2)  
             
+
+def ch2_18(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    offset = random.randint(-10, -3)
+    child.sendline(str(offset))
+
+    currentTime = time.time()# get current time
+    # obtain the total seconds since midnight Jan 1, 1970 
+    totalSeconds = int(currentTime)
+    # get the current second
+    currentSecond = totalSeconds % 60
+    # get the total minutes
+    totalMinutes = totalSeconds // 60
+    # compute the current minute in the hour
+    currentMinute = totalMinutes % 60
+    # obtain the total hours
+    totalHours = totalMinutes // 60
+    # compute the current hour
+    currentHour = totalHours % 24
+   
+    phrase = f"Current time is {currentHour + offset}:{currentMinute}:{currentSecond}"
+    # check the correctness of the submission
+    try:
+        child.expect_exact(phrase)
+        # pass
+        print('{}Output is correct!\n\n{}{}\n\n{}:) ch2_18.py == passed!{}'.format(BY, G, phrase, BY, X))
+    # fail
+    except:
+        print('{}Expected output of:\n\n{}{}\n\n{}Actual output was:\n\n{}{}\n{}:( ch2_18.py == failed{}'
+        .format(BY, R, phrase, BY, R, child.before, BY, X))
+    if child.isalive:
+            child.kill(2)  
+            
+
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
 def ch3_1(file):
@@ -717,6 +755,12 @@ def ch3_11(file):
             child.kill(2)      
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+
+
+
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def slices(file):
     """
     :param file: the python file passed as a command line argument 
