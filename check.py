@@ -528,7 +528,7 @@ def ch2_14(file):
     s3 = ((data[4] - data[0])**2 + (data[5] - data[1])**2)**.5
     s = (s1 + s2 + s3) / 2
     area = (s * (s - s1) * (s - s2) * (s - s3))**.5
-    phrase = 'The area of the triange is {:.1f}'.format(area)
+    phrase = 'The area of the triangle is {:.1f}'.format(area)
     # check the correctness of the submission
     try:
         child.expect_exact(phrase)
