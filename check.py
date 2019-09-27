@@ -118,6 +118,7 @@ def child_selector(option, file):
         return ch1_5(file)
     if option == 'ch1_6.py':
         return ch1_6(file)
+        
     if option == 'ch2_1.py':
         return ch2_1(file)
     if option == 'ch2_2.py':
@@ -146,6 +147,13 @@ def child_selector(option, file):
         return ch2_15(file)
     if option == 'ch2_18.py':
         return ch2_18(file)
+    if option == 'ch2_19.py':
+        return ch2_19(file)
+    if option == 'ch2_20.py':
+        return ch2_20(file)
+    if option == 'ch2_21.py':
+        return ch2_21(file)
+        
     if option == 'ch3_1.py':
         return ch3_1(file)
     if option == 'ch3_2.py':
@@ -160,6 +168,7 @@ def child_selector(option, file):
         return ch3_7(file)
     if option == 'ch3_11.py':
         return ch3_11(file)
+        
     if option == 'slices.py':
         return slices(file)
     if option == 'madlib.py':
@@ -459,7 +468,58 @@ def ch2_18(file):
     assess(child, 'ch2_18.py', phrase, child.before)
     if child.isalive:
             child.kill(2)  
-            
+
+
+def ch2_19(file):
+    
+    investmentAmount = random.randint(1200, 50000)
+    annualInterestRate = round(random.uniform(1, 7), 2)
+    years = random.randint(1, 10)
+
+    child = pexpect.spawnu("python3 {}".format(file))
+    
+    child.sendline(str(investmentAmount))
+    child.sendline(str(annualInterestRate))
+    child.sendline(str(years))
+
+    annualInterestRate /= 100
+    monthlyInterestRate = annualInterestRate / 12
+    numberOfMonths = years * 12
+    futureInvestmentAmount = investmentAmount * (1 + monthlyInterestRate) ** numberOfMonths
+    phrase = f"Accumulated value is ${futureInvestmentAmount:.2f}"
+
+    assess(child, 'ch2_19.py', phrase, child.before)
+    if child.isalive:
+            child.kill(2)  
+
+
+def ch2_20(file):
+    
+    balance = random.randint(1200, 50000)
+    rate = round(random.uniform(1, 7), 2)
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(f"{balance}, {rate}")
+    interest = balance * (rate / 1200)
+    phrase = f"The interest is ${interest:.2f}"
+    
+    assess(child, 'ch2_20.py', phrase, child.before)
+    if child.isalive:
+            child.kill(2) 
+
+
+def ch2_21(file):
+    
+    principal = random.randint(100, 1000)
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(str(principal))
+    m1 = principal * (1 + .00417)
+    for i in range(5):
+        m1 = (principal + m1) * (1 + .00417)
+    phrase = f"After the sixth month, the account value is ${m1:.2f}"
+    
+    assess(child, 'ch2_21.py', phrase, child.before)
+    if child.isalive:
+            child.kill(2) 
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
