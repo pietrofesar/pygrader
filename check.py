@@ -652,7 +652,7 @@ def slices(file):
     child = pexpect.spawnu('python3 {}'.format(file))
     phrase = 'Be\r\nyourself\r\neveryone\r\nelse\r\nis\r\nalready\r\ntaken\r\n'
     # check the correctness of the submission
-    assess(child, "slices.py", phrase, child.before)
+    assess(child, "slices.py", phrase)
     if child.isalive:
             child.kill(2)
      
@@ -678,7 +678,7 @@ def madlib(file):
         # enters the words
         for each in words:
             child.sendline(each)
-        assess(child, "madlib.py", phrase, child.before)
+        assess(child, "madlib.py", phrase)
         if child.isalive:
             child.kill(2)
 
@@ -696,7 +696,7 @@ def greedy(file):
     for i, each in enumerate(data_in):
         child = pexpect.spawnu('python3 {}'.format(file))
         child.sendline(str(each))
-        assess(child, "greedy.py", phrase, child.before)
+        assess(child, "greedy.py", phrase)
         if child.isalive:
                 child.kill(2) 
 
