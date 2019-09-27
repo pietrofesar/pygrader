@@ -87,7 +87,7 @@ def b_sanitize(before):
         pass
     return parts
 
-def assess(child, pset, phrase, before):
+def assess(child, pset, phrase):
     """
     assesses the output of the calling function for correctness, reports the output
     """
@@ -95,7 +95,7 @@ def assess(child, pset, phrase, before):
     try:
         child.expect_exact(phrase)
         # pass
-        print(f"{BY}Output is correct!\n\n{G}{phrase}\n\n{BY}:) {pset} == passed!{X}")
+        print(f"{BY}Output is correct!\n\n{G}{child.before}{phrase}\n\n{BY}:) {pset} == passed!{X}")
     # fail
     except:
         print(f"{BY}Expected output of:\n\n{R}{phrase}\n\n{BY}Actual output was:\n\n{R}{child.before}\n{BY}:( {pset} == failed{X}")
@@ -212,7 +212,7 @@ def ch1_1(file):
     child = pexpect.spawnu('python3 {}'.format(file))
     phrase = 'Welcome to Python\r\nWelcome to Computer Science\r\nProgramming is fun\r\n'
     # check the correctness of the submission
-    assess(child, "ch_1.py", phrase, child.before)
+    assess(child, "ch_1.py", phrase)
     if child.isalive:
             child.kill(2)
     
@@ -221,7 +221,7 @@ def ch1_2(file):
     child = pexpect.spawnu('python3 {}'.format(file))
     phrase = 'FFFF  U    U  N    N\r\nF     U    U  NN   N\r\nFFFF  U    U  N N  N\r\nF     U    U  N  N N\r\nF      UUUU   N   NN\r\n'
     # check the correctness of the submission
-    assess(child, "ch1_2.py", phrase, child.before)
+    assess(child, "ch1_2.py", phrase)
     if child.isalive:
             child.kill(2)
 
@@ -230,7 +230,7 @@ def ch1_3(file):
     child = pexpect.spawnu('python3 {}'.format(file))
     phrase = ' ---------\r\n|  O   O  |\r\n|    U    |\r\n|  \___/  |\r\n|         |\r\n ---------'
     # check the correctness of the submission
-    assess(child, "ch1_3.py", phrase, child.before)
+    assess(child, "ch1_3.py", phrase)
     if child.isalive:
             child.kill(2)
 
@@ -241,7 +241,7 @@ def ch1_4(file):
                 '{0:<7d}{1:<7d}{2:d}\r\n'.format(2, 4, 16) + '{0:<7d}{1:<7d}{2:d}\r\n'.format(3, 9, 27) + \
                 '{0:<7d}{1:<7d}{2:d}\r\n'.format(4, 16, 64)
     # check the correctness of the submission
-    assess(child, "ch1_4.py", phrase, child.before)
+    assess(child, "ch1_4.py", phrase)
     if child.isalive:
             child.kill(2)
  
@@ -250,7 +250,7 @@ def ch1_5(file):
     child = pexpect.spawnu('python3 {}'.format(file))
     phrase = str((9.5 *4.5-2.5*3)/(45.5-3.5))
     # check the correctness of the submission
-    assess(child, "ch1_5.py", phrase, child.before)
+    assess(child, "ch1_5.py", phrase)
     if child.isalive:
             child.kill(2)
             
@@ -259,7 +259,7 @@ def ch1_6(file):
     child = pexpect.spawnu('python3 {}'.format(file))
     phrase = 'area is {0:.2f}\r\nperimeter is {1:.2f}\r\n'.format(4.5 * 7.9, (2 * 4.5 + 2 * 7.9))
     # check the correctness of the submission
-    assess(child, "ch1_6.py", phrase, child.before)
+    assess(child, "ch1_6.py", phrase)
     if child.isalive:
             child.kill(2)
 
@@ -271,7 +271,7 @@ def ch2_1(file):
     phrase = '24 Celsius is 75.2 Fahrenheit'
     child.sendline('24')
     # check the correctness of the submission
-    assess(child, "ch2_1.py", phrase, child.before)
+    assess(child, "ch2_1.py", phrase)
     if child.isalive:
             child.kill(2)
 
@@ -285,7 +285,7 @@ def ch2_2(file):
     child.sendline('{}, {}'.format(radius, length))
     phrase = 'The area is {}\r\nThe volume is {}'.format(PI * radius**2, PI * radius**2 * length)
     
-    assess(child, "ch2_2.py", phrase, child.before)
+    assess(child, "ch2_2.py", phrase)
     if child.isalive:
             child.kill(2)
  
@@ -297,7 +297,7 @@ def ch2_3(file):
     child.sendline(str(feet))
     phrase = '{} feet is {} meters'.format(feet, feet * .305)
     
-    assess(child, "ch2_3.py", phrase, child.before)
+    assess(child, "ch2_3.py", phrase)
     if child.isalive:
             child.kill(2)
             
@@ -309,7 +309,7 @@ def ch2_4(file):
     child.sendline(str(pounds))
     phrase = '{} pounds is {} kilograms'.format(pounds, pounds * .454)
     
-    assess(child, "ch2_4.py", phrase, child.before)
+    assess(child, "ch2_4.py", phrase)
     if child.isalive:
             child.kill(2)    
 
@@ -322,7 +322,7 @@ def ch2_5(file):
     child.sendline('{}, {}'.format(subtotal, rate))
     phrase = 'The gratuity is {0:.2f} and the total is {1:.2f}'.format(subtotal * (rate/100), subtotal * (1 + (rate/100)))
     
-    assess(child, "ch2_5.py", phrase, child.before)
+    assess(child, "ch2_5.py", phrase)
     if child.isalive:
             child.kill(2) 
             
@@ -335,7 +335,7 @@ def ch2_6(file):
     phrase = 'The sum of the digits is {}'.format((num % 10) + ((num // 10) % 10) + ((num // 100) % 10))
     
     # check the correctness of the submission
-    assess(child, "ch2_6.py", phrase, child.before)
+    assess(child, "ch2_6.py", phrase)
     if child.isalive:
             child.kill(2) 
             
@@ -347,7 +347,7 @@ def ch2_7(file):
     child.sendline(str(minutes))
     phrase = '{} minutes is approximately {} years and {} days'.format(minutes, minutes // 525600, (minutes % 525600) // 1440)
     
-    assess(child, "ch2_7.py", phrase, child.before)
+    assess(child, "ch2_7.py", phrase)
     if child.isalive:
             child.kill(2) 
 
@@ -360,7 +360,7 @@ def ch2_8(file):
         child.sendline(str(each))
     phrase = 'The energy needed is {:.1f}'.format(data[0] * (data[2] - data[1]) * 4184)
     
-    assess(child, "ch2_8.py", phrase, child.before)
+    assess(child, "ch2_8.py", phrase)
     if child.isalive:
             child.kill(2) 
             
@@ -374,7 +374,7 @@ def ch2_9(file):
     child.sendline(str(v))
     phrase = 'The wind chill index is {:.5f}'.format(35.74 + 0.621 * t - 35.75 * v**0.16 + 0.4275 * t * v**0.16)
     
-    assess(child, "ch2_9.py", phrase, child.before)
+    assess(child, "ch2_9.py", phrase)
     if child.isalive:
             child.kill(2) 
 
@@ -387,7 +387,7 @@ def ch2_10(file):
     child.sendline('{}, {}'.format(v, a))
     phrase = 'The minimum runway length for this airplane is {:.3f} meters'.format((v**2)/(2*a))
     
-    assess(child, "ch2_10.py", phrase, child.before)
+    assess(child, "ch2_10.py", phrase)
     if child.isalive:
             child.kill(2) 
 
@@ -408,7 +408,7 @@ def ch2_13(file):
     data.append(n)
     phrase = '{}\r\n{}\r\n{}\r\n{}'.format(data[0], data[1], data[2], data[3])
     
-    assess(child, "ch2_13.py", phrase, child.before)
+    assess(child, "ch2_13.py", phrase)
     if child.isalive:
             child.kill(2) 
 
@@ -426,7 +426,7 @@ def ch2_14(file):
     s = (s1 + s2 + s3) / 2
     area = (s * (s - s1) * (s - s2) * (s - s3))**.5
     phrase = 'The area of the triangle is {:.1f}'.format(area)
-    assess(child, "ch2_14.py", phrase, child.before)
+    assess(child, "ch2_14.py", phrase)
     if child.isalive:
             child.kill(2)  
             
@@ -437,7 +437,7 @@ def ch2_15(file):
     s = round(random.uniform(15, 5), 1)
     child.sendline(str(s))
     phrase = 'The area of the hexagon is {0:.2f}'.format(((3*3**.5) / 2) * s**2)
-    assess(child, "ch2_15.py", phrase, child.before)
+    assess(child, "ch2_15.py", phrase)
     if child.isalive:
             child.kill(2)  
             
@@ -465,7 +465,8 @@ def ch2_18(file):
    
     phrase = f"Current time is {currentHour + offset}:{currentMinute}:{currentSecond}"
     
-    assess(child, 'ch2_18.py', phrase, child.before)
+    assess(child, 'ch2_18.py', phrase)
+    print(child.before)
     if child.isalive:
             child.kill(2)  
 
@@ -488,7 +489,7 @@ def ch2_19(file):
     futureInvestmentAmount = investmentAmount * (1 + monthlyInterestRate) ** numberOfMonths
     phrase = f"Accumulated value is ${futureInvestmentAmount:.2f}"
 
-    assess(child, 'ch2_19.py', phrase, child.before)
+    assess(child, 'ch2_19.py', phrase)
     if child.isalive:
             child.kill(2)  
 
@@ -502,7 +503,7 @@ def ch2_20(file):
     interest = balance * (rate / 1200)
     phrase = f"The interest is ${interest:.2f}"
     
-    assess(child, 'ch2_20.py', phrase, child.before)
+    assess(child, 'ch2_20.py', phrase)
     if child.isalive:
             child.kill(2) 
 
@@ -517,7 +518,7 @@ def ch2_21(file):
         m1 = (principal + m1) * (1 + .00417)
     phrase = f"After the sixth month, the account value is ${m1:.2f}"
     
-    assess(child, 'ch2_21.py', phrase, child.before)
+    assess(child, 'ch2_21.py', phrase)
     if child.isalive:
             child.kill(2) 
 
@@ -531,7 +532,7 @@ def ch3_1(file):
     side = 2 * s * math.sin((math.pi / 5))
     area = (3 * math.sqrt(3) / 2) * math.pow(side, 2)
     phrase = f"The area of the pentagon is {area:.2f}"
-    assess(child, "ch3_1.py", phrase, child.before)
+    assess(child, "ch3_1.py", phrase)
     if child.isalive:
             child.kill(2)  
 
@@ -551,7 +552,7 @@ def ch3_2(file):
     d = 6371.01 * math.acos(math.sin(data[0]) * math.sin(data[2]) + math.cos(data[0]) * math.cos(data[2]) * math.cos(data[1] - data[3]))
 
     phrase = f"The distance between two points is {d:.4f} km"
-    assess(child, "ch3_2.py", phrase, child.before)
+    assess(child, "ch3_2.py", phrase)
     if child.isalive:
             child.kill(2)  
     
@@ -565,7 +566,7 @@ def ch3_4(file):
     area = (5 * s**2) / (4 * math.tan((math.pi / 5)))
 
     phrase = f"The area of a pentagon is {area:.2f}"
-    assess(child, "ch3_4.py", phrase, child.before)
+    assess(child, "ch3_4.py", phrase)
     if child.isalive:
             child.kill(2)  
     
@@ -582,7 +583,7 @@ def ch3_5(file):
     area = (n * s**2) / (4 * math.tan((math.pi / n)))
 
     phrase = f"The area of a pentagon is {area:.2f}"
-    assess(child, "ch3_5.py", phrase, child.before)
+    assess(child, "ch3_5.py", phrase)
     if child.isalive:
             child.kill(2)  
 
@@ -595,7 +596,7 @@ def ch3_6(file):
     child.sendline(str(n))
     
     phrase = f"The character is {chr(n)}"
-    assess(child, "ch3_6.py", phrase, child.before)
+    assess(child, "ch3_6.py", phrase)
     if child.isalive:
             child.kill(2)      
             
@@ -630,7 +631,7 @@ def ch3_11(file):
     ones = remainder % 10
     
     phrase = f"{n} reversed is {ones}{tens}{hundreds}{thousands}"
-    assess(child, "ch3_11.py", phrase, child.before)
+    assess(child, "ch3_11.py", phrase)
     if child.isalive:
             child.kill(2)      
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
