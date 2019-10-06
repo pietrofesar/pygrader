@@ -87,7 +87,7 @@ def b_sanitize(before):
         pass
     return parts
 
-def assess(child, pset, phrase):
+def assess(child, pset, phrase, read=""):
     """
     assesses the output of the calling function for correctness, reports the output
     """
@@ -95,10 +95,10 @@ def assess(child, pset, phrase):
     try:
         child.expect_exact(phrase)
         # pass
-        print(f"{BY}Output is correct!\n\n{G}{child.before}{phrase}\n\n{BY}:) {pset} == passed!{X}")
+        print(f"{BY}Output is correct!\n\n{G}{read}{child.before}{phrase}\n\n{BY}:) {pset} == passed!{X}")
     # fail
     except:
-        print(f"{BY}Expected output of:\n\n{R}{phrase}\n\n{BY}Actual output was:\n\n{R}{child.before}\n{BY}:( {pset} == failed{X}")
+        print(f"{BY}Expected output of:\n\n{R}{phrase}\n\n{BY}Actual output was:\n\n{R}{read}{child.before}\n{BY}:( {pset} == failed{X}")
    
 
 def child_selector(option, file):
@@ -168,7 +168,26 @@ def child_selector(option, file):
         return ch3_7(file)
     if option == 'ch3_11.py':
         return ch3_11(file)
-        
+    
+    if option == 'ch4_1.py':
+        return ch4_1(file)
+    if option == 'ch4_2.py':
+        return ch4_2(file)
+    if option == 'ch4_3.py':
+        return ch4_3(file)
+    if option == 'ch4_4.py':
+        return ch4_4(file)
+    if option == 'ch4_5.py':
+        return ch4_5(file)
+    if option == 'ch4_6.py':
+        return ch4_6(file)
+    if option == 'ch4_7.py':
+        return ch4_7(file)
+    if option == 'ch4_8.py':
+        return ch4_8(file)
+    if option == 'ch4_9.py':
+        return ch4_9(file)    
+    
     if option == 'slices.py':
         return slices(file)
     if option == 'madlib.py':
@@ -634,13 +653,315 @@ def ch3_11(file):
     assess(child, "ch3_11.py", phrase)
     if child.isalive:
             child.kill(2)      
+            
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+def ch4_1(file):
+    
+    def genCoefficients():
+        while True:
+            a = random.randint(-5, 5)
+            b = random.randint(-5, 5)
+            c = random.randint(-5, 5)
+            d = b**2 - 4 * a * c
+            if 2 * a == 0:
+                continue
+            else:
+                return [a, b, c, d]
+
+    # test case 1: d < 0, no roots
+    data = genCoefficients()
+    while data[3] >= 0:
+        data = genCoefficients()
+    phrase = "The equation has no real roots"
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(f"{data[0]}, {data[1]}, {data[2]}")
+   
+    assess(child, "ch4_1.py case 1", phrase)
+    if child.isalive:
+            child.kill(2)       
+    
+    # test case 2: d == 0, one root
+    while data[3] != 0:
+        data = genCoefficients()
+    singleRoot = -data[1] / (2 * data[0])
+    phrase = f"The root is {singleRoot:.2f}"
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(f"{data[0]}, {data[1]}, {data[2]}")
+   
+    assess(child, "ch4_1.py case 2", phrase)
+    if child.isalive:
+            child.kill(2) 
+    
+    # test case 3: d > 0, two roots
+    while data[3] <= 0:
+        data = genCoefficients()
+    pRoot = (-data[1] + math.pow(data[3], .5)) / (2 * data[0])
+    nRoot = (-data[1] - math.pow(data[3], .5)) / (2 * data[0])
+    phrase = f"The roots are {pRoot:.2f} and {nRoot:.2f}"
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(f"{data[0]}, {data[1]}, {data[2]}")
+   
+    assess(child, "ch4_1.py case 3", phrase)
+    if child.isalive:
+            child.kill(2) 
 
 
+def ch4_2(file):
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    message = child.read_nonblocking(size=20, timeout=-1).strip()
+    data = []
+    for i in message:
+        if i.isdigit():
+            data.append(int(i))
+    total = data[0] + data[1] + data[2]
+    child.sendline(str(total))
+    phrase = f"{data[0]} + {data[1]} + {data[2]} = {total} is True"
+    assess(child, "ch4_2.py: case 1", phrase, f'{message} ')
+    child.terminate()
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    message = child.read_nonblocking(size=20, timeout=-1).strip()
+    data = []
+    for i in message:
+        if i.isdigit():
+            data.append(int(i))
+    total = data[0] + data[1] + data[2] + random.randint(1, 5)
+    child.sendline(str(total))
+    phrase = f"{data[0]} + {data[1]} + {data[2]} = {total} is False"
+    assess(child, "ch4_2.py: case 2", phrase, f'{message} ')
+    child.terminate()
+    
+    
+def ch4_3(file):
+    
+    def genCoefficients():
+        data = []
+        for i in range(6):
+            data.append(round(random.randint(-15, 15), 1))
+        return data
+    
+    # case 1
+    data = genCoefficients()
+    while data[0] * data[3] - data[1] * data[2] == 0:
+        data = genCoefficients()
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(f"{data[0]}, {data[1]}, {data[2]}, {data[3]}, {data[4]}, {data[5]}")
+    x = (data[4] * data[3] - data[1] * data[5]) / (data[0] * data[3] - data[1] * data[2])
+    y = (data[0] * data[5] - data[4] * data[2]) / (data[0] * data[3] - data[1] * data[2])
+    phrase = f"x is {x:.1f} and y is {y:.1f}"
+    assess(child, "ch4_3.py: case 1", phrase)
+    child.terminate()
+    
+    # case 2
+    data = genCoefficients()
+    while data[0] * data[3] - data[1] * data[2] != 0:
+        data = genCoefficients()
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(f"{data[0]}, {data[1]}, {data[2]}, {data[3]}, {data[4]}, {data[5]}")
+    phrase = "The equation has no solution"
+    assess(child, "ch4_3.py: case 2", phrase)
+    child.terminate()
+    
+
+def ch4_4(file):
+    
+    def getOperands(message):
+        data = message.split(" ")
+        i = 0
+        while i < len(data):
+            try:
+                data[i] = int(data[i])
+                i += 1
+            except:
+                if data[i][0].isdigit():
+                    if not data[i][-1].isdigit():
+                        data[i] = int(data[i][0:-1])
+                    i += 1  
+                else:
+                    data.remove(data[i]) 
+        return data
+                
+    child = pexpect.spawnu("python3 {}".format(file))
+    message = child.read_nonblocking(size=15, timeout=-1).strip()
+    data = getOperands(message)
+            
+    total = data[0] + data[1]
+    child.sendline(str(total))
+    phrase = f"{data[0]} + {data[1]} = {total} is True"
+    assess(child, "ch4_4 .py: case 1", phrase, message)
+    child.terminate()
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    message = child.read_nonblocking(size=15, timeout=-1).strip()
+    data = getOperands(message)
+
+    total = data[0] + data[1] + random.randint(-5, 5)
+    child.sendline(str(total))
+    phrase = f"{data[0]} + {data[1]} = {total} is False"
+    assess(child, "ch4_4.py: case 2", phrase, message)
+    child.terminate()
+    
+
+def ch4_5(file):
+    for i in range(3):
+        days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        day = random.randint(0, 6)
+        f = random.randint(2, 6)
+        future = (day + f) % 7
+        child = pexpect.spawnu("python3 {}".format(file))
+        child.sendline(str(day))
+        child.sendline(str(f))
+        
+        phrase = f'Today is {days[day]} and the future day is {days[future]}'
+        assess(child, f'ch4_5.py try {i + 1}', phrase)
+        child.terminate()
+        
+
+def ch4_6(file):
+    weight = random.randint(150, 230)
+    feet = random.randint(4, 6)
+    inch = random.randint(0, 11)
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(str(weight))
+    child.sendline(str(feet))
+    child.sendline(str(inch))
+
+    height = (feet * 12) + inch
+
+    KILOGRAMS_PER_POUND = 0.45359237 # Constant
+    METERS_PER_INCH = 0.0254 # Constant
+    
+    # Compute BMI
+    weightInKilograms = weight * KILOGRAMS_PER_POUND
+    heightInMeters = height * METERS_PER_INCH
+    bmi = weightInKilograms / (heightInMeters * heightInMeters)
+    
+    # Display result
+    s1 = f'BMI is {bmi:.2f}'
+    if bmi < 18.5:
+        s2 = 'Underweight'
+    elif bmi < 25:
+        s2 = 'Normal'
+    elif bmi < 30:
+        s2 = 'Overweight'
+    else:
+        s2 = 'Obese'
+    phrase = f'{s1}\r\n{s2}'
+    assess(child, f'ch4_6.py', phrase)
+    child.terminate()
+    
+
+def ch4_7(file):
+
+    def getMoney(amount):
+        remainingAmount = int(amount * 100)
+        oneDollars = remainingAmount // 100
+        remainingAmount = remainingAmount % 100
+        quarters = remainingAmount // 25
+        remainingAmount = remainingAmount % 25
+        dimes = remainingAmount // 10
+        remainingAmount = remainingAmount % 10
+        nickels = remainingAmount // 5
+        pennies = remainingAmount % 5
+        return [oneDollars, quarters, dimes, nickels, pennies]
 
 
+    def getResult(amount, money):
+        result = f'Your amount ${amount} consists of\r\n'
+        if money[0] >= 1:
+            if money[0] == 1:
+                result += f'\t{money[0]} dollar\r\n'
+            else:
+                result += f'\t{money[0]} oneDollars\r\n'
+        if money[1] >= 1:
+            if money[1] == 1:
+                result += f'\t{money[1]} quarter\r\n'
+            else:
+                result += f'\t{money[1]} quarters\r\n'
+        if money[2] >= 1:
+            if money[2] == 1:
+                result += f'\t{money[2]} dime\r\n'
+            else:
+                result += f'\t{money[2]} dimes\r\n'
+        if money[3] >= 1:
+            if money[3] == 1:
+                result += f'\t{money[3]} nickel\r\n'
+            else:
+                result += f'\t{money[3]} nickels\r\n'
+        if money[4] >= 1:
+            if money[4] == 1:
+                result += f'\t{money[4]} penny\r\n'
+            else:
+                result += f'\t{money[4]} pennies\r\n'
+        return result
+        
+    amount = [0.13, 1.41, 4.69]
+    # amount = round(random.uniform(0, 6), 2)
+    
+    for i in range(3):
+        child = pexpect.spawnu("python3 {}".format(file))
+        child.sendline(str(amount[i]))
+        money = getMoney(amount[i])
+        phrase = getResult(amount[i], money)
+        assess(child, f'ch4_7.py case {i + 2}', phrase)
+        child.terminate()
+    
+def ch4_8(file):
+    
+    data = [[-8,-5,-2], [8,9,7], [15,13,14]]
+    for i in range(3):
+        child = pexpect.spawnu("python3 {}".format(file))
+        child.sendline(f'{data[i][0]}, {data[i][1]}, {data[i][2]}')
+        greatest = max(data[i])
+        lowest = min(data[i])
+        for j in range(3):
+            if data[i][j] != greatest and data[i][j] != lowest:
+                middle = data[i][j]
+            
+        phrase = f'max: {greatest} middle: {middle} min: {lowest}'
+        assess(child, f'ch4_8.py case {i + 1}', phrase)
+        child.terminate()
 
+
+def ch4_9(file):
+    
+    def getData():
+        w1 = random.randint(25, 100)
+        p1 = round(random.uniform(10, 30),2)
+        w2 = random.randint(25, 100)
+        p2 = round(random.uniform(10, 30),2)
+        return [w1, p1, w2, p2]
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    data = getData()
+    while data[0]/data[1] > data[2]/data[3]:
+        data = getData()
+    child.sendline(f'{data[0]}, {data[1]}')
+    child.sendline(f'{data[2]}, {data[3]}')
+    
+    phrase = 'Package 1 has the better price.'
+    assess(child, f'ch4_9.py case 1', phrase)
+    child.terminate()
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    while data[0]/data[1] < data[2]/data[3]:
+        data = getData()
+    child.sendline(f'{data[0]}, {data[1]}')
+    child.sendline(f'{data[2]}, {data[3]}')
+    
+    phrase = 'Package 2 has the better price.'
+    assess(child, f'ch4_9.py case 2', phrase)
+    child.terminate()
+    
+    
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def slices(file):
     """
