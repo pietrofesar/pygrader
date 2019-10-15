@@ -878,9 +878,9 @@ def ch4_7(file):
         result = f'Your amount ${amount} consists of\r\n'
         if money[0] >= 1:
             if money[0] == 1:
-                result += f'\t{money[0]} dollars\r\n'
+                result += f'\t{money[0]} dollar\r\n'
             else:
-                result += f'\t{money[0]} oneDollar\r\n'
+                result += f'\t{money[0]} dollars\r\n'
         if money[1] >= 1:
             if money[1] == 1:
                 result += f'\t{money[1]} quarter\r\n'
@@ -935,9 +935,9 @@ def ch4_9(file):
     
     def getData():
         w1 = random.randint(25, 100)
-        p1 = round(random.uniform(10, 30),2)
+        p1 = round(random.uniform(30, 10),2)
         w2 = random.randint(25, 100)
-        p2 = round(random.uniform(10, 30),2)
+        p2 = round(random.uniform(30, 10),2)
         return [w1, p1, w2, p2]
     
     child = pexpect.spawnu("python3 {}".format(file))
