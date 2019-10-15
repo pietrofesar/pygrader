@@ -878,9 +878,9 @@ def ch4_7(file):
         result = f'Your amount ${amount} consists of\r\n'
         if money[0] >= 1:
             if money[0] == 1:
-                result += f'\t{money[0]} dollar\r\n'
+                result += f'\t{money[0]} dollars\r\n'
             else:
-                result += f'\t{money[0]} oneDollars\r\n'
+                result += f'\t{money[0]} oneDollar\r\n'
         if money[1] >= 1:
             if money[1] == 1:
                 result += f'\t{money[1]} quarter\r\n'
