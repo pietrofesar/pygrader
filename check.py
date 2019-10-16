@@ -93,7 +93,7 @@ def assess(child, pset, phrase, read=""):
     """
     # check the correctness of the submission
     try:
-        child.expect(phrase)
+        child.expect_exact(phrase)
         # pass
         print(f"{BY}Output is correct!\n\n{G}{read}{child.before}{phrase}\n\n{BY}:) {pset} == passed!{X}")
     # fail
