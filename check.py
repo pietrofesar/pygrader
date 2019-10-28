@@ -1473,7 +1473,6 @@ def lottery(file):
     def createTest(file):
         child = pexpect.spawnu("python3 {}".format(file))
         secret = int(child.read_nonblocking(size=2, timeout=-1).strip())
-        print(secret)
         secret1 = secret // 10 # isolate first digit
         secret2 = secret % 10 # isolate second digit
         return [child, secret, secret1, secret2]
@@ -1482,12 +1481,14 @@ def lottery(file):
     def case1(data):
         data[0].sendline(str(data[1]))
         phrase = 'You won $10000'
+        print(f'Secret is {data[1]}')
         assess(data[0], "lottery.py Case 1", phrase)
     
             
     def case2(data):
         data[0].sendline(f'{data[3]}{data[2]}')
         phrase = 'You won $3000'
+        print(f'Secret is {data[1]}')
         assess(data[0], "lottery.py Case 2", phrase)
     
     
@@ -1500,6 +1501,7 @@ def lottery(file):
                 continue
         data[0].sendline(f'{data[3]}{noMatch}')
         phrase = 'You won $1000'
+        print(f'Secret is {data[1]}')
         assess(data[0], "lottery.py Case 3", phrase)
     
     
@@ -1512,6 +1514,7 @@ def lottery(file):
                 continue
         data[0].sendline(f'{noMatch}{noMatch}')
         phrase = 'You won $0'
+        print(f'Secret is {data[1]}')
         assess(data[0], "lottery.py Case 4", phrase)
 
     
