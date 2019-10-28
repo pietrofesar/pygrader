@@ -223,8 +223,8 @@ def child_selector(option, file):
         return validate(file)
     if option == 'validate_functions.py':
         return validate_functions(form)
-    if option == 'quad_form.py':
-        return quad_form_test()
+    if option == 'lottery.py':
+        return lottery(file)
 
 #++++++++++++++++++++++++++++ chapter 1 ++++++++++++++++++++++++
 def ch1_1(file):
@@ -1468,47 +1468,57 @@ def binary_search(file):
         print('{}:( {} == failed{}'.format(BY, file, X))
 
 
-def quad_form_test():
-        
-    def quad_form_unit_test():
-        
-        ok = True
-        zero = ('no', 1, -3, 4, 0, [])
-        one = ('one', -4, 12, -9, 1, [1.5])
-        two = ('two', 2, -11, 5, 2, [5.0, 0.5])
-        data = (zero, one , two)
-        
-        for i, each in enumerate(data):
-            t = quad_form(data[i][1], data[i][2], data[i][3])
-            print('{}Testing for {} real root/s{}'.format(BY, data[i][0], X))
-            print('quad_form({}, {}, {}) returns {}'.format(data[i][1], data[i][2], data[i][3], t))
-        
-            if len(t) == data[i][4]:
-                print('{}Correct number of return values{}'.format(G, X))
-                if t == data[i][5] or data[i][5].reverse:
-                    print('{}root/s are correct{}'.format(G, X))
-                else:
-                    print('{}root/s are wrong{}'.format(G, X))
-                    ok == False
-            else:
-                print('{}Wrong number of return values{}'.format(R, X))
-                ok == False
-            if type(t) == list:
-                print('{}data type correct{}'.format(G, X))
-            else:
-                print('{}data type wrong{}'.format(R, X))
-                ok == False
-        if ok:
-            print('{}:) quad_form == passed!{}'.format(BY, X))
-        else:
-            print('{}:( quad_from == failed{}'.format(BY, X))
+def lottery(file):
+
+    def createTest(file):
+        child = pexpect.spawnu("python3 {}".format(file))
+        secret = int(child.read_nonblocking(size=2, timeout=-1).strip())
+        print(secret)
+        secret1 = secret // 10 # isolate first digit
+        secret2 = secret % 10 # isolate second digit
+        return [child, secret, secret1, secret2]
     
-    p = Popen(['python3'], stdout=PIPE, stdin=PIPE, stderr=STDOUT)    
-    out = p.communicate(input=b'from quad_form import quad_form\nfrom helpers import quad_form_unit_test\nquad_form_unit_test()\n')[0]
-    print(out.decode())
+    
+    def case1(data):
+        data[0].sendline(str(data[1]))
+        phrase = 'You won $10000'
+        assess(data[0], "lottery.py Case 1", phrase)
+    
+            
+    def case2(data):
+        data[0].sendline(f'{data[3]}{data[2]}')
+        phrase = 'You won $3000'
+        assess(data[0], "lottery.py Case 2", phrase)
+    
+    
+    def case3(data):
+        while True:
+            noMatch = random.randint(1,9)
+            if noMatch != data[2] and noMatch != data[3]:
+                break
+            else:
+                continue
+        data[0].sendline(f'{data[3]}{noMatch}')
+        phrase = 'You won $1000'
+        assess(data[0], "lottery.py Case 3", phrase)
+    
+    
+    def case4(data):
+        while True:
+            noMatch = random.randint(1,9)
+            if noMatch != data[2] and noMatch != data[3]:
+                break
+            else:
+                continue
+        data[0].sendline(f'{noMatch}{noMatch}')
+        phrase = 'You won $0'
+        assess(data[0], "lottery.py Case 4", phrase)
 
-
-
+    
+    case1(createTest(file))
+    case2(createTest(file))
+    case3(createTest(file))
+    case4(createTest(file))
 
 
 def main():
