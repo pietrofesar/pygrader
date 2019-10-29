@@ -100,6 +100,17 @@ def assess(child, pset, phrase, read=""):
     except:
         print(f"{BY}Expected output of:\n\n{R}{phrase}\n\n{BY}Actual output was:\n\n{R}{read}{child.before}\n{BY}:( {pset} == failed{X}")
    
+   
+def getNumbers(string):
+    numbers = []
+    for each in string.split():
+        if '?' in each:
+            numbers.append(int(each[0:each.index('?')]))
+        else:
+            if each.isdigit():
+                numbers.append(int(each))
+    return numbers
+
 
 def child_selector(option, file):
     """ input is name of program to grade, output is call to relevant autograde function
@@ -190,6 +201,20 @@ def child_selector(option, file):
     
     if option == 'ch5_1.py':
         return ch5_1(file)
+    if option == 'ch5_2.py':
+        return ch5_2(file)
+    if option == 'ch5_3.py':
+        return ch5_3(file)
+    if option == 'ch5_4.py':
+        return ch5_4(file)
+    if option == 'ch5_5.py':
+        return ch5_5(file)
+    if option == 'ch5_6.py':
+        return ch5_6(file)
+    if option == 'ch5_7.py':
+        return ch5_7(file)
+    if option == 'ch5_8.py':
+        return ch5_8(file)
     
     if option == 'slices.py':
         return slices(file)
@@ -966,6 +991,7 @@ def ch4_9(file):
 
 
 #+++++++++++++++++++++++++++++ Chapter 5 +++++++++++++++++++++++++++++++++++++++
+
 def ch5_1(file):
     # generate integers for test case 1
     integers = []
@@ -1016,7 +1042,149 @@ def ch5_1(file):
     # test the output
     assess(child, f'ch5_1.py Case 2', phrase)
     child.terminate()
+
+
+def ch5_2(file):
+    DELAY = .1
+    CORRECT_LENGTH = 12
+    WRONG_LENGTH = 26
+    print(f'{BY}!!!+++Time may be off and cause a failure+++!!!{X}')
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    start = time.time()
+    for i in range(10):
+        # capture child out
+        expression = child.read_nonblocking(size=18, timeout=-1).strip()
+        # extract numbers from child out
+        numbers = getNumbers(expression)
+        # determines if the response is 1 or 2 characters
+        if len(str(sum(numbers))) == 1:
+            size = 1
+        else:
+            size = 2
+        print(f'{P}{expression} {B}{str(sum(numbers))}{X}')
+        # sends the correct response
+        child.sendline(str(sum(numbers)))
+        # delays so that all text is present before flushing
+        time.sleep(DELAY)
+        # flushes the inbetween text
+        child.read_nonblocking(size=CORRECT_LENGTH + size, timeout=-1)
+
+    duration = time.time() - start -.1
+    phrase = f'You got 10 out of 10 correct\r\nTest time is {duration:.1f} seconds'
+    assess(child, f'ch5_2.py Case 1', phrase)
+    child.terminate()
     
+    print(f'{BY}!!!+++Time may be off and cause a failure+++!!!{X}')
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    start = time.time()
+    for i in range(10):
+        # capture child out
+        expression = child.read_nonblocking(size=18, timeout=-1).strip()
+        # extract numbers from child out
+        numbers = getNumbers(expression)
+        # determines if the response is 1 or 2 characters
+        if len(str(sum(numbers))) == 1:
+            size = 1
+        else:
+            size = 2
+        print(f'{P}{expression} {B}{str(sum(numbers))}{X}')
+        # sends the correct response
+        child.sendline(str(sum(numbers) + 1))
+        # delays so that all text is present before flushing
+        time.sleep(DELAY)
+        # flushes the inbetween text
+        child.read_nonblocking(size=WRONG_LENGTH + size, timeout=-1)
+
+    duration = time.time() - start -.1
+    phrase = f'You got 0 out of 10 correct\r\nTest time is {duration:.1f} seconds'
+    assess(child, f'ch5_2.py Case 2', phrase)
+    child.terminate()
+
+
+def ch5_3(file):
+    phrase = f'{"Kilograms":13}{"Pounds":>6}\r\n'
+    kilograms = 1
+    while kilograms <= 199:
+        pounds = kilograms * 2.2
+        phrase += f'{kilograms:<13}{pounds:>6.1f}\r\n'
+        kilograms += 2
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    assess(child, f'ch5_3.py', phrase)
+    
+    
+def ch5_4(file):
+    phrase = f'{"Miles":10}Kilometers\r\n'
+    miles = 1
+    while miles <= 10:
+        kilometers = miles * 1.609
+        phrase += f'{miles:<10}{kilometers:.3f}\r\n'
+        miles += 1
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    assess(child, f'ch5_4.py', phrase)
+
+
+def ch5_5(file):
+    phrase = f'{"Kilograms":<11}{"Pounds":<8}|  {"Pounds":<8}{"Kilograms":<9}\r\n'
+    kilograms1 = 1
+    pounds2 = 20
+    while kilograms1 <= 199:
+        pounds1 = kilograms1 * 2.2 
+        kilograms2 = pounds2 * .4536
+        phrase += f'{kilograms1:<11}{pounds1:<8.1f}|  {pounds2:<8}{kilograms2:<9.2f}\r\n'
+        kilograms1 += 2
+        pounds2 += 5
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    assess(child, f'ch5_5.py', phrase)
+
+
+def ch5_6(file):
+    phrase = f'{"Miles":<12}{"Kilometers":<12}|  {"Kilometers":<12}{"Miles":<12}\r\n'
+    miles1 = 1
+    kilometers2 = 20
+    while miles1 <= 10:
+        kilometers1 = miles1 * 1.609 
+        miles2 = kilometers2 * .621
+        phrase += f'{miles1:<12}{kilometers1:<12.3f}|  {kilometers2:<12}{miles2:<12.3f}\r\n'
+        miles1 += 1
+        kilometers2 += 5
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    assess(child, f'ch5_6.py', phrase)
+
+
+def ch5_7(file):
+    phrase = f'{"Degree":<12}{"Sin":<12}{"Cos":<12}\r\n'
+    degree = 0
+    while degree <= 360:
+        sin = math.sin(math.radians(degree))
+        cos = math.cos(math.radians(degree))
+        phrase += f'{degree:<12}{sin:<12.4f}{cos:<12.4f}\r\n'
+        degree += 10
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    assess(child, f'ch5_7.py', phrase)
+
+
+def ch5_8(file):
+    phrase = f'{"Number":<10}{"Square Root":<10}\r\n'
+    number = 0
+    while number <= 20:
+        root = math.sqrt(number)
+        phrase += f'{number:<10}{root:<10.4f}\r\n'
+        number += 1
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    assess(child, f'ch5_8.py', phrase)
+
+
+
+
+
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def slices(file):
     """
