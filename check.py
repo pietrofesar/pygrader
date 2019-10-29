@@ -188,6 +188,9 @@ def child_selector(option, file):
     if option == 'ch4_9.py':
         return ch4_9(file)    
     
+    if option == 'ch5_1.py':
+        return ch5_1(file)
+    
     if option == 'slices.py':
         return slices(file)
     if option == 'madlib.py':
@@ -541,7 +544,7 @@ def ch2_21(file):
     if child.isalive:
             child.kill(2) 
 
-#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#++++++++++++++++++++++++ Chapter 3 ++++++++++++++++++++++++++++++++++++++++++++
     
 def ch3_1(file):
     
@@ -654,7 +657,7 @@ def ch3_11(file):
     if child.isalive:
             child.kill(2)      
             
-#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#++++++++++++++++++++++++++++++ Chapter 4 ++++++++++++++++++++++++++++++++++++++
 
 def ch4_1(file):
     
@@ -960,7 +963,59 @@ def ch4_9(file):
     phrase = 'Package 2 has the better price.'
     assess(child, f'ch4_9.py case 2', phrase)
     child.terminate()
+
+
+#+++++++++++++++++++++++++++++ Chapter 5 +++++++++++++++++++++++++++++++++++++++
+def ch5_1(file):
+    # generate integers for test case 1
+    integers = []
+    for i in range(random.randint(4, 11)):
+        sign = random.randint(0, 1)
+        if sign == 0:
+            integers.append(random.randint(1, 20))
+        else:
+            integers.append(random.randint(-20, -1))
+    integers.append(0)
     
+    # summarize the data for case 1
+    tally, positives, negatives, total = 0, 0, 0, 0
+    for i in integers:
+        if i != 0:
+            tally += 1
+            if i > 0:
+                positives += 1
+            else:
+                negatives +=1
+            total += i
+    average = total / tally
+    
+    # generate the output for test case 1
+    phrase = f'The number of positives is {positives}\r\n'
+    phrase += f'The number of negatives is {negatives}\r\n'
+    phrase += f'The total is {total}\r\n'
+    phrase += f'The average is {average:.2f}\r\n'
+    
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    
+    # send the input
+    for i in integers:
+        child.sendline(str(i))
+    
+    # test the output
+    assess(child, f'ch5_1.py Case 1', phrase)
+    child.terminate()
+
+    # test case 2
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    # send the input
+    child.sendline(str(0))
+    # correct output
+    phrase = 'You didn\'t enter any number\r\n'
+    # test the output
+    assess(child, f'ch5_1.py Case 2', phrase)
+    child.terminate()
     
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def slices(file):
