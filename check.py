@@ -1128,13 +1128,13 @@ def ch5_4(file):
 
 
 def ch5_5(file):
-    phrase = f'{"Kilograms":<11}{"Pounds":<8}|  {"Pounds":<8}{"Kilograms":<9}\r\n'
+    phrase = f'{"Kilograms":<11}{"Pounds":<7}| {"Pounds":<7}{"Kilograms":}\r\n'
     kilograms1 = 1
     pounds2 = 20
     while kilograms1 <= 199:
         pounds1 = kilograms1 * 2.2 
         kilograms2 = pounds2 * .4536
-        phrase += f'{kilograms1:<11}{pounds1:<8.1f}|  {pounds2:<8}{kilograms2:<9.2f}\r\n'
+        phrase += f'{kilograms1:<11}{pounds1:<7.1f}| {pounds2:<7}{kilograms2:.2f}\r\n'
         kilograms1 += 2
         pounds2 += 5
     # generate python instance
@@ -1143,13 +1143,13 @@ def ch5_5(file):
 
 
 def ch5_6(file):
-    phrase = f'{"Miles":<12}{"Kilometers":<12}|  {"Kilometers":<12}{"Miles":<12}\r\n'
+    phrase = f'{"Miles":<7}{"Kilometers":<11}| {"Kilometers":<11}{"Miles":}\r\n'
     miles1 = 1
     kilometers2 = 20
     while miles1 <= 10:
         kilometers1 = miles1 * 1.609 
         miles2 = kilometers2 * .621
-        phrase += f'{miles1:<12}{kilometers1:<12.3f}|  {kilometers2:<12}{miles2:<12.3f}\r\n'
+        phrase += f'{miles1:<7}{kilometers1:<11.3f}| {kilometers2:<11}{miles2:<.3f}\r\n'
         miles1 += 1
         kilometers2 += 5
     # generate python instance
@@ -1158,12 +1158,12 @@ def ch5_6(file):
 
 
 def ch5_7(file):
-    phrase = f'{"Degree":<12}{"Sin":<12}{"Cos":<12}\r\n'
+    phrase = f'{"Degree":<8}{"Sin":<10}{"Cos":}\r\n'
     degree = 0
     while degree <= 360:
         sin = math.sin(math.radians(degree))
         cos = math.cos(math.radians(degree))
-        phrase += f'{degree:<12}{sin:<12.4f}{cos:<12.4f}\r\n'
+        phrase += f'{degree:<8}{sin:<10.4f}{cos:.4f}\r\n'
         degree += 10
     # generate python instance
     child = pexpect.spawnu("python3 {}".format(file))
