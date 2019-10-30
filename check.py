@@ -1171,11 +1171,11 @@ def ch5_7(file):
 
 
 def ch5_8(file):
-    phrase = f'{"Number":<10}{"Square Root":<10}\r\n'
+    phrase = f'{"Number":<8}{"Square Root":}\r\n'
     number = 0
     while number <= 20:
         root = math.sqrt(number)
-        phrase += f'{number:<10}{root:<10.4f}\r\n'
+        phrase += f'{number:<8}{root:.4f}\r\n'
         number += 1
     # generate python instance
     child = pexpect.spawnu("python3 {}".format(file))
