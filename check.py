@@ -1097,7 +1097,7 @@ def ch5_2(file):
         # flushes the inbetween text
         child.read_nonblocking(size=WRONG_LENGTH + size, timeout=-1)
 
-    duration = time.time() - start -.1
+    duration = time.time() - start -.5
     phrase = f'You got 0 out of 10 correct\r\nTest time is {duration:.1f} seconds'
     assess(child, f'ch5_2.py Case 2', phrase)
     child.terminate()
