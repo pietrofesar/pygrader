@@ -1097,7 +1097,7 @@ def ch5_2(file):
         # flushes the inbetween text
         child.read_nonblocking(size=WRONG_LENGTH + size, timeout=-1)
 
-    duration = time.time() - start -0
+    duration = time.time() - start
     phrase = f'You got 0 out of 10 correct\r\nTest time is {duration:.1f} seconds'
     assess(child, f'ch5_2.py Case 2', phrase)
     child.terminate()
@@ -1116,11 +1116,11 @@ def ch5_3(file):
     
     
 def ch5_4(file):
-    phrase = f'{"Miles":10}Kilometers\r\n'
+    phrase = f'{"Miles":7}Kilometers\r\n'
     miles = 1
     while miles <= 10:
         kilometers = miles * 1.609
-        phrase += f'{miles:<10}{kilometers:.3f}\r\n'
+        phrase += f'{miles:<7}{kilometers:.3f}\r\n'
         miles += 1
     # generate python instance
     child = pexpect.spawnu("python3 {}".format(file))
