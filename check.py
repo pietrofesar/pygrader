@@ -217,6 +217,26 @@ def child_selector(option, file):
         return ch5_8(file)
     if option == 'ch5_11.py':
         return ch5_11(file)
+    if option == 'ch5_12.py':
+        return ch5_12(file)
+    if option == 'ch5_13.py':
+        return ch5_13(file)
+    if option == 'ch5_14.py':
+        return ch5_14(file)
+    if option == 'ch5_15.py':
+        return ch5_15(file)
+    if option == 'ch5_16.py':
+        return ch5_16(file)
+    if option == 'ch5_17.py':
+        return ch5_17(file)
+    if option == 'ch5_18.py':
+        return ch5_18(file)
+    if option == 'ch5_19.py':
+        return ch5_19(file)
+    if option == 'ch5_20.py':
+        return ch5_20(file)
+    if option == 'ch5_21.py':
+        return ch5_21(file)
     
     if option == 'slices.py':
         return slices(file)
@@ -1210,6 +1230,208 @@ def ch5_11(file):
     phrase = '0 was entered for the number of students'
     assess(child, f'ch5_11.py Case 2', phrase)
 
+
+def ch5_12(file):
+    
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    phrase = ''
+    i = 100
+    while i <= 1000:
+        count = 0
+        line = ''
+        while count < 10 and i <= 1000:
+            if i % 5 == 0 and i % 6 == 0:
+                line += str(i)
+                count += 1
+                if count != 10:
+                    line += ' '
+            i += 1
+        phrase += f'{line}\r\n' 
+    assess(child, f'ch5_12.py', phrase)
+    
+    
+def ch5_13(file):
+    
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    phrase = ''
+    i = 100
+    while i <= 200:
+        count = 0
+        phrase = ''
+        line = ''
+        while count < 10 and i <= 200:
+            if i % 5 == 0 or i % 6 == 0 and not(i % 5 == 0 and i % 6 == 0):
+                line += str(i)
+                count += 1
+                if count != 10:
+                    line += ' '
+            i += 1
+        phrase += f'{line}\r\n' 
+    assess(child, f'ch5_13.py', phrase)  
+    
+    
+def ch5_14(file):
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    phrase = ''
+    n = 0
+    while n**2 < 12000:
+        phrase += f'{n} is not the answer\r\n'
+        n += 1
+    phrase += f'{n} is the answer\r\n'
+    assess(child, f'ch5_14.py', phrase)  
+       
+
+def ch5_15(file):
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    phrase = ''
+    n = 1
+    while n**3 < 12000:
+        n += 1
+    phrase += f'{n - 1}\r\n'
+    assess(child, f'ch5_15.py', phrase)  
+
+
+def ch5_17(file):
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    CHARACTER = 33
+    phrase = ''
+    while CHARACTER <= 126:
+        count = 0
+        line = ''
+        while count < 10:
+            line += chr(CHARACTER)
+            line += ' '
+            count += 1
+            CHARACTER += 1
+        phrase += f'{line}\r\n'
+    assess(child, f'ch5_17.py', phrase)
+
+
+def ch5_19(file):
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    lines = random.randint(2, 9)
+    child.sendline(str(lines))
+    spaces = lines * 2 - 2
+    digit = 1
+    phrase = ''
+    # loops for the number of rows
+    for i in range(lines):
+        output = ''
+        # creates the spaces part of the row
+        for j in range(spaces):
+            output += ' '
+        
+        # creates the left digits decreasing part of a row
+        count = digit
+        while count != 0:
+            output += str(count)
+            output += ' '
+            count -= 1
+        
+        # creates the right digits increasing part of a row
+        count = 1
+        while count < digit:
+            output += str(count + 1)
+            output += ' '
+            count += 1
+        phrase += f'{output}\r\n'
+        
+        # update counters
+        spaces -= 2
+        digit += 1
+    assess(child, f'ch5_19.py', phrase)
+
+
+def ch5_20(file):
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    phrase = ''
+    # pattern A
+    phrase += 'Pattern A\r\n'
+    for i in range(1, 7):
+        line = ''
+        for j in range(1, i + 1):
+            line += str(j)
+            line += ' '
+        phrase += f'{line}\r\n'
+        
+        
+    # pattern B
+    digits = 6
+    phrase += 'Pattern B\r\n'
+    for i in range(1, 7):
+        line = ''
+        for j in range(1, digits + 1):
+            line += str(j)
+            line += ' '
+        digits -= 1
+        phrase += f'{line}\r\n'
+        
+    # pattern C
+    phrase += 'Pattern C\r\n'
+    spaces = 5
+    i = 1
+    for i in range(1, 7):
+        line = ''
+        for j in range(spaces * 2):
+            line += ' '
+        for j in range(i, 0, -1):
+            line += str(j)
+            line += ' '
+        spaces -= 1
+        phrase += f'{line}\r\n'
+        
+    # pattern D
+    digits = 7
+    phrase += 'Pattern D\r\n'
+    for i in range(1, 7):
+        line = ''
+        for j in range(1, digits):
+            line += str(j)
+            line += ' '
+        digits -= 1
+        phrase += f'{line}\r\n'
+    
+    assess(child, f'ch5_20.py', phrase)
+
+
+def ch5_21(file):
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    phrase = ''
+    LINES = 8
+    spaces = LINES * 4 - 4
+    # loops for the number of rows
+    for i in range(1, LINES + 1):
+        output = ''
+        # creates the spaces part of the row
+        for j in range(spaces):
+            output += ' '
+        
+        # creates the left digits decreasing part of a row
+        power = 0
+        for j in range(i):
+            output += f'{str(2 ** power):>4}'
+            power += 1
+            
+        
+        # creates the right digits increasing part of a row
+        power = i - 2
+        for j in range(i - 1):
+            output += f'{str(2 ** power):>4}'
+            power -= 1
+        phrase += f'{output}\r\n'
+        
+        # update counters
+        spaces -= 4
+    assess(child, f'ch5_21.py', phrase)
+    
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def slices(file):
