@@ -215,6 +215,8 @@ def child_selector(option, file):
         return ch5_7(file)
     if option == 'ch5_8.py':
         return ch5_8(file)
+    if option == 'ch5_11.py':
+        return ch5_11(file)
     
     if option == 'slices.py':
         return slices(file)
@@ -1182,7 +1184,31 @@ def ch5_8(file):
     assess(child, f'ch5_8.py', phrase)
 
 
-
+def ch5_11(file):
+    
+    # generate python instance
+    child = pexpect.spawnu("python3 {}".format(file))
+    NUM_OF_STUDENTS = random.randint(2, 9)
+    child.sendline(str(NUM_OF_STUDENTS))
+    grades = []
+    for i in range(NUM_OF_STUDENTS):
+        temp = random.randint(50, 100)
+        child.sendline(str(temp))
+        grades.append(temp)
+    highScore, runnerUp = 0, 0
+    for i in grades:
+        if highScore < i:
+            highScore = i
+        else:
+            if runnerUp < i:
+                runnerUp = i
+    phrase = f'High Score: {highScore} Second Highest Score: {runnerUp}'
+    assess(child, f'ch5_11.py Case 1', phrase)
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline('0')
+    phrase = '0 was entered for the number of students'
+    assess(child, f'ch5_11.py Case 2', phrase)
 
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
