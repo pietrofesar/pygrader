@@ -1166,13 +1166,13 @@ def ch5_5(file):
 
 
 def ch5_6(file):
-    phrase = f'{"Miles":<7}{"Kilometers":<11}| {"Kilometers":<11}{"Miles":}\r\n'
+    phrase = f'{"Miles":<7}{"Kilometers":<11}| {"Kilometers":<11}{"Miles":<6}\r\n'
     miles1 = 1
     kilometers2 = 20
     while miles1 <= 10:
         kilometers1 = miles1 * 1.609 
         miles2 = kilometers2 * .621
-        phrase += f'{miles1:<7}{kilometers1:<11.3f}| {kilometers2:<11}{miles2:<.3f}\r\n'
+        phrase += f'{miles1:<7}{kilometers1:<11.3f}| {kilometers2:<11}{miles2:<6.3f}\r\n'
         miles1 += 1
         kilometers2 += 5
     # generate python instance
