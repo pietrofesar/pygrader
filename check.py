@@ -1084,6 +1084,7 @@ def ch5_2(file):
             size = 1
         else:
             size = 2
+        # prints the question
         print(f'{P}{expression} {B}{str(sum(numbers))}{X}')
         # sends the correct response
         child.sendline(str(sum(numbers)))
@@ -1150,13 +1151,13 @@ def ch5_4(file):
 
 
 def ch5_5(file):
-    phrase = f'{"Kilograms":<11}{"Pounds":<7}| {"Pounds":<7}{"Kilograms":}\r\n'
+    phrase = f'{"Kilograms":<11}{"Pounds":<7}| {"Pounds":<7}{"Kilograms":<9}\r\n'
     kilograms1 = 1
     pounds2 = 20
     while kilograms1 <= 199:
         pounds1 = kilograms1 * 2.2 
         kilograms2 = pounds2 * .4536
-        phrase += f'{kilograms1:<11}{pounds1:<7.1f}| {pounds2:<7}{kilograms2:.2f}\r\n'
+        phrase += f'{kilograms1:<11}{pounds1:<7.1f}| {pounds2:<7}{kilograms2:<9.2f}\r\n'
         kilograms1 += 2
         pounds2 += 5
     # generate python instance
