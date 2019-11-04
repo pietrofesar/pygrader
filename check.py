@@ -1181,12 +1181,12 @@ def ch5_6(file):
 
 
 def ch5_7(file):
-    phrase = f'{"Degree":<8}{"Sin":<10}{"Cos":}\r\n'
+    phrase = f'{"Degree":<8}{"Sin":<10}{"Cos":<5}\r\n'
     degree = 0
     while degree <= 360:
         sin = math.sin(math.radians(degree))
         cos = math.cos(math.radians(degree))
-        phrase += f'{degree:<8}{sin:<10.4f}{cos:.4f}\r\n'
+        phrase += f'{degree:<8}{sin:<10.4f}{cos:<5.4f}\r\n'
         degree += 10
     # generate python instance
     child = pexpect.spawnu("python3 {}".format(file))
