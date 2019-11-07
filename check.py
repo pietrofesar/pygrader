@@ -1218,10 +1218,11 @@ def ch5_11(file):
         grades.append(temp)
     highScore, runnerUp = 0, 0
     for i in grades:
-        if highScore < i:
+        if i > highScore:
+            runnerUp = highScore
             highScore = i
         else:
-            if runnerUp < i:
+            if i > runnerUp:
                 runnerUp = i
     phrase = f'High Score: {highScore} Second Highest Score: {runnerUp}'
     assess(child, f'ch5_11.py Case 1', phrase)
@@ -1230,7 +1231,7 @@ def ch5_11(file):
     child.sendline('0')
     phrase = '0 was entered for the number of students'
     assess(child, f'ch5_11.py Case 2', phrase)
-
+    
 
 def ch5_12(file):
     
