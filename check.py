@@ -1002,7 +1002,7 @@ def ch4_9(file):
     child.terminate()
     
     child = pexpect.spawnu("python3 {}".format(file))
-    while data[0]/data[1] > data[2]/data[3]:
+    while data[0]/data[1] < data[2]/data[3]:
         data = getData()
     child.sendline(f'{data[0]}, {data[1]}')
     child.sendline(f'{data[2]}, {data[3]}')
