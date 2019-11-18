@@ -1658,7 +1658,7 @@ def even_odd(file):
             ok += 1
         # fail
         except:
-            print('\n{}Expected output of:\n{}{} is an {} number\n{}Actual output was:\n{}{}{}'
+            print('\n{}Expected output of:\n{}{} is an {} number.\n{}Actual output was:\n{}{}{}'
             .format(BY, R, test_data[i][0], test_data[i][1], BY, R, child.before[19:], X))
         if child.isalive:
             child.kill(2)
