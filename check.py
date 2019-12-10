@@ -237,6 +237,31 @@ def child_selector(option, file):
         return ch5_20(file)
     if option == 'ch5_21.py':
         return ch5_21(file)
+        
+    if option == 'ch6_2.py':
+        return ch6_2(file)
+    if option == 'ch6_3.py':
+        return ch6_3(file)
+    if option == 'ch6_4.py':
+        return ch6_4(file)
+    if option == 'ch6_5.py':
+        return ch6_5(file)
+    if option == 'ch6_6.py':
+        return ch6_6(file)
+    if option == 'ch6_7.py':
+        return ch6_7(file)
+    if option == 'ch6_8.py':
+        return ch6_8(file)
+    if option == 'ch6_9.py':
+        return ch6_9(file)
+    if option == 'ch6_10.py':
+        return ch6_10(file)
+    if option == 'ch6_11.py':
+        return ch6_11(file)
+    if option == 'ch6_12.py':
+        return ch6_12(file)
+    if option == 'ch6_13.py':
+        return ch6_13(file)
     
     if option == 'slices.py':
         return slices(file)
@@ -1435,7 +1460,164 @@ def ch5_21(file):
     assess(child, f'ch5_21.py', phrase)
     
 
+#++++++++++++++++++++++++++Chapter 6++++++++++++++++++++++++++++++++++++++++++++
+
+def ch6_2(file):
+    child = pexpect.spawnu("python3 {}".format(file))
+    n = random.randint(0, 9999)
+    
+    child.sendline(str(n))
+    total = n // 1000
+    remainder = n % 1000
+    total += remainder // 100
+    remainder = n % 100
+    total += remainder // 10
+    total += remainder % 10
+    
+    phrase = f'The sum of the numbers is {total}'
+    assess(child, "ch6_2.py", phrase)
+
+
+def ch6_3(file):
+    child = pexpect.spawnu("python3 {}".format(file))
+    n = random.randint(1111, 9999)
+    
+    child.sendline(str(n))
+    thousands = n // 1000
+    remainder = n % 1000
+    hundreds = remainder // 100
+    remainder = n % 100
+    tens = remainder // 10
+    ones = remainder % 10
+    
+    phrase = f'{n} reversed is {ones}{tens}{hundreds}{thousands}'
+    assess(child, "ch6_3.py", phrase)
+
+
+def ch6_4(file):
+    # Test case 1 no palindrome
+    child = pexpect.spawnu("python3 {}".format(file))
+    not_palindrome = str(random.randint(1, 4))
+    not_palindrome += str(random.randint(0, 9))
+    not_palindrome += str(random.randint(0, 9))
+    not_palindrome += str(random.randint(5, 9))
+    child.sendline(not_palindrome)
+    phrase = f'No {not_palindrome} is not a palindrome'
+    assess(child, 'ch6_4.py Case 1', phrase)
+    
+    # Test case 2 palindrome
+    child = pexpect.spawnu("python3 {}".format(file))
+    outers = str(random.randint(1, 9))
+    inners = str(random.randint(1, 9))
+    palindrome = outers + inners * 2 + outers
+    child.sendline(palindrome)
+    phrase = f'Yes {palindrome} is a palindrome'
+    assess(child, 'ch6_4.py Case 2', phrase)
+    
+        
+def ch6_5(file):
+    child = pexpect.spawnu("python3 {}".format(file))
+    numbers = [random.randint(50, 300), random.randint(-100, 30), random.randint(-200, 200)]
+    child.sendline(f'{numbers[0]}, {numbers[1]}, {numbers[2]}')
+    numbers.sort()
+    phrase = f'The sorted numbers are {numbers[0]}, {numbers[1]}, {numbers[2]}'
+    assess(child, 'ch6_5.py', phrase)
+    
+
+def ch6_6(file):
+    child = pexpect.spawnu("python3 {}".format(file))
+    rows = random.randint(0, 9)
+    child.sendline(str(rows))
+    spaces = rows - 1
+    phrase = ''
+    for row in range(rows):
+        for spaces in range(spaces):
+            phrase += '  '
+        digits = row + 1
+        for nums in range(row + 1):
+            phrase += f'{digits} '
+            digits -= 1
+        phrase += '\r\n'
+    assess(child, 'ch6_6.py', phrase)
+            
+
+def ch6_7(file):
+   
+    def future_value(principle, annual_rate, years):
+        # Computes the return on an investment
+        annual_rate /= 100
+        monthly_rate = annual_rate / 12
+        months = years * 12
+        future_amount = principle * (1 + monthly_rate) ** months
+        return future_amount
+
+
+    def create_table(principle, annual_rate, years):
+        # Creates a printable table of the loan data
+        table = f'{"Years":7}{"Future Value":12}\r\n'
+        for year in range(1, years + 1):
+            table += f'{year:<7}{future_value(principle, annual_rate, year):<12.2f}\r\n'
+        return table
+    
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    principle = random.randint(1000, 80000)
+    rate = random.randint(3, 6)
+    years = random.randint(4, 15)
+    child.sendline(str(principle))
+    child.sendline(str(rate))
+    child.sendline(str(years))
+    table = f'{create_table(principle, rate, years)}\r\n'
+    
+    assess(child, 'ch6_7.py', table)
+    
+
+def ch6_8(file):
+    def celsius_to_fahreneit(celsius):
+        # Converts from Celsius to Fahrenheit
+        return (9 / 5) * celsius + 32
+
+    def fahrenheit_to_celsius(fahrenheit):
+        # Converts from Fahrenheit to Celsius
+        return (5 / 9) * (fahrenheit - 32)
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    fahrenheit = 120.0
+    table = ''
+    table +=f'{"Celsius":<10}{"Fahrenheit":<12}|  {"Fahrenheit":<12}{"Celsius":<10}\r\n'
+    for row in range(40, 30, -1):
+        f_temp = celsius_to_fahreneit(float(row))
+        c_temp = fahrenheit_to_celsius(fahrenheit)
+        table += f'{float(row):<10.1f}{f_temp:<12.1f}|  {fahrenheit:<12.1f}{c_temp:<10.2f}\r\n'
+        fahrenheit -= 10
+    assess(child, 'ch6_8.py', table)
+    
+    
+def ch6_9(file):
+    def ft_to_m(foot):
+        # Converts from feet to meters
+        return 0.305 * foot
+
+
+    def m_to_ft(meter):
+        # Converts from meters to feet
+        return meter / 0.305
+        
+    child = pexpect.spawnu("python3 {}".format(file))
+    meter = 20.0
+    table = ''
+    table += f'{"Feet":<10}{"Meters":<8}|  {"Meters":<10}{"Feet":<10}\r\n'
+    for foot in range(1, 11):
+        to_meter = ft_to_m(foot)
+        to_foot = m_to_ft(meter)
+        table += f'{float(foot):<10.1f}{to_meter:<8.3f}|  {meter:<10.1f}{to_foot:<10.3f}\r\n'
+        meter += 6
+    assess(child, 'ch6_9.py', table)
+
+
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
 def slices(file):
     """
     :param file: the python file passed as a command line argument 
