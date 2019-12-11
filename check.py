@@ -1615,6 +1615,48 @@ def ch6_9(file):
     assess(child, 'ch6_9.py', table)
 
 
+def ch6_12(file):
+    
+    def print_chars(ch1, ch2, number_per_line):
+        start = ord(ch1)
+        the_string = ''
+        while start <= ord(ch2):
+            for i in range(number_per_line):
+                the_string += chr(start)
+                start += 1
+                if start > ord(ch2):
+                    break
+            the_string += '\r\r\n'
+        return the_string
+    
+    ch1 = chr(random.randint(33, 80))
+    ch2 = chr(random.randint(81, 133))
+    number_per_line = random.randint(5, 15)
+    the_string = print_chars(ch1, ch2, number_per_line)
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(ch1)
+    child.sendline(ch2)
+    child.sendline(str(number_per_line))
+    assess(child, 'ch6_12.py', the_string)
+
+
+def ch6_13(file):
+   
+    def sum_series(i):
+        # Computes the sum of a series
+        total = 0
+        for j in range(1, i + 1):
+            total += j / (j + 1)
+        return total
+    
+    answer_key = ''
+    answer_key += f'{"i":10}{"m(i)":10}\r\n'
+    for i in range(1, 21):
+        total = sum_series(i)
+        answer_key += f'{i:<10}{total:<10.4f}\r\n'
+    child = pexpect.spawnu("python3 {}".format(file))
+    assess(child, 'ch6_13.py', answer_key)
+
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
