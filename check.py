@@ -263,6 +263,13 @@ def child_selector(option, file):
     if option == 'ch6_13.py':
         return ch6_13(file)
     
+    if option == 'ch8_1.py':
+        return ch8_1(file)
+    if option == 'ch8_2.py':
+        return ch8_2(file)
+    if option == 'ch8_3.py':
+        return ch8_3(file)
+    
     if option == 'slices.py':
         return slices(file)
     if option == 'madlib.py':
@@ -1657,8 +1664,99 @@ def ch6_13(file):
     child = pexpect.spawnu("python3 {}".format(file))
     assess(child, 'ch6_13.py', answer_key)
 
-#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#++++++++++++++++++++++++Chapter 8++++++++++++++++++++++++++++++++++++++++++++++
 
+def ch8_1(file):
+    tests = [['123456789', 'Valid SSN'], ['1234567890111213', 'Invalid SSN'], ['123-45-6789', 'Valid SSN'], ['123p45p6789', 'Invalid SSN'], ['1234567ok', 'Invalid SSN']]
+    for i in range(5):
+        child = pexpect.spawnu("python3 {}".format(file))
+        child.sendline(tests[i][0])
+        assess(child, f'ch8_1.py case {i + 1}', tests[i][1])
+
+
+def ch8_2(file):
+    words = ['hot', 'cold', 'cat', 'mouse', 'pizza', 'wet']
+    
+    def sub_pass(words):
+        key = random.randint(0, len(words) - 1)
+        phrase = words[key]
+        for i in range(len(words)):
+            phrase += words[random.randint(0, len(words) - 1)]
+        return words[key], phrase
+    
+    def sub_fail(words):
+        key = random.randint(0, len(words) - 1)
+        phrase = ''
+        for i in range(len(words)):
+            if i != key:
+                phrase += words[i]
+        return words[key], phrase
+    
+    key, phrase = sub_pass(words)
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(key)
+    child.sendline(phrase)
+    assess(child, "ch8_2.py Case 1", 'is a substring')
+    
+    key, phrase = sub_fail(words)
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(key)
+    child.sendline(phrase)
+    assess(child, "ch8_2.py Case 2", 'not a substring')
+    
+    
+def ch8_3(file):
+    
+    def valid():
+        password = ''
+        digits = random.randint(2, 5)
+        alpha = 9 - digits
+        for digit in range(digits):
+            password += str(random.randint(0,9))
+        for char in range(alpha):
+            password += chr(random.randint(97, 122))
+        return password
+        
+    def dig_invalid():
+        password = str(random.randint(0,9))
+        for char in range(8):
+            password += chr(random.randint(97, 122))
+        return password
+    
+    def char_invalid():
+        password = ''
+        for char in range(9):
+            password += chr(random.randint(33, 122))
+        return password
+    
+    def len_invalid():
+        password = ''
+        digits = random.randint(2, 4)
+        alpha = 7 - digits
+        for digit in range(digits):
+            password += str(random.randint(0,9))
+        for char in range(alpha):
+            password += chr(random.randint(65, 90))
+        return password
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(valid())
+    assess(child, "ch8_3.py Case 1", 'valid password')
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(dig_invalid())
+    assess(child, "ch8_3.py Case 2", 'invalid password')
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(char_invalid())
+    assess(child, "ch8_3.py Case 3", 'invalid password')
+    
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(len_invalid())
+    assess(child, "ch8_3.py Case 4", 'invalid password')
+    
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def slices(file):
     """
