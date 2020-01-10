@@ -1761,7 +1761,7 @@ def ch8_3(file):
 def ch8_4(file):
     words = [['apparatus', 'a', 3], ['missippi', 'i', 3], ['penelope', 'e', 3]], ['sassafras', 's', 4]
     child = pexpect.spawnu("python3 {}".format(file))
-    index = random.randint(0, 2)
+    index = random.randint(0, 3)
     child.sendline(f'{words[index][0]}, {words[index][1]}')
     assess(child, "ch8_4.py Case 1", str(words[index][2]))
     
