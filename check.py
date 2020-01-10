@@ -269,6 +269,8 @@ def child_selector(option, file):
         return ch8_2(file)
     if option == 'ch8_3.py':
         return ch8_3(file)
+    if option == 'ch8_4.py':
+        return ch8_4(file)
     
     if option == 'slices.py':
         return slices(file)
@@ -1751,10 +1753,17 @@ def ch8_3(file):
     child.sendline(char_invalid())
     assess(child, "ch8_3.py Case 3", 'invalid password')
     
-    
     child = pexpect.spawnu("python3 {}".format(file))
     child.sendline(len_invalid())
     assess(child, "ch8_3.py Case 4", 'invalid password')
+    
+
+def ch8_4(file):
+    words = [['apparatus', 'a', 3], ['missippi', 'i', 3], ['penelope', 'e', 3]], ['sassafras', 's', 4]
+    child = pexpect.spawnu("python3 {}".format(file))
+    index = random.randint(0, 2)
+    child.sendline(f'{words[index][0]}, {words[index][1]}')
+    assess(child, "ch8_4.py Case 1", str(words[index][2]))
     
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
