@@ -278,6 +278,8 @@ def child_selector(option, file):
         return ch8_5(file)
     if option == 'ch8_6.py':
         return ch8_6(file)
+    if option == 'ch8_7.py':
+        return ch8_7(file)
     
     if option == 'slices.py':
         return slices(file)
@@ -1790,6 +1792,33 @@ def ch8_6(file):
         test = library[random.randint(0, len(library) - 1)]
         child.sendline(test)
         assess(child, f'ch8_6.py test{i + 1}', str(count_letters(test)))
+
+
+def ch8_7(file):
+    def get_number(letter):
+        if letter in 'ABC':
+            return 2
+        elif letter in 'DEF':
+            return 3
+        elif letter in 'GHI':
+            return 4
+        elif letter in 'JKL':
+            return 5
+        elif letter in 'MNO':
+            return 6
+        elif letter in 'PQRS':
+            return 7
+        elif letter in 'TUV':
+            return 8
+        else:
+            return 9
+   
+    for i in range(4):
+        child = pexpect.spawnu("python3 {}".format(file))
+        test = str(random.randint(65, 90))
+        child.sendline(test)
+        assess(child, f'ch8_7.py test{i + 1}', str(get_number(test)))
+    
     
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
