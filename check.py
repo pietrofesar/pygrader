@@ -1863,7 +1863,24 @@ def ch8_11(file):
     
 def ch8_12(file):
     print('Under Construction')
+
+
+def ch8_13(file):
+    def prefix(s1, s2):
+        pre = ''
+        for i in range(len(s1)):
+            if s1[i] == s2[i]:
+                pre += s1[i]
+            else:
+                return pre
     
+    for i in range(4):
+        tests = ['disinfection', 'distance', 'diolate', 'dissatisfactory', 'dissimilarities', 'dissatisfactory', 'disable', 'disagree']
+        child = pexpect.spawnu("python3 {}".format(file))
+        test1 = tests[random.randint(0, len(tests) - 1)]
+        test2 = tests[random.randint(0, len(tests) - 1)]
+        child.sendline(test)
+        assess(child, f'ch8_11.py test{i + 1}', prefix(test1, test2))
     
     
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
