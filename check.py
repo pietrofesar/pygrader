@@ -280,6 +280,19 @@ def child_selector(option, file):
         return ch8_6(file)
     if option == 'ch8_7.py':
         return ch8_7(file)
+    if option == 'ch8_8.py':
+        return ch8_8(file)
+    if option == 'ch8_9.py':
+        return ch8_9(file)
+    if option == 'ch8_10.py':
+        return ch8_10(file)
+    if option == 'ch8_11.py':
+        return ch8_11(file)
+    if option == 'ch8_12.py':
+        return ch8_12(file)
+    if option == 'ch8_13.py':
+        return ch8_13(file)
+    
     
     if option == 'slices.py':
         return slices(file)
@@ -1818,6 +1831,39 @@ def ch8_7(file):
         test = chr(random.randint(65, 90))
         child.sendline(test)
         assess(child, f'ch8_7.py test{i + 1}', str(get_number(test)))
+    
+    
+def ch8_8(file):
+    print('Under construction :(')
+    
+
+def ch8_9(file):
+    print('Under construction :(')
+    
+    
+def ch8_10(file):
+    print('Under construciton')
+    
+    
+def ch8_11(file):
+    def reverse(s):
+        s2 = ''
+        i = len(s) - 1
+        while i >= 0:
+            s2 += s[i]
+            i -= 1
+        return s2
+        
+    for i in range(4):
+        child = pexpect.spawnu("python3 {}".format(file))
+        test = library[random.randint(0, len(library) - 1)]
+        child.sendline(test)
+        assess(child, f'ch8_11.py test{i + 1}', str(reverse(test)))
+        
+    
+def ch8_12(file):
+    print('Under Construction')
+    
     
     
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
