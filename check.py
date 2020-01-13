@@ -49,6 +49,9 @@ A = '\033[0;36m'    # aqua
 BA = '\033[1;36m'   # bold aqua
 X = '\033[0m'       # reset
 
+
+library = ['hello', 'apparatus', 'consequence', 'missippi', 'alagash', 'illustrate', 'erradicate', 'impecible', 'american-indian', 'distillery', 'distinguished']
+
 # searches for a file in the tree
 def findInSubdirectory(filename, subdirectory=''):
     if subdirectory:
@@ -271,6 +274,10 @@ def child_selector(option, file):
         return ch8_3(file)
     if option == 'ch8_4.py':
         return ch8_4(file)
+    if option == 'ch8_5.py':
+        return ch8_5(file)
+    if option == 'ch8_6.py':
+        return ch8_6(file)
     
     if option == 'slices.py':
         return slices(file)
@@ -1764,6 +1771,25 @@ def ch8_4(file):
     index = random.randint(0, 3)
     child.sendline(f'{words[index][0]}, {words[index][1]}')
     assess(child, "ch8_4.py", str(words[index][2]))
+    
+
+def ch8_5(file):
+    print('Under Construction :(')
+    
+    
+def ch8_6(file):
+    def count_letters(s1):
+        s2 = ''
+        for each in s1:
+            if each not in s2:
+                s2 += each
+        return len(s2)
+    
+    for i in range(4):
+        child = pexpect.spawnu("python3 {}".format(file))
+        test = library[random.randint(0, len(library) - 1)]
+        child.sendline(test)
+        assess(child, f'ch8_6.py test{i + 1}', str(count_letters(test)))
     
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
