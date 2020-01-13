@@ -1815,7 +1815,7 @@ def ch8_7(file):
    
     for i in range(4):
         child = pexpect.spawnu("python3 {}".format(file))
-        test = str(random.randint(65, 90))
+        test = chr(random.randint(65, 90))
         child.sendline(test)
         assess(child, f'ch8_7.py test{i + 1}', str(get_number(test)))
     
