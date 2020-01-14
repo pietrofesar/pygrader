@@ -1834,15 +1834,15 @@ def ch8_7(file):
     
     
 def ch8_8(file):
-    print('Under construction :(')
+    print('Under Construction :(')
     
 
 def ch8_9(file):
-    print('Under construction :(')
+    print('Under Construction :(')
     
     
 def ch8_10(file):
-    print('Under construciton')
+    print('Under Construciton :(')
     
     
 def ch8_11(file):
@@ -1862,26 +1862,32 @@ def ch8_11(file):
         
     
 def ch8_12(file):
-    print('Under Construction')
+    print('Under Construction :(')
 
 
 def ch8_13(file):
     def prefix(s1, s2):
         pre = ''
-        for i in range(len(s1)):
+        length = min(len(s1), len(s2))
+        for i in range(length):
             if s1[i] == s2[i]:
                 pre += s1[i]
-            else:
-                return pre
+        if pre == '':
+            return 'No matches'
+        else:
+            return pre
+        
     
-    for i in range(4):
-        tests = ['disinfection', 'distance', 'diolate', 'dissatisfactory', 'dissimilarities', 'dissatisfactory', 'disable', 'disagree']
+    for i in range(3):
+        tests = ['disinfection', 'distance', 'diolate', 'dissatisfactory', 'dissimilarities', 'dissatisfactory', 'disable', 'disagree', 'onynx', 'onion', 'onbaord', 'online']
         child = pexpect.spawnu("python3 {}".format(file))
         test1 = tests[random.randint(0, len(tests) - 1)]
         test2 = tests[random.randint(0, len(tests) - 1)]
+        print(test1)
+        print(test2)
         child.sendline(test1)
         child.sendline(test2)
-        assess(child, f'ch8_11.py test{i + 1}', prefix(test1, test2))
+        assess(child, f'ch8_13.py test{i + 1}', str(prefix(test1, test2)))
     
     
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
