@@ -90,18 +90,25 @@ def b_sanitize(before):
         pass
     return parts
 
-def assess(child, pset, phrase, read=""):
+def assess(child, pset, answer_key, read=""):
     """
     assesses the output of the calling function for correctness, reports the output
     """
     # check the correctness of the submission
     try:
-        child.expect_exact(phrase)
+        child.expect_exact(answer_key)
         # pass
-        print(f"{BY}Output is correct!\n\n{G}{read}{child.before}{phrase}\n\n{BY}:) {pset} == passed!{X}")
+        print(f'{BY}Output is correct!')
+        print(f'\n{G}{read}{child.before}')
+        print(f'{answer_key}')
+        print(f'\n{BY}:) {pset} == passed!{X}')
+        child.terminate
     # fail
     except:
-        print(f"{BY}Expected output of:\n\n{R}{phrase}\n\n{BY}Actual output was:\n\n{R}{read}{child.before}\n{BY}:( {pset} == failed{X}")
+        print(f'{BY}Expected output of:\n\n{R}{answer_key}')
+        print(f'\n{BY}Actual output was:\n\n{R}{read}{child.before}')
+        print(f'{BY}:( {pset} == failed{X}')
+        child.terminate
    
    
 def getNumbers(string):
@@ -293,7 +300,28 @@ def child_selector(option, file):
     if option == 'ch8_13.py':
         return ch8_13(file)
     
+    # Sienna Green 2018 Problems
+    if option == 'g1_2018.py':
+        return g1_2018(file)
+    if option == 'g2_2018.py':
+        return g2_2018(file)
+    if option == 'g3_2018.py':
+        return g3_2018(file)
+    if option == 'g4_2018.py':
+        return g4_2018(file)
+    if option == 'g5_2018.py':
+        return g5_2018(file)
+    if option == 'g6_2018.py':
+        return g6_2018(file)
+    if option == 'g7_2018.py':
+        return g7_2018(file)
     
+    # random
+    if option == 'rock_paper_scissors.py':
+        return rock_paper_scissors(file)
+    
+    
+    # old stuff
     if option == 'slices.py':
         return slices(file)
     if option == 'madlib.py':
@@ -1891,7 +1919,225 @@ def ch8_13(file):
         assess(child, f'ch8_13.py test{i + 1}', str(prefix(test1, test2)))
     
     
+#++++++++++++++++++++++++++++SIENNA Green 2018++++++++++++++++++++++++++++++++++
+
+def g1_2018(file):
+    def fourthsum(n):
+        result = 0
+        for i in range(1, n + 1):
+            result += i**4
+        return result
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    n = random.randint(0, 9)
+    child.sendline(str(n))
+    assess(child, 'g1_2018.py', str(fourthsum(n)))
+
+
+def g2_2018(file):
+    def test(first_symbol, second_symbol):
+        if first_symbol == 'Rock':
+            if second_symbol == 'Scissors' or second_symbol == 'Lizard' or second_symbol == 'Zombie':
+                return first_symbol
+            elif first_symbol == second_symbol:
+                return 'Tie'
+            else:
+                return second_symbol
+        elif first_symbol == 'Paper':
+            if second_symbol == 'Rock' or second_symbol == 'Spock' or second_symbol == 'LargeHadronCollider':
+                return first_symbol
+            elif first_symbol == second_symbol:
+                return 'Tie'
+            else:
+                return second_symbol
+        elif first_symbol == 'Scissors':
+            if second_symbol == 'Paper' or second_symbol == 'Lizard' or second_symbol == 'Zombie':
+                return first_symbol
+            elif first_symbol == second_symbol:
+                return 'Tie'
+            else:
+                return second_symbol
+        elif first_symbol == 'Lizard':
+            if second_symbol == 'Paper' or second_symbol == 'Spock' or second_symbol == 'LargeHadronCollider':
+                 return first_symbol
+            elif first_symbol == second_symbol:
+                return 'Tie'
+            else: 
+                return second_symbol
+        elif first_symbol == 'Spock':
+            if second_symbol == 'Rock' or second_symbol == 'Scissors' or second_symbol == 'Collider':
+                 return first_symbol
+            elif first_symbol == second_symbol:
+                return 'Tie'
+            else: 
+                return second_symbol
+        elif first_symbol == 'Zombie':
+            if second_symbol == 'Paper' or second_symbol == 'Lizard' or second_symbol == 'Spock':
+                 return first_symbol
+            elif first_symbol == second_symbol:
+                return 'Tie'
+            else: 
+                return second_symbol
+        else:
+            if second_symbol == 'Rock' or second_symbol == 'Scissors' or second_symbol == 'Zombie':
+                 return first_symbol
+            elif first_symbol == second_symbol:
+                return 'Tie'
+            else: 
+                return second_symbol  
+    
+    symbols = ['Rock', 'Paper', 'Scissors', 'Lizard', 'Spock', 'Zombie', 'LargeHadronCollider']
+    child = pexpect.spawnu("python3 {}".format(file))
+    first = symbols[random.randint(0, len(symbols) - 1)]
+    while True:
+        second = symbols[random.randint(0, len(symbols) - 1)]
+        if first != second:
+            break
+    child.sendline(first)
+    child.sendline(second)
+    assess(child, 'g2_2018.py', test(first, second))
+
+    
+def g3_2018(file):
+    def get_time(current, alarm):
+        if current < 720 and alarm < 720:
+            if current > alarm:
+                return 1440 - current + alarm
+            else:
+                return alarm - current
+        elif current < 720 and alarm > 720:
+            return alarm - current
+        else:
+            if alarm > current:
+                return alarm - current
+            else:
+                return 1440 - current + alarm
+        
+    current_hour = random.randint(7, 23)
+    current_minute = random.randint(10, 58)
+    current_time = current_hour * 60 + current_minute
+    alarm_hour = random.randint(7, 23)
+    alarm_minute = random.randint(10, 58)
+    alarm_time = alarm_hour * 60 + alarm_minute
+    
+    duration = get_time(current_time, alarm_time)
+    hours = duration // 60
+    minutes  = duration % 60
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(str(current_hour))
+    child.sendline(str(current_minute))
+    child.sendline(str(alarm_hour))
+    child.sendline(str(alarm_minute))
+    assess(child, 'g3_2018.py', f'{hours} {minutes}')
+    
+    
+def g4_2018(file):
+    print('Under Construction :(')
+    '''
+    word = dictionary[random.randint(0, len(dictionary) - 1)]
+    num_of_indices = random.randint(2, int(len(word)/2))
+    indices = []
+    
+    for each in range(num_of_indices):
+        index = 
+        indices.append(eval(input()) - 1)
+
+    indices.sort()
+    output = ''
+    for i in range(len(word)):
+        if i not in indices:
+            output += word[i]
+  
+    print(output)
+    '''
+
+def g5_2018(file):
+    tests = [['Elvis', 'Lives!'], ['Astronomer', 'moon starers'],
+            ['clothes pins', 'so let\'s pinch'], 
+            ['Slot machines', 'Cash lost in \'em'],
+            ['A registrant\'s friend', 'Transfinder is great!!!']]
+    
+    def sterilize(word):
+        # removes any chars other than alpha
+        word = word.strip()
+        word = word.lower()
+        sterilized = ''
+        for each in word:
+            if each.isalpha():
+                sterilized += each
+        return sterilized
+    
+    
+    def uniqe_letters(sterilized):
+        # collects a copy of each uniqe letter in sorted order
+        letters = []
+        for each in sterilized:
+            if each not in letters:
+                letters.append('each')
+        letters.sort()
+        return letters
+        
+    
+    def compare_lists(list1, list2):
+        if list1 == list2:
+            return True
+        else:
+            return False
+    
+    for i in range(4):
+        first = tests[i][0]
+        second = tests[i][1]
+        child = pexpect.spawnu("python3 {}".format(file))
+        child.sendline(first)
+        child.sendline(second)
+        
+        first = sterilize(first)
+        first = uniqe_letters(first)
+        
+        second = sterilize(second)
+        second = uniqe_letters(second)
+    
+        if compare_lists(first, second):
+            answer_key = 'YES'
+        else:
+            answer_key = 'NO'
+            
+        assess(child, f'g5_2018.py Case{i + 1}', answer_key)
+        
+
+def g6_2018(file):
+    print('Under Construction :(')
+
+    
+def g7_2018(file):
+    print('Under Construction :(')
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def rock_paper_scissors(file):
+    def test(first, second):
+        combined = first + second
+        if 'PAPER' in combined and 'ROCK' in combined:
+            return 'PAPER WINS'
+        elif 'SCISSORS' in combined and 'PAPER' in combined:
+            return 'SCISSORS WINS'
+        elif 'ROCK' in combined and 'SCISSORS' in combined:
+            return 'ROCK WINS'
+        else:
+            return "TIE"
+        
+        
+    tests = ['ROCK', 'PAPER', 'SCISSORS']
+    for i in range(3):
+        child = pexpect.spawnu("python3 {}".format(file))
+        first = tests[i % 3]
+        second =  tests[(i + 1) % 3]
+        child.sendline(first)
+        child.sendline(second)  
+        answer_key = test(first, second)
+        
+        assess(child, f'rock_paper_scissors.py Case{i + 1}', answer_key)
+        
+            
 
 def slices(file):
     """
