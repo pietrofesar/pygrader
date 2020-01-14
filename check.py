@@ -1883,8 +1883,6 @@ def ch8_13(file):
         child = pexpect.spawnu("python3 {}".format(file))
         test1 = tests[random.randint(0, len(tests) - 1)]
         test2 = tests[random.randint(0, len(tests) - 1)]
-        print(test1)
-        print(test2)
         child.sendline(test1)
         child.sendline(test2)
         assess(child, f'ch8_13.py test{i + 1}', str(prefix(test1, test2)))
