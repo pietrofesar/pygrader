@@ -20,7 +20,7 @@ Todo:
     
     
 Author: Rocco Pietofesa
-Date: 9/13/19
+Date: 1/14/20
 Please credit author for any use/modification of this base program
 Please send donation to pietrofesar@gmail.com via PayPal if you find this useful
 """
@@ -375,17 +375,13 @@ def ch1_2(file):
     phrase = 'FFFF  U    U  N    N\r\nF     U    U  NN   N\r\nFFFF  U    U  N N  N\r\nF     U    U  N  N N\r\nF      UUUU   N   NN\r\n'
     # check the correctness of the submission
     assess(child, "ch1_2.py", phrase)
-    if child.isalive:
-            child.kill(2)
-
+    
 
 def ch1_3(file):
     child = pexpect.spawnu('python3 {}'.format(file))
     phrase = ' ---------\r\n|  O   O  |\r\n|    U    |\r\n|  \___/  |\r\n|         |\r\n ---------'
     # check the correctness of the submission
     assess(child, "ch1_3.py", phrase)
-    if child.isalive:
-            child.kill(2)
 
 
 def ch1_4(file):
@@ -395,27 +391,21 @@ def ch1_4(file):
                 '{0:<7d}{1:<7d}{2:d}\r\n'.format(4, 16, 64)
     # check the correctness of the submission
     assess(child, "ch1_4.py", phrase)
-    if child.isalive:
-            child.kill(2)
- 
+    
  
 def ch1_5(file):
     child = pexpect.spawnu('python3 {}'.format(file))
     phrase = str((9.5 *4.5-2.5*3)/(45.5-3.5))
     # check the correctness of the submission
     assess(child, "ch1_5.py", phrase)
-    if child.isalive:
-            child.kill(2)
-            
+    
 
 def ch1_6(file):
     child = pexpect.spawnu('python3 {}'.format(file))
     phrase = 'area is {0:.2f}\r\nperimeter is {1:.2f}\r\n'.format(4.5 * 7.9, (2 * 4.5 + 2 * 7.9))
     # check the correctness of the submission
     assess(child, "ch1_6.py", phrase)
-    if child.isalive:
-            child.kill(2)
-
+    
 #++++++++++++++++++++++ chapter 2 ++++++++++++++++++++++++++++++++++++++
 
 def ch2_1(file):
@@ -425,9 +415,7 @@ def ch2_1(file):
     child.sendline('24')
     # check the correctness of the submission
     assess(child, "ch2_1.py", phrase)
-    if child.isalive:
-            child.kill(2)
-
+    
 
 def ch2_2(file):
     
@@ -437,11 +425,8 @@ def ch2_2(file):
     length = round(random.uniform(15, 1), 1)
     child.sendline('{}, {}'.format(radius, length))
     phrase = 'The area is {}\r\nThe volume is {}'.format(PI * radius**2, PI * radius**2 * length)
-    
     assess(child, "ch2_2.py", phrase)
-    if child.isalive:
-            child.kill(2)
- 
+    
  
 def ch2_3(file):
     
@@ -449,22 +434,16 @@ def ch2_3(file):
     feet = round(random.uniform(30, 1), 2)
     child.sendline(str(feet))
     phrase = '{} feet is {} meters'.format(feet, feet * .305)
-    
     assess(child, "ch2_3.py", phrase)
-    if child.isalive:
-            child.kill(2)
+    
             
-
 def ch2_4(file):
     
     child = pexpect.spawnu("python3 {}".format(file))
     pounds = round(random.uniform(200, 1), 2)
     child.sendline(str(pounds))
     phrase = '{} pounds is {} kilograms'.format(pounds, pounds * .454)
-    
     assess(child, "ch2_4.py", phrase)
-    if child.isalive:
-            child.kill(2)    
 
 
 def ch2_5(file):
@@ -474,10 +453,7 @@ def ch2_5(file):
     rate = round(random.uniform(20, 10))
     child.sendline('{}, {}'.format(subtotal, rate))
     phrase = 'The gratuity is {0:.2f} and the total is {1:.2f}'.format(subtotal * (rate/100), subtotal * (1 + (rate/100)))
-    
     assess(child, "ch2_5.py", phrase)
-    if child.isalive:
-            child.kill(2) 
             
             
 def ch2_6(file):
@@ -486,11 +462,8 @@ def ch2_6(file):
     num = random.randint(0, 1000)
     child.sendline(str(num))
     phrase = 'The sum of the digits is {}'.format((num % 10) + ((num // 10) % 10) + ((num // 100) % 10))
-    
     # check the correctness of the submission
     assess(child, "ch2_6.py", phrase)
-    if child.isalive:
-            child.kill(2) 
             
 
 def ch2_7(file):
@@ -499,10 +472,7 @@ def ch2_7(file):
     minutes = random.randint(0, 1000000000)
     child.sendline(str(minutes))
     phrase = '{} minutes is approximately {} years and {} days'.format(minutes, minutes // 525600, (minutes % 525600) // 1440)
-    
     assess(child, "ch2_7.py", phrase)
-    if child.isalive:
-            child.kill(2) 
 
 
 def ch2_8(file):
@@ -512,10 +482,7 @@ def ch2_8(file):
     for each in data:
         child.sendline(str(each))
     phrase = 'The energy needed is {:.1f}'.format(data[0] * (data[2] - data[1]) * 4184)
-    
     assess(child, "ch2_8.py", phrase)
-    if child.isalive:
-            child.kill(2) 
             
             
 def ch2_9(file):
@@ -526,10 +493,7 @@ def ch2_9(file):
     child.sendline(str(t))
     child.sendline(str(v))
     phrase = 'The wind chill index is {:.5f}'.format(35.74 + 0.621 * t - 35.75 * v**0.16 + 0.4275 * t * v**0.16)
-    
     assess(child, "ch2_9.py", phrase)
-    if child.isalive:
-            child.kill(2) 
 
 
 def ch2_10(file):
@@ -539,11 +503,8 @@ def ch2_10(file):
     a = round(random.uniform(10, 3), 1)
     child.sendline('{}, {}'.format(v, a))
     phrase = 'The minimum runway length for this airplane is {:.3f} meters'.format((v**2)/(2*a))
-    
     assess(child, "ch2_10.py", phrase)
-    if child.isalive:
-            child.kill(2) 
-
+    
 
 def ch2_13(file):
     
@@ -560,11 +521,9 @@ def ch2_13(file):
     n%= 10
     data.append(n)
     phrase = '{}\r\n{}\r\n{}\r\n{}'.format(data[0], data[1], data[2], data[3])
-    
     assess(child, "ch2_13.py", phrase)
-    if child.isalive:
-            child.kill(2) 
-
+    
+    
 def ch2_14(file):
     
     child = pexpect.spawnu("python3 {}".format(file))
@@ -580,8 +539,6 @@ def ch2_14(file):
     area = (s * (s - s1) * (s - s2) * (s - s3))**.5
     phrase = 'The area of the triangle is {:.1f}'.format(area)
     assess(child, "ch2_14.py", phrase)
-    if child.isalive:
-            child.kill(2)  
             
 
 def ch2_15(file):
@@ -591,9 +548,6 @@ def ch2_15(file):
     child.sendline(str(s))
     phrase = 'The area of the hexagon is {0:.2f}'.format(((3*3**.5) / 2) * s**2)
     assess(child, "ch2_15.py", phrase)
-    if child.isalive:
-            child.kill(2)  
-            
 
 
 def ch2_18(file):
@@ -619,9 +573,6 @@ def ch2_18(file):
     phrase = f"Current time is {currentHour + offset}:{currentMinute}:{currentSecond}"
     
     assess(child, 'ch2_18.py', phrase)
-    print(child.before)
-    if child.isalive:
-            child.kill(2)  
 
 
 def ch2_19(file):
@@ -631,7 +582,6 @@ def ch2_19(file):
     years = random.randint(1, 10)
 
     child = pexpect.spawnu("python3 {}".format(file))
-    
     child.sendline(str(investmentAmount))
     child.sendline(str(annualInterestRate))
     child.sendline(str(years))
@@ -641,10 +591,7 @@ def ch2_19(file):
     numberOfMonths = years * 12
     futureInvestmentAmount = investmentAmount * (1 + monthlyInterestRate) ** numberOfMonths
     phrase = f"Accumulated value is ${futureInvestmentAmount:.2f}"
-
     assess(child, 'ch2_19.py', phrase)
-    if child.isalive:
-            child.kill(2)  
 
 
 def ch2_20(file):
@@ -655,10 +602,7 @@ def ch2_20(file):
     child.sendline(f"{balance}, {rate}")
     interest = balance * (rate / 1200)
     phrase = f"The interest is ${interest:.2f}"
-    
     assess(child, 'ch2_20.py', phrase)
-    if child.isalive:
-            child.kill(2) 
 
 
 def ch2_21(file):
@@ -670,10 +614,8 @@ def ch2_21(file):
     for i in range(5):
         m1 = (principal + m1) * (1 + .00417)
     phrase = f"After the sixth month, the account value is ${m1:.2f}"
-    
     assess(child, 'ch2_21.py', phrase)
-    if child.isalive:
-            child.kill(2) 
+    
 
 #++++++++++++++++++++++++ Chapter 3 ++++++++++++++++++++++++++++++++++++++++++++
     
@@ -686,8 +628,7 @@ def ch3_1(file):
     area = (3 * math.sqrt(3) / 2) * math.pow(side, 2)
     phrase = f"The area of the pentagon is {area:.2f}"
     assess(child, "ch3_1.py", phrase)
-    if child.isalive:
-            child.kill(2)  
+      
 
 def ch3_2(file):
     
@@ -706,8 +647,6 @@ def ch3_2(file):
 
     phrase = f"The distance between two points is {d:.4f} km"
     assess(child, "ch3_2.py", phrase)
-    if child.isalive:
-            child.kill(2)  
     
     
 def ch3_4(file):
@@ -720,8 +659,6 @@ def ch3_4(file):
 
     phrase = f"The area of a pentagon is {area:.2f}"
     assess(child, "ch3_4.py", phrase)
-    if child.isalive:
-            child.kill(2)  
     
 
 def ch3_5(file):
@@ -737,27 +674,20 @@ def ch3_5(file):
 
     phrase = f"The area of a pentagon is {area:.2f}"
     assess(child, "ch3_5.py", phrase)
-    if child.isalive:
-            child.kill(2)  
 
 
 def ch3_6(file):
     
     child = pexpect.spawnu("python3 {}".format(file))
     n = random.randint(0, 127)
-    
     child.sendline(str(n))
-    
     phrase = f"The character is {chr(n)}"
     assess(child, "ch3_6.py", phrase)
-    if child.isalive:
-            child.kill(2)      
             
             
 def ch3_7(file):
     
     child = pexpect.spawnu("python3 {}".format(file))
-    
     child.expect(pexpect.EOF)
     if child.before.strip() in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
         # pass
@@ -765,8 +695,6 @@ def ch3_7(file):
     # fail
     else:
         print(f"{BY}Expected output of:\n\n{R}{'a capital letter'}\n{BY}Actual output was:\n\n{R}{child.before}\n{BY}:( ch3_7.py == failed{X}")
-    if child.isalive:
-            child.kill(2)      
             
 
 def ch3_11(file):
@@ -775,7 +703,7 @@ def ch3_11(file):
     n = random.randint(0, 9999)
     
     child.sendline(str(n))
-    
+
     thousands = n // 1000
     remainder = n % 1000
     hundreds = remainder // 100
@@ -785,8 +713,7 @@ def ch3_11(file):
     
     phrase = f"{n} reversed is {ones}{tens}{hundreds}{thousands}"
     assess(child, "ch3_11.py", phrase)
-    if child.isalive:
-            child.kill(2)      
+    
             
 #++++++++++++++++++++++++++++++ Chapter 4 ++++++++++++++++++++++++++++++++++++++
 
@@ -808,26 +735,19 @@ def ch4_1(file):
     while data[3] >= 0:
         data = genCoefficients()
     phrase = "The equation has no real roots"
-    
     child = pexpect.spawnu("python3 {}".format(file))
     child.sendline(f"{data[0]}, {data[1]}, {data[2]}")
-   
     assess(child, "ch4_1.py case 1", phrase)
-    if child.isalive:
-            child.kill(2)       
     
     # test case 2: d == 0, one root
     while data[3] != 0:
         data = genCoefficients()
     singleRoot = -data[1] / (2 * data[0])
     phrase = f"The root is {singleRoot:.2f}"
-    
     child = pexpect.spawnu("python3 {}".format(file))
     child.sendline(f"{data[0]}, {data[1]}, {data[2]}")
-   
     assess(child, "ch4_1.py case 2", phrase)
-    if child.isalive:
-            child.kill(2) 
+     
     
     # test case 3: d > 0, two roots
     while data[3] <= 0:
@@ -835,13 +755,9 @@ def ch4_1(file):
     pRoot = (-data[1] + math.pow(data[3], .5)) / (2 * data[0])
     nRoot = (-data[1] - math.pow(data[3], .5)) / (2 * data[0])
     phrase = f"The roots are {pRoot:.2f} and {nRoot:.2f}"
-    
     child = pexpect.spawnu("python3 {}".format(file))
     child.sendline(f"{data[0]}, {data[1]}, {data[2]}")
-   
     assess(child, "ch4_1.py case 3", phrase)
-    if child.isalive:
-            child.kill(2) 
 
 
 def ch4_2(file):
@@ -856,7 +772,6 @@ def ch4_2(file):
     child.sendline(str(total))
     phrase = f"{data[0]} + {data[1]} + {data[2]} = {total} is True"
     assess(child, "ch4_2.py: case 1", phrase, f'{message} ')
-    child.terminate()
     
     child = pexpect.spawnu("python3 {}".format(file))
     message = child.read_nonblocking(size=20, timeout=-1).strip()
@@ -868,7 +783,6 @@ def ch4_2(file):
     child.sendline(str(total))
     phrase = f"{data[0]} + {data[1]} + {data[2]} = {total} is False"
     assess(child, "ch4_2.py: case 2", phrase, f'{message} ')
-    child.terminate()
     
     
 def ch4_3(file):
@@ -890,7 +804,6 @@ def ch4_3(file):
     y = (data[0] * data[5] - data[4] * data[2]) / (data[0] * data[3] - data[1] * data[2])
     phrase = f"x is {x:.1f} and y is {y:.1f}"
     assess(child, "ch4_3.py: case 1", phrase)
-    child.terminate()
     
     # case 2
     data = genCoefficients()
@@ -901,7 +814,6 @@ def ch4_3(file):
     child.sendline(f"{data[0]}, {data[1]}, {data[2]}, {data[3]}, {data[4]}, {data[5]}")
     phrase = "The equation has no solution"
     assess(child, "ch4_3.py: case 2", phrase)
-    child.terminate()
     
 
 def ch4_4(file):
@@ -930,7 +842,6 @@ def ch4_4(file):
     child.sendline(str(total))
     phrase = f"{data[0]} + {data[1]} = {total} is True"
     assess(child, "ch4_4 .py: case 1", phrase, message)
-    child.terminate()
     
     child = pexpect.spawnu("python3 {}".format(file))
     message = child.read_nonblocking(size=15, timeout=-1).strip()
@@ -940,7 +851,6 @@ def ch4_4(file):
     child.sendline(str(total))
     phrase = f"{data[0]} + {data[1]} = {total} is False"
     assess(child, "ch4_4.py: case 2", phrase, message)
-    child.terminate()
     
 
 def ch4_5(file):
@@ -952,10 +862,8 @@ def ch4_5(file):
         child = pexpect.spawnu("python3 {}".format(file))
         child.sendline(str(day))
         child.sendline(str(f))
-        
         phrase = f'Today is {days[day]} and the future day is {days[future]}'
         assess(child, f'ch4_5.py try {i + 1}', phrase)
-        child.terminate()
         
 
 def ch4_6(file):
@@ -990,7 +898,6 @@ def ch4_6(file):
         s2 = 'Obese'
     phrase = f'{s1}\r\n{s2}'
     assess(child, f'ch4_6.py', phrase)
-    child.terminate()
     
 
 def ch4_7(file):
@@ -1046,7 +953,7 @@ def ch4_7(file):
         money = getMoney(amount[i])
         phrase = getResult(amount[i], money)
         assess(child, f'ch4_7.py case {i + 2}', phrase)
-        child.terminate()
+        
     
 def ch4_8(file):
     
@@ -1059,10 +966,8 @@ def ch4_8(file):
         for j in range(3):
             if data[i][j] != greatest and data[i][j] != lowest:
                 middle = data[i][j]
-            
         phrase = f'max: {greatest} middle: {middle} min: {lowest}'
         assess(child, f'ch4_8.py case {i + 1}', phrase)
-        child.terminate()
 
 
 def ch4_9(file):
@@ -1080,20 +985,17 @@ def ch4_9(file):
         data = getData()
     child.sendline(f'{data[0]}, {data[1]}')
     child.sendline(f'{data[2]}, {data[3]}')
-    
     phrase = 'Package 1 has the better price.'
     assess(child, f'ch4_9.py case 1', phrase)
-    child.terminate()
+   
     
     child = pexpect.spawnu("python3 {}".format(file))
     while data[0]/data[1] > data[2]/data[3]:
         data = getData()
     child.sendline(f'{data[0]}, {data[1]}')
     child.sendline(f'{data[2]}, {data[3]}')
-    
     phrase = 'Package 2 has the better price.'
     assess(child, f'ch4_9.py case 2', phrase)
-    child.terminate()
 
 
 #+++++++++++++++++++++++++++++ Chapter 5 +++++++++++++++++++++++++++++++++++++++
@@ -1126,20 +1028,13 @@ def ch5_1(file):
     phrase += f'The number of negatives is {negatives}\r\n'
     phrase += f'The total is {total}\r\n'
     phrase += f'The average is {average:.2f}\r\n'
-    
-    # generate python instance
     child = pexpect.spawnu("python3 {}".format(file))
-    
     # send the input
     for i in integers:
         child.sendline(str(i))
-    
     # test the output
     assess(child, f'ch5_1.py Case 1', phrase)
-    child.terminate()
-
     # test case 2
-    # generate python instance
     child = pexpect.spawnu("python3 {}".format(file))
     # send the input
     child.sendline(str(0))
@@ -1147,7 +1042,6 @@ def ch5_1(file):
     phrase = 'You didn\'t enter any number\r\n'
     # test the output
     assess(child, f'ch5_1.py Case 2', phrase)
-    child.terminate()
 
 
 def ch5_2(file):
@@ -1207,7 +1101,6 @@ def ch5_2(file):
     duration = time.time() - start
     phrase = f'You got 0 out of 10 correct\r\nTest time is {duration:.1f} seconds'
     assess(child, f'ch5_2.py Case 2', phrase)
-    child.terminate()
 
 
 def ch5_3(file):
@@ -1719,7 +1612,9 @@ def ch6_13(file):
 #++++++++++++++++++++++++Chapter 8++++++++++++++++++++++++++++++++++++++++++++++
 
 def ch8_1(file):
-    tests = [['123456789', 'Valid SSN'], ['1234567890111213', 'Invalid SSN'], ['123-45-6789', 'Valid SSN'], ['123p45p6789', 'Invalid SSN'], ['1234567ok', 'Invalid SSN']]
+    tests = [['123456789', 'Valid SSN'], ['1234567890111213', 'Invalid SSN'],
+            ['123-45-6789', 'Valid SSN'], ['123p45p6789', 'Invalid SSN'],
+            ['1234567ok', 'Invalid SSN']]
     for i in range(5):
         child = pexpect.spawnu("python3 {}".format(file))
         child.sendline(tests[i][0])
@@ -1809,7 +1704,8 @@ def ch8_3(file):
     
 
 def ch8_4(file):
-    words = [['apparatus', 'a', 3], ['missippi', 'i', 3], ['penelope', 'e', 3], ['sassafras', 's', 4]]
+    words = [['apparatus', 'a', 3], ['missippi', 'i', 3],
+            ['penelope', 'e', 3], ['sassafras', 's', 4]]
     child = pexpect.spawnu("python3 {}".format(file))
     index = random.randint(0, 3)
     child.sendline(f'{words[index][0]}, {words[index][1]}')
@@ -1906,7 +1802,9 @@ def ch8_13(file):
         
     
     for i in range(3):
-        tests = ['disinfection', 'distance', 'diolate', 'dissatisfactory', 'dissimilarities', 'dissatisfactory', 'disable', 'disagree', 'onynx', 'onion', 'onbaord', 'online']
+        tests = ['disinfection', 'distance', 'diolate', 'dissatisfactory', 
+                'dissimilarities', 'dissatisfactory', 'disable', 'disagree',
+                'onynx', 'onion', 'onbaord', 'online']
         child = pexpect.spawnu("python3 {}".format(file))
         test1 = tests[random.randint(0, len(tests) - 1)]
         while True: 
@@ -2032,24 +1930,28 @@ def g3_2018(file):
     
     
 def g4_2018(file):
-    print('Under Construction :(')
-    '''
-    word = dictionary[random.randint(0, len(dictionary) - 1)]
-    num_of_indices = random.randint(2, int(len(word)/2))
+    tests = ['mountains', 'altruism', 'alphanumeric', 'beautiful', 
+            'parameterize', 'automobile' 'absurdism', 
+            'underwear', 'organisms']
+    word = tests[random.randint(0, len(tests) - 1)]
+    ranges = [[0, 2], [3, 4], [5, 6], [7, 9]]
     indices = []
+    n = random.randint(2, 4)
+    for each in range(n):
+        indices.append(random.randint(ranges[each][0], ranges[each][1]))
     
-    for each in range(num_of_indices):
-        index = 
-        indices.append(eval(input()) - 1)
-
-    indices.sort()
-    output = ''
+    answer_key = ''
     for i in range(len(word)):
         if i not in indices:
-            output += word[i]
-  
-    print(output)
-    '''
+            answer_key += word[i]
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(word)
+    child.sendline(str(n + 1))
+    for each in range(n):
+        child.sendline(str(indices[each]))
+    assess(child, 'g4_2018.py', answer_key)
+    
 
 def g5_2018(file):
     tests = [['Elvis', 'Lives!'], ['Astronomer', 'moon starers'],
