@@ -2008,8 +2008,49 @@ def green5_18(file):
         
 
 def green6_18(file):
-    print('Under Construction :(')
-
+    
+    def primary(N):
+        answer_key = ''
+        for base in range(2, 11):
+            max_exponent = find_exponent(N, base)
+            converted = converted_base(N, base, max_exponent)
+            if is_mono_digit(converted):
+                answer_key += f'{N} Base {base}: {converted}'
+        return answer_key
+        
+        
+    def find_exponent(N, base):    
+        # finds the greatest base quantity in the number N
+        exponent = 0
+        while N >= base**exponent:
+            exponent += 1
+        return exponent - 1
+       
+    
+    def converted_base(N, base, exponent):
+        # returns N in converted to a new base as a string
+        number = ''
+        while exponent >= 0:
+            number += str(N // base**exponent) 
+            N %= base**exponent
+            exponent -= 1
+        return number
+        
+    
+    def is_mono_digit(number):
+        for each in number:
+            if each == number[0]:
+                continue
+            else:
+                return False
+        return True
+    
+    N = random.randint(4, 1000)
+    child = pexpect.spawnu("python3 {}".format(file))
+    answer_key = primary(N)
+    child.sendline(str(N))
+    assess(child, f'green6_18.py', answer_key)
+    
     
 def green7_18(file):
     print('Under Construction :(')
