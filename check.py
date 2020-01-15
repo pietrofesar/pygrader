@@ -1947,9 +1947,9 @@ def green4_18(file):
     
     child = pexpect.spawnu("python3 {}".format(file))
     child.sendline(word)
-    child.sendline(str(n + 1))
+    child.sendline(str(n))
     for each in range(n):
-        child.sendline(str(indices[each]))
+        child.sendline(str(indices[each] + 1))
     assess(child, 'g4_2018.py', answer_key)
     
 
