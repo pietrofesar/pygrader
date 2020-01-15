@@ -301,20 +301,20 @@ def child_selector(option, file):
         return ch8_13(file)
     
     # Sienna Green 2018 Problems
-    if option == 'g1_2018.py':
-        return g1_2018(file)
-    if option == 'g2_2018.py':
-        return g2_2018(file)
-    if option == 'g3_2018.py':
-        return g3_2018(file)
-    if option == 'g4_2018.py':
-        return g4_2018(file)
-    if option == 'g5_2018.py':
-        return g5_2018(file)
-    if option == 'g6_2018.py':
-        return g6_2018(file)
-    if option == 'g7_2018.py':
-        return g7_2018(file)
+    if option == 'green1_18.py':
+        return green1_18(file)
+    if option == 'green2_18.py':
+        return green2_18(file)
+    if option == 'green3_18.py':
+        return green3_18(file)
+    if option == 'green4_18.py':
+        return green4_18(file)
+    if option == 'green5_18.py':
+        return green5_18(file)
+    if option == 'green6_18.py':
+        return green6_18(file)
+    if option == 'green7_18.py':
+        return green7_18(file)
     
     # random
     if option == 'rock_paper_scissors.py':
@@ -1819,7 +1819,7 @@ def ch8_13(file):
     
 #++++++++++++++++++++++++++++SIENNA Green 2018++++++++++++++++++++++++++++++++++
 
-def g1_2018(file):
+def green1_18(file):
     def fourthsum(n):
         result = 0
         for i in range(1, n + 1):
@@ -1832,7 +1832,7 @@ def g1_2018(file):
     assess(child, 'g1_2018.py', str(fourthsum(n)))
 
 
-def g2_2018(file):
+def green2_18(file):
     def test(first_symbol, second_symbol):
         if first_symbol == 'Rock':
             if second_symbol == 'Scissors' or second_symbol == 'Lizard' or second_symbol == 'Zombie':
@@ -1896,7 +1896,7 @@ def g2_2018(file):
     assess(child, 'g2_2018.py', test(first, second))
 
     
-def g3_2018(file):
+def green3_18(file):
     def get_time(current, alarm):
         if current < 720 and alarm < 720:
             if current > alarm:
@@ -1929,7 +1929,7 @@ def g3_2018(file):
     assess(child, 'g3_2018.py', f'{hours} {minutes}')
     
     
-def g4_2018(file):
+def green4_18(file):
     tests = ['mountains', 'altruism', 'alphanumeric', 'beautiful', 
             'parameterize', 'automobile' 'absurdism', 
             'underwear', 'organisms']
@@ -1953,7 +1953,7 @@ def g4_2018(file):
     assess(child, 'g4_2018.py', answer_key)
     
 
-def g5_2018(file):
+def green5_18(file):
     tests = [['Elvis', 'Lives!'], ['Astronomer', 'moon starers'],
             ['clothes pins', 'so let\'s pinch'], 
             ['Slot machines', 'Cash lost in \'em'],
@@ -2007,11 +2007,11 @@ def g5_2018(file):
         assess(child, f'g5_2018.py Case{i + 1}', answer_key)
         
 
-def g6_2018(file):
+def green6_18(file):
     print('Under Construction :(')
 
     
-def g7_2018(file):
+def green7_18(file):
     print('Under Construction :(')
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
