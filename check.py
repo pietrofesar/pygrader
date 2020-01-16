@@ -2015,7 +2015,7 @@ def green6_18(file):
             max_exponent = find_exponent(N, base)
             converted = converted_base(N, base, max_exponent)
             if is_mono_digit(converted):
-                answer_key += f'{N} Base {base}: {converted}'
+                answer_key += f'{N} Base {base}: {converted}\r\n'
         return answer_key
         
         
@@ -2045,15 +2045,65 @@ def green6_18(file):
                 return False
         return True
     
-    N = random.randint(4, 1000)
+    
     child = pexpect.spawnu("python3 {}".format(file))
-    answer_key = primary(N)
+    while True:
+        N = random.randint(4, 1000)
+        answer_key = primary(N)
+        if answer_key != '':
+            break
     child.sendline(str(N))
     assess(child, f'green6_18.py', answer_key)
     
     
 def green7_18(file):
-    print('Under Construction :(')
+    
+    def get_sets(cards):
+        sets = []
+        if '1DSR' in cards and '1OSV' in cards and '1PSG' in cards:
+            sets.append('1DSR 1OSV 1PSG')
+        if '1DSR' in cards and '2DHV' in cards and '3DLG' in cards:
+            sets.append('1DSR 2HDV 3DLG')
+        if '1OHG' in cards and '2OLV' in cards and '3OSR' in cards:
+            sets.append('1OHG 2OLV 3OSR')
+        if '1PSR' in cards and '2DSR' in cards and '3OSR' in cards:
+            sets.append('1PSR 2DSR 3OSR')
+        if '2DSR' in cards and '2OLV' in cards and '2PHG' in cards:
+            sets.append('2DSR 2OLV 2PHG')
+        if '3DLG' in cards and '3OSR' in cards and '3PHV' in cards:
+            sets.append('3DLG 3OSR 3PHV')
+        sets.sort()
+        return sets
+        
+    def generate_test_cards():
+        while True:
+            num_of_cards = random.randint(3, 12)
+            list_of_cards = ['1DSR', '3OSR', '2PHG', '3PHV', '1PSR', '2DHV', 
+                            '3DLG', '1PSG', '2DSR', '1OSV', '1OHG', '2OLV']
+            test_cards = []
+            for n in range(num_of_cards):
+                while True:
+                    i = random.randint(0, len(list_of_cards) - 1)
+                    if list_of_cards[i] not in  test_cards:
+                        test_cards.append(list_of_cards[i])
+                        break
+            if len(get_sets(test_cards)) != 0:
+                break
+        return num_of_cards, test_cards   
+        
+    n, test_cards = generate_test_cards()
+    sets = get_sets(test_cards)
+    answer_key = ''
+    for each in sets:
+        answer_key += f'{each}\r\n'
+       
+        
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(str(n))
+    for each in test_cards:
+        child.sendline(each)
+    assess(child, f'green7_18.py', answer_key)
+    
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def rock_paper_scissors(file):
