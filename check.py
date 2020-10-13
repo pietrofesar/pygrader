@@ -1006,7 +1006,7 @@ def ch4_9(file):
         p1, w1, p2, w2 = getData()
     child.sendline(f'{w1}, {p1}')
     child.sendline(f'{w2}, {p2}')
-    phrase = 'Package 1 has the better price.'
+    phrase = f'Package1: ${p1/w1}\nPackage 2: ${p2/w32}\nPackage 1 has the better price.'
     assess(child, f'ch4_9.py case 1', phrase)
    
     
@@ -1015,13 +1015,13 @@ def ch4_9(file):
         p1, w1, p2, w2 = getData()
     child.sendline(f'{w1}, {p1}')
     child.sendline(f'{w2}, {p2}')
-    phrase = 'Package 2 has the better price.'
+    phrase = f'Package1: ${p1/w1}\nPackage 2: ${p2/w32}\nPackage 2 has the better price.'
     assess(child, f'ch4_9.py case 2', phrase)
     
     child = pexpect.spawnu("python3 {}".format(file))
     child.sendline(f'{1}, {1}')
     child.sendline(f'{1}, {1}')
-    phrase = 'They are the same price.'
+    phrase = f'Package1: ${p1/w1}\nPackage 2: ${p2/w32}\nThey are the same price.'
     assess(child, f'ch4_9.py case 3', phrase)
 
 
