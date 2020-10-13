@@ -998,25 +998,31 @@ def ch4_9(file):
         p1 = round(random.uniform(30, 10),2)
         w2 = random.randint(25, 100)
         p2 = round(random.uniform(30, 10),2)
-        return [p1, w1, p2, w2]
+        return p1, w1, p2, w2
     
     child = pexpect.spawnu("python3 {}".format(file))
-    data = getData()
-    while data[0]/data[1] < data[2]/data[3]:
-        data = getData()
-    child.sendline(f'{data[0]}, {data[1]}')
-    child.sendline(f'{data[2]}, {data[3]}')
+    p1, w1, p2, w2 = getData()
+    while p1 / w1 < p2 / w2:
+        p1, w1, p2, w2 = getData()
+    child.sendline(f'{w1}, {p1}')
+    child.sendline(f'{w2}, {p2}')
     phrase = 'Package 1 has the better price.'
     assess(child, f'ch4_9.py case 1', phrase)
    
     
     child = pexpect.spawnu("python3 {}".format(file))
-    while data[0]/data[1] > data[2]/data[3]:
-        data = getData()
-    child.sendline(f'{data[0]}, {data[1]}')
-    child.sendline(f'{data[2]}, {data[3]}')
+    while p1 / w1 < p2 / w2:
+        p1, w1, p2, w2 = getData()
+    child.sendline(f'{w1}, {p1}')
+    child.sendline(f'{w2}, {p2}')
     phrase = 'Package 2 has the better price.'
     assess(child, f'ch4_9.py case 2', phrase)
+    
+    child = pexpect.spawnu("python3 {}".format(file))
+    child.sendline(f'{1}, {1}')
+    child.sendline(f'{1}, {1}')
+    phrase = 'They are the same price.'
+    assess(child, f'ch4_9.py case 3', phrase)
 
 
 #+++++++++++++++++++++++++++++ Chapter 5 +++++++++++++++++++++++++++++++++++++++
