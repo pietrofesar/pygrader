@@ -998,7 +998,7 @@ def ch4_9(file):
         p1 = round(random.uniform(30, 10),2)
         w2 = random.randint(25, 100)
         p2 = round(random.uniform(30, 10),2)
-        return [w1, p1, w2, p2]
+        return [p1, w1, p2, w2]
     
     child = pexpect.spawnu("python3 {}".format(file))
     data = getData()
