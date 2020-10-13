@@ -994,35 +994,35 @@ def ch4_8(file):
 def ch4_9(file):
     
     def getData():
-        w1 = random.randint(25, 100)
-        p1 = round(random.uniform(30, 10),2)
-        w2 = random.randint(25, 100)
-        p2 = round(random.uniform(30, 10),2)
-        return p1, w1, p2, w2
+        weight1 = random.randint(25, 100)
+        price1 = round(random.uniform(30, 10),2)
+        weight2 = random.randint(25, 100)
+        price2 = round(random.uniform(30, 10),2)
+        return price1, weight1, price2, weight2
     
     child = pexpect.spawnu("python3 {}".format(file))
-    p1, w1, p2, w2 = getData()
-    while p1 / w1 < p2 / w2:
-        p1, w1, p2, w2 = getData()
-    child.sendline(f'{w1}, {p1}')
-    child.sendline(f'{w2}, {p2}')
-    phrase = f'Package1: ${p1/w1}\nPackage 2: ${p2/w32}\nPackage 1 has the better price.'
-    assess(child, f'ch4_9.py case 1', phrase)
+    price1, weight1, price2, weight2 = getData()
+    while price1 / weight1 < price2 / weight2:
+        price1, weight1, price2, weight2 = getData()
+    child.sendline(f'{weight1}, {price1}')
+    child.sendline(f'{weight2}, {price2}')
+    key = f'Package 1: ${price1/weight1:.2f}\r\nPackage 2: ${price2/weight2:.2f}\r\nPackage 2 has the better price.\r\n'
+    assess(child, f'ch4_9.py case 1', key)
    
     
     child = pexpect.spawnu("python3 {}".format(file))
-    while p1 / w1 < p2 / w2:
-        p1, w1, p2, w2 = getData()
-    child.sendline(f'{w1}, {p1}')
-    child.sendline(f'{w2}, {p2}')
-    phrase = f'Package1: ${p1/w1}\nPackage 2: ${p2/w32}\nPackage 2 has the better price.'
-    assess(child, f'ch4_9.py case 2', phrase)
+    while price1 / weight1 > price2 / weight2:
+        price1, weight1, price2, weight2 = getData()
+    child.sendline(f'{weight1}, {price1}')
+    child.sendline(f'{weight2}, {price2}')
+    key = f'Package 1: ${price1/weight1:.2f}\r\nPackage 2: ${price2/weight2:.2f}\r\nPackage 1 has the better price.\r\n'
+    assess(child, f'ch4_9.py case 2', key)
     
     child = pexpect.spawnu("python3 {}".format(file))
     child.sendline(f'{1}, {1}')
     child.sendline(f'{1}, {1}')
-    phrase = f'Package1: ${p1/w1}\nPackage 2: ${p2/w32}\nThey are the same price.'
-    assess(child, f'ch4_9.py case 3', phrase)
+    key = f'Package 1: ${1:.2f}\r\nPackage 2: ${1:.2f}\r\nThey are the same price.\r\n'
+    assess(child, f'ch4_9.py case 3', key)
 
 
 #+++++++++++++++++++++++++++++ Chapter 5 +++++++++++++++++++++++++++++++++++++++
