@@ -1000,24 +1000,29 @@ def ch4_9(file):
         price2 = round(random.uniform(30, 10),2)
         return price1, weight1, price2, weight2
     
+    # case 1 Package 1 has better price
     child = pexpect.spawnu("python3 {}".format(file))
-    price1, weight1, price2, weight2 = getData()
-    while price1 / weight1 < price2 / weight2:
+    while True:
         price1, weight1, price2, weight2 = getData()
-    child.sendline(f'{weight1}, {price1}')
-    child.sendline(f'{weight2}, {price2}')
-    key = f'Package 1: ${price1/weight1:.2f}\r\nPackage 2: ${price2/weight2:.2f}\r\nPackage 2 has the better price.\r\n'
-    assess(child, f'ch4_9.py case 1', key)
-   
-    
-    child = pexpect.spawnu("python3 {}".format(file))
-    while price1 / weight1 > price2 / weight2:
-        price1, weight1, price2, weight2 = getData()
+        if price1 / weight1 < price2 / weight2:
+            break
     child.sendline(f'{weight1}, {price1}')
     child.sendline(f'{weight2}, {price2}')
     key = f'Package 1: ${price1/weight1:.2f}\r\nPackage 2: ${price2/weight2:.2f}\r\nPackage 1 has the better price.\r\n'
+    assess(child, f'ch4_9.py case 1', key)
+    
+    # case 2 Package  has better price       
+    child = pexpect.spawnu("python3 {}".format(file))
+    while True:
+        price1, weight1, price2, weight2 = getData()
+        if price1 / weight1 > price2 / weight2:
+            break
+    child.sendline(f'{weight1}, {price1}')
+    child.sendline(f'{weight2}, {price2}')
+    key = f'Package 1: ${price1/weight1:.2f}\r\nPackage 2: ${price2/weight2:.2f}\r\nPackage 2 has the better price.\r\n'
     assess(child, f'ch4_9.py case 2', key)
     
+    # case 3 packages are same price
     child = pexpect.spawnu("python3 {}".format(file))
     child.sendline(f'{1}, {1}')
     child.sendline(f'{1}, {1}')
