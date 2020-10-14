@@ -112,6 +112,7 @@ def assess(child, pset, answer_key, read=""):
    
    
 def getNumbers(string):
+    '''extracts numbers from a string'''
     numbers = []
     for each in string.split():
         if '?' in each:
@@ -122,6 +123,22 @@ def getNumbers(string):
     return numbers
 
 
+def getIntegersFromString(theString):
+    """Extracts integers from a string"""
+    i, j = 0, 1
+    operands = []
+    while j < len(theString):
+        while theString[i].isalpha():
+            i += 1
+        j = i + 1
+        while theString[i:j].isdigit():
+            j += 1
+        if theString[i:j - 1].isdigit():
+            operands.append(int(theString[i:j - 1]))
+        i, j = j, j + 1
+    return operands
+    
+    
 def child_selector(option, file):
     """ input is name of program to grade, output is call to relevant autograde function
     :param option   : the name of the file entered into command line
@@ -207,7 +224,17 @@ def child_selector(option, file):
     if option == 'ch4_8.py':
         return ch4_8(file)
     if option == 'ch4_9.py':
-        return ch4_9(file)    
+        return ch4_9(file)  
+    if option == 'ch4_10.py':
+        return ch4_10(file)
+    if option == 'ch4_11.py':
+        return ch4_11(file)
+    if option == 'ch4_12.py':
+        return ch4_12(file)
+    if option == 'ch4_16.py':
+        return ch4_16(file)
+    if option == 'ch4_24.py':
+        return ch4_24(file)
     
     if option == 'ch5_1.py':
         return ch5_1(file)
@@ -383,153 +410,140 @@ def child_selector(option, file):
 
 #++++++++++++++++++++++++++++ chapter 1 ++++++++++++++++++++++++
 def ch1_1(file):
-    child = pexpect.spawnu('python3 {}'.format(file))
-    phrase = 'Welcome to Python\r\nWelcome to Computer Science\r\nProgramming is fun\r\n'
+    child = pexpect.spawnu(f'python3 {file}')
+    key = 'Welcome to Python\r\nWelcome to Computer Science\r\nProgramming is fun\r\n'
     # check the correctness of the submission
-    assess(child, "ch_1.py", phrase)
-    if child.isalive:
-            child.kill(2)
+    assess(child, "ch1_1.py", key)
     
 
 def ch1_2(file):
-    child = pexpect.spawnu('python3 {}'.format(file))
-    phrase = 'FFFF  U    U  N    N\r\nF     U    U  NN   N\r\nFFFF  U    U  N N  N\r\nF     U    U  N  N N\r\nF      UUUU   N   NN\r\n'
+    child = pexpect.spawnu(f'python3 {file}')
+    key = 'FFFF  U    U  N    N\r\nF     U    U  NN   N\r\nFFFF  U    U  N N  N\r\nF     U    U  N  N N\r\nF      UUUU   N   NN\r\n'
     # check the correctness of the submission
-    assess(child, "ch1_2.py", phrase)
+    assess(child, "ch1_2.py", key)
     
 
 def ch1_3(file):
-    child = pexpect.spawnu('python3 {}'.format(file))
-    phrase = ' ---------\r\n|  O   O  |\r\n|    U    |\r\n|  \___/  |\r\n|         |\r\n ---------'
+    child = pexpect.spawnu(f'python3 {file}')
+    key = ' ---------\r\n|  O   O  |\r\n|    U    |\r\n|  \___/  |\r\n|         |\r\n ---------'
     # check the correctness of the submission
-    assess(child, "ch1_3.py", phrase)
+    assess(child, "ch1_3.py", key)
 
 
 def ch1_4(file):
-    child = pexpect.spawnu('python3 {}'.format(file))
-    phrase = '{0:7s}{1:7s}{2:s}\r\n'.format('a', 'a^2', 'a^3') + '{0:<7d}{1:<7d}{2:d}\r\n'.format(1, 1, 1) +\
+    child = pexpect.spawnu(f'python3 {file}')
+    key = '{0:7s}{1:7s}{2:s}\r\n'.format('a', 'a^2', 'a^3') + '{0:<7d}{1:<7d}{2:d}\r\n'.format(1, 1, 1) +\
                 '{0:<7d}{1:<7d}{2:d}\r\n'.format(2, 4, 16) + '{0:<7d}{1:<7d}{2:d}\r\n'.format(3, 9, 27) + \
                 '{0:<7d}{1:<7d}{2:d}\r\n'.format(4, 16, 64)
     # check the correctness of the submission
-    assess(child, "ch1_4.py", phrase)
+    assess(child, "ch1_4.py", key)
     
  
 def ch1_5(file):
-    child = pexpect.spawnu('python3 {}'.format(file))
-    phrase = str((9.5 *4.5-2.5*3)/(45.5-3.5))
+    child = pexpect.spawnu(f'python3 {file}')
+    key = str((9.5 *4.5-2.5*3)/(45.5-3.5))
     # check the correctness of the submission
-    assess(child, "ch1_5.py", phrase)
+    assess(child, "ch1_5.py", key)
     
 
 def ch1_6(file):
-    child = pexpect.spawnu('python3 {}'.format(file))
-    phrase = 'area is {0:.2f}\r\nperimeter is {1:.2f}\r\n'.format(4.5 * 7.9, (2 * 4.5 + 2 * 7.9))
+    child = pexpect.spawnu(f'python3 {file}')
+    key = 'area is {0:.2f}\r\nperimeter is {1:.2f}\r\n'.format(4.5 * 7.9, (2 * 4.5 + 2 * 7.9))
     # check the correctness of the submission
-    assess(child, "ch1_6.py", phrase)
+    assess(child, "ch1_6.py", key)
     
 #++++++++++++++++++++++ chapter 2 ++++++++++++++++++++++++++++++++++++++
 
 def ch2_1(file):
-    
-    child = pexpect.spawnu('python3 {}'.format(file))
-    phrase = '24 Celsius is 75.2 Fahrenheit'
+    child = pexpect.spawnu(f'python3 {file}')
+    key = '24 Celsius is 75.2 Fahrenheit'
     child.sendline('24')
     # check the correctness of the submission
-    assess(child, "ch2_1.py", phrase)
+    assess(child, "ch2_1.py", key)
     
 
 def ch2_2(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     PI = 3.14159
     radius = round(random.uniform(8, 1), 1)
     length = round(random.uniform(15, 1), 1)
     child.sendline('{}, {}'.format(radius, length))
-    phrase = 'The area is {}\r\nThe volume is {}'.format(PI * radius**2, PI * radius**2 * length)
-    assess(child, "ch2_2.py", phrase)
+    key = 'The area is {}\r\nThe volume is {}'.format(PI * radius**2, PI * radius**2 * length)
+    assess(child, "ch2_2.py", key)
     
  
 def ch2_3(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     feet = round(random.uniform(30, 1), 2)
     child.sendline(str(feet))
-    phrase = '{} feet is {} meters'.format(feet, feet * .305)
-    assess(child, "ch2_3.py", phrase)
+    key = '{} feet is {} meters'.format(feet, feet * .305)
+    assess(child, "ch2_3.py", key)
     
             
 def ch2_4(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     pounds = round(random.uniform(200, 1), 2)
     child.sendline(str(pounds))
-    phrase = '{} pounds is {} kilograms'.format(pounds, pounds * .454)
-    assess(child, "ch2_4.py", phrase)
+    key = '{} pounds is {} kilograms'.format(pounds, pounds * .454)
+    assess(child, "ch2_4.py", key)
 
 
 def ch2_5(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     subtotal = round(random.uniform(80, 1), 2)
     rate = round(random.uniform(20, 10))
     child.sendline('{}, {}'.format(subtotal, rate))
-    phrase = 'The gratuity is {0:.2f} and the total is {1:.2f}'.format(subtotal * (rate/100), subtotal * (1 + (rate/100)))
-    assess(child, "ch2_5.py", phrase)
+    key = 'The gratuity is {0:.2f} and the total is {1:.2f}'.format(subtotal * (rate/100), subtotal * (1 + (rate/100)))
+    assess(child, "ch2_5.py", key)
             
             
 def ch2_6(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     num = random.randint(0, 1000)
     child.sendline(str(num))
-    phrase = 'The sum of the digits is {}'.format((num % 10) + ((num // 10) % 10) + ((num // 100) % 10))
+    key = 'The sum of the digits is {}'.format((num % 10) + ((num // 10) % 10) + ((num // 100) % 10))
     # check the correctness of the submission
-    assess(child, "ch2_6.py", phrase)
+    assess(child, "ch2_6.py", key)
             
 
 def ch2_7(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     minutes = random.randint(0, 1000000000)
     child.sendline(str(minutes))
-    phrase = '{} minutes is approximately {} years and {} days'.format(minutes, minutes // 525600, (minutes % 525600) // 1440)
-    assess(child, "ch2_7.py", phrase)
+    key = '{} minutes is approximately {} years and {} days'.format(minutes, minutes // 525600, (minutes % 525600) // 1440)
+    assess(child, "ch2_7.py", key)
 
 
 def ch2_8(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     data = [round(random.uniform(100,20), 1), round(random.uniform(20,1), 1), round(random.uniform(20,1), 1)]
     for each in data:
         child.sendline(str(each))
-    phrase = 'The energy needed is {:.1f}'.format(data[0] * (data[2] - data[1]) * 4184)
-    assess(child, "ch2_8.py", phrase)
+    key = 'The energy needed is {:.1f}'.format(data[0] * (data[2] - data[1]) * 4184)
+    assess(child, "ch2_8.py", key)
             
             
 def ch2_9(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     t = round(random.uniform(41, -58), 1)
     v = random.randint(2, 80)
     child.sendline(str(t))
     child.sendline(str(v))
-    phrase = 'The wind chill index is {:.5f}'.format(35.74 + 0.621 * t - 35.75 * v**0.16 + 0.4275 * t * v**0.16)
-    assess(child, "ch2_9.py", phrase)
+    key = 'The wind chill index is {:.5f}'.format(35.74 + 0.621 * t - 35.75 * v**0.16 + 0.4275 * t * v**0.16)
+    assess(child, "ch2_9.py", key)
 
 
 def ch2_10(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     v = round(random.uniform(210, 80), 1)
     a = round(random.uniform(10, 3), 1)
     child.sendline('{}, {}'.format(v, a))
-    phrase = 'The minimum runway length for this airplane is {:.3f} meters'.format((v**2)/(2*a))
-    assess(child, "ch2_10.py", phrase)
+    key = 'The minimum runway length for this airplane is {:.3f} meters'.format((v**2)/(2*a))
+    assess(child, "ch2_10.py", key)
     
 
 def ch2_13(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     n = random.randint(1111, 9999)
     F = 1000
     child.sendline(str(n))
@@ -541,39 +555,36 @@ def ch2_13(file):
     data.append(n // 10)
     n%= 10
     data.append(n)
-    phrase = '{}\r\n{}\r\n{}\r\n{}'.format(data[0], data[1], data[2], data[3])
-    assess(child, "ch2_13.py", phrase)
+    key = '{}\r\n{}\r\n{}\r\n{}'.format(data[0], data[1], data[2], data[3])
+    assess(child, "ch2_13.py", key)
     
     
 def ch2_14(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     data = []
     for each in range(6):
         data.append(round(random.uniform(10,-10), 1))
     child.sendline('{}, {}, {}, {}, {}, {}'.format(data[0], data[1], data[2], data[3], data[4], data[5]))
-    phrase = '{}\r\n{}\r\n{}\r\n{}'.format(data[0], data[1], data[2], data[3])
+    key = '{}\r\n{}\r\n{}\r\n{}'.format(data[0], data[1], data[2], data[3])
     s1 = ((data[0] - data[2])**2 + (data[1] - data[3])**2)**.5
     s2 = ((data[2] - data[4])**2 + (data[3] - data[5])**2)**.5
     s3 = ((data[4] - data[0])**2 + (data[5] - data[1])**2)**.5
     s = (s1 + s2 + s3) / 2
     area = (s * (s - s1) * (s - s2) * (s - s3))**.5
-    phrase = 'The area of the triangle is {:.1f}'.format(area)
-    assess(child, "ch2_14.py", phrase)
+    key = 'The area of the triangle is {:.1f}'.format(area)
+    assess(child, "ch2_14.py", key)
             
 
 def ch2_15(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     s = round(random.uniform(15, 5), 1)
     child.sendline(str(s))
-    phrase = 'The area of the hexagon is {0:.2f}'.format(((3*3**.5) / 2) * s**2)
-    assess(child, "ch2_15.py", phrase)
+    key = 'The area of the hexagon is {0:.2f}'.format(((3*3**.5) / 2) * s**2)
+    assess(child, "ch2_15.py", key)
 
 
 def ch2_18(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     offset = random.randint(-10, -3)
     child.sendline(str(offset))
 
@@ -591,18 +602,17 @@ def ch2_18(file):
     # compute the current hour
     currentHour = totalHours % 24
    
-    phrase = f"Current time is {currentHour + offset}:{currentMinute}:{currentSecond}"
+    key = f"Current time is {currentHour + offset}:{currentMinute}:{currentSecond}"
     
-    assess(child, 'ch2_18.py', phrase)
+    assess(child, 'ch2_18.py', key)
 
 
 def ch2_19(file):
-    
     investmentAmount = random.randint(1200, 50000)
     annualInterestRate = round(random.uniform(1, 7), 2)
     years = random.randint(1, 10)
 
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(str(investmentAmount))
     child.sendline(str(annualInterestRate))
     child.sendline(str(years))
@@ -611,49 +621,46 @@ def ch2_19(file):
     monthlyInterestRate = annualInterestRate / 12
     numberOfMonths = years * 12
     futureInvestmentAmount = investmentAmount * (1 + monthlyInterestRate) ** numberOfMonths
-    phrase = f"Accumulated value is ${futureInvestmentAmount:.2f}"
-    assess(child, 'ch2_19.py', phrase)
+    key = f"Accumulated value is ${futureInvestmentAmount:.2f}"
+    assess(child, 'ch2_19.py', key)
 
 
 def ch2_20(file):
-    
     balance = random.randint(1200, 50000)
     rate = round(random.uniform(1, 7), 2)
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(f"{balance}, {rate}")
     interest = balance * (rate / 1200)
-    phrase = f"The interest is ${interest:.2f}"
-    assess(child, 'ch2_20.py', phrase)
+    key = f"The interest is ${interest:.2f}"
+    assess(child, 'ch2_20.py', key)
 
 
 def ch2_21(file):
     
     principal = random.randint(100, 1000)
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(str(principal))
     m1 = principal * (1 + .00417)
     for i in range(5):
         m1 = (principal + m1) * (1 + .00417)
-    phrase = f"After the sixth month, the account value is ${m1:.2f}"
-    assess(child, 'ch2_21.py', phrase)
+    key = f"After the sixth month, the account value is ${m1:.2f}"
+    assess(child, 'ch2_21.py', key)
     
 
 #++++++++++++++++++++++++ Chapter 3 ++++++++++++++++++++++++++++++++++++++++++++
     
 def ch3_1(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     s = round(random.uniform(15, 1), 1)
     child.sendline(str(s))
     side = 2 * s * math.sin((math.pi / 5))
     area = (3 * math.sqrt(3) / 2) * math.pow(side, 2)
-    phrase = f"The area of the pentagon is {area:.2f}"
-    assess(child, "ch3_1.py", phrase)
+    key = f"The area of the pentagon is {area:.2f}"
+    assess(child, "ch3_1.py", key)
       
 
 def ch3_2(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     data = []
     for i in range(4):
         data.append(round(random.uniform(100, -100), 1))
@@ -666,25 +673,23 @@ def ch3_2(file):
   
     d = 6371.01 * math.acos(math.sin(data[0]) * math.sin(data[2]) + math.cos(data[0]) * math.cos(data[2]) * math.cos(data[1] - data[3]))
 
-    phrase = f"The distance between two points is {d:.4f} km"
-    assess(child, "ch3_2.py", phrase)
+    key = f"The distance between two points is {d:.4f} km"
+    assess(child, "ch3_2.py", key)
     
     
 def ch3_4(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     s = round(random.uniform(15, 1), 1)
 
     child.sendline(str(s))
     area = (5 * s**2) / (4 * math.tan((math.pi / 5)))
 
-    phrase = f"The area of a pentagon is {area:.2f}"
-    assess(child, "ch3_4.py", phrase)
+    key = f"The area of a pentagon is {area:.2f}"
+    assess(child, "ch3_4.py", key)
     
 
 def ch3_5(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     n = round(random.uniform(15, 1), 1)
     s = round(random.uniform(15, 1), 1)
 
@@ -693,22 +698,20 @@ def ch3_5(file):
 
     area = (n * s**2) / (4 * math.tan((math.pi / n)))
 
-    phrase = f"The area of a pentagon is {area:.2f}"
-    assess(child, "ch3_5.py", phrase)
+    key = f"The area of a pentagon is {area:.2f}"
+    assess(child, "ch3_5.py", key)
 
 
 def ch3_6(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     n = random.randint(0, 127)
     child.sendline(str(n))
-    phrase = f"The character is {chr(n)}"
-    assess(child, "ch3_6.py", phrase)
+    key = f"The character is {chr(n)}"
+    assess(child, "ch3_6.py", key)
             
             
 def ch3_7(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.expect(pexpect.EOF)
     if child.before.strip() in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
         # pass
@@ -719,91 +722,82 @@ def ch3_7(file):
             
 
 def ch3_11(file):
-    
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     n = random.randint(0, 9999)
-    
     child.sendline(str(n))
-
     thousands = n // 1000
     remainder = n % 1000
     hundreds = remainder // 100
     remainder = n % 100
     tens = remainder // 10
     ones = remainder % 10
-    
-    phrase = f"{n} reversed is {ones}{tens}{hundreds}{thousands}"
-    assess(child, "ch3_11.py", phrase)
+    key = f"{n} reversed is {ones}{tens}{hundreds}{thousands}"
+    assess(child, "ch3_11.py", key)
     
             
 #++++++++++++++++++++++++++++++ Chapter 4 ++++++++++++++++++++++++++++++++++++++
 
 def ch4_1(file):
-    
     def genCoefficients():
         while True:
             a = random.randint(-5, 5)
             b = random.randint(-5, 5)
             c = random.randint(-5, 5)
-            d = b**2 - 4 * a * c
+            discriminant = b**2 - 4 * a * c
             if 2 * a == 0:
                 continue
             else:
-                return [a, b, c, d]
+                return a, b, c, discriminant
 
     # test case 1: d < 0, no roots
-    data = genCoefficients()
-    while data[3] >= 0:
-        data = genCoefficients()
-    phrase = "The equation has no real roots"
-    child = pexpect.spawnu("python3 {}".format(file))
-    child.sendline(f"{data[0]}, {data[1]}, {data[2]}")
-    assess(child, "ch4_1.py case 1", phrase)
+    a, b, c, discriminant = genCoefficients()
+    while discriminant >= 0:
+        a, b, c, discriminant = genCoefficients()
+    key = "The equation has no real roots"
+    child = pexpect.spawnu(f'python3 {file}')
+    child.sendline(f"{a}, {b}, {c}")
+    assess(child, "ch4_1.py case 1", key)
     
     # test case 2: d == 0, one root
-    while data[3] != 0:
-        data = genCoefficients()
-    singleRoot = -data[1] / (2 * data[0])
-    phrase = f"The root is {singleRoot:.2f}"
-    child = pexpect.spawnu("python3 {}".format(file))
-    child.sendline(f"{data[0]}, {data[1]}, {data[2]}")
-    assess(child, "ch4_1.py case 2", phrase)
+    while discriminant != 0:
+        a, b, c, discriminant = genCoefficients()
+    singleRoot = -b / (2 * a)
+    key = f"The root is {singleRoot:.2f}"
+    child = pexpect.spawnu(f'python3 {file}')
+    child.sendline(f"{a}, {b}, {c}")
+    assess(child, "ch4_1.py case 2", key)
      
-    
     # test case 3: d > 0, two roots
-    while data[3] <= 0:
-        data = genCoefficients()
-    pRoot = (-data[1] + math.pow(data[3], .5)) / (2 * data[0])
-    nRoot = (-data[1] - math.pow(data[3], .5)) / (2 * data[0])
-    phrase = f"The roots are {pRoot:.2f} and {nRoot:.2f}"
-    child = pexpect.spawnu("python3 {}".format(file))
-    child.sendline(f"{data[0]}, {data[1]}, {data[2]}")
-    assess(child, "ch4_1.py case 3", phrase)
+    while discriminant <= 0:
+        a, b, c, discriminant = genCoefficients()
+    pRoot = (-b + math.pow(discriminant, .5)) / (2 * a)
+    nRoot = (-b - math.pow(discriminant, .5)) / (2 * a)
+    key = f"The roots are {pRoot:.2f} and {nRoot:.2f}"
+    child = pexpect.spawnu(f'python3 {file}')
+    child.sendline(f"{a}, {b}, {c}")
+    assess(child, "ch4_1.py case 3", key)
 
 
 def ch4_2(file):
+    def computeSum(child):
+        message = child.read_nonblocking(size=20, timeout=-1).strip()
+        operands = []
+        for i in message:
+            if i.isdigit():
+                operands.append(int(i))
+        total = operands[0] + operands[1] + operands[2]
+        child.sendline(str(total))
+        return message, operands, total
+        
+    child = pexpect.spawnu(f'python3 {file}')
+    message, operands, total = computeSum(child)
+    key = f'{operands[0]} + {operands[1]} + {operands[2]} = {total} is True'
+    assess(child, 'ch4_2.py: case 1', key, f'{message} ')
     
-    child = pexpect.spawnu("python3 {}".format(file))
-    message = child.read_nonblocking(size=20, timeout=-1).strip()
-    data = []
-    for i in message:
-        if i.isdigit():
-            data.append(int(i))
-    total = data[0] + data[1] + data[2]
-    child.sendline(str(total))
-    phrase = f"{data[0]} + {data[1]} + {data[2]} = {total} is True"
-    assess(child, "ch4_2.py: case 1", phrase, f'{message} ')
-    
-    child = pexpect.spawnu("python3 {}".format(file))
-    message = child.read_nonblocking(size=20, timeout=-1).strip()
-    data = []
-    for i in message:
-        if i.isdigit():
-            data.append(int(i))
-    total = data[0] + data[1] + data[2] + random.randint(1, 5)
-    child.sendline(str(total))
-    phrase = f"{data[0]} + {data[1]} + {data[2]} = {total} is False"
-    assess(child, "ch4_2.py: case 2", phrase, f'{message} ')
+    child = pexpect.spawnu(f'python3 {file}')
+    message, operands, total = computeSum(child)
+    key = f'{operands[0]} + {operands[1]} + {operands[2]} = {total} is False'
+    assess(child, 'ch4_2.py: case 2', key, f'{message} ')
     
     
 def ch4_3(file):
@@ -819,59 +813,40 @@ def ch4_3(file):
     while data[0] * data[3] - data[1] * data[2] == 0:
         data = genCoefficients()
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(f"{data[0]}, {data[1]}, {data[2]}, {data[3]}, {data[4]}, {data[5]}")
     x = (data[4] * data[3] - data[1] * data[5]) / (data[0] * data[3] - data[1] * data[2])
     y = (data[0] * data[5] - data[4] * data[2]) / (data[0] * data[3] - data[1] * data[2])
-    phrase = f"x is {x:.1f} and y is {y:.1f}"
-    assess(child, "ch4_3.py: case 1", phrase)
+    key = f"x is {x:.1f} and y is {y:.1f}"
+    assess(child, "ch4_3.py: case 1", key)
     
     # case 2
     data = genCoefficients()
     while data[0] * data[3] - data[1] * data[2] != 0:
         data = genCoefficients()
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(f"{data[0]}, {data[1]}, {data[2]}, {data[3]}, {data[4]}, {data[5]}")
-    phrase = "The equation has no solution"
-    assess(child, "ch4_3.py: case 2", phrase)
+    key = "The equation has no solution"
+    assess(child, "ch4_3.py: case 2", key)
     
 
 def ch4_4(file):
+    child = pexpect.spawnu(f'python3 {file}')
+    inputOutput = child.read_nonblocking(size=18, timeout=-1)
+    operands = getIntegersFromString(inputOutput)
+    child.sendline(str(sum(operands)))
+    key = f'{operands[0]} + {operands[1]} + {operands[2]} = {sum(operands)} is True'
+    assess(child, 'ch4_4 .py: case 1', key, inputOutput)
     
-    def getOperands(message):
-        data = message.split(" ")
-        i = 0
-        while i < len(data):
-            try:
-                data[i] = int(data[i])
-                i += 1
-            except:
-                if data[i][0].isdigit():
-                    if not data[i][-1].isdigit():
-                        data[i] = int(data[i][0:-1])
-                    i += 1  
-                else:
-                    data.remove(data[i]) 
-        return data
-                
-    child = pexpect.spawnu("python3 {}".format(file))
-    message = child.read_nonblocking(size=15, timeout=-1).strip()
-    data = getOperands(message)
-            
-    total = data[0] + data[1]
-    child.sendline(str(total))
-    phrase = f"{data[0]} + {data[1]} = {total} is True"
-    assess(child, "ch4_4 .py: case 1", phrase, message)
-    
-    child = pexpect.spawnu("python3 {}".format(file))
-    message = child.read_nonblocking(size=15, timeout=-1).strip()
-    data = getOperands(message)
+    child = pexpect.spawnu(f'python3 {file}')
+    inputOutput = child.read_nonblocking(size=18, timeout=-1).strip()
+    operands = getIntegersFromString(inputOutput)
 
-    total = data[0] + data[1] + random.randint(-5, 5)
+    total = sum(operands) + random.randint(-5, 5)
     child.sendline(str(total))
-    phrase = f"{data[0]} + {data[1]} = {total} is False"
-    assess(child, "ch4_4.py: case 2", phrase, message)
+    key = f'{operands[0]} + {operands[1]} + {operands[2]} = {total} is False'
+    assess(child, "ch4_4.py: case 2", key, inputOutput)
     
 
 def ch4_5(file):
@@ -880,11 +855,11 @@ def ch4_5(file):
         day = random.randint(0, 6)
         f = random.randint(2, 6)
         future = (day + f) % 7
-        child = pexpect.spawnu("python3 {}".format(file))
+        child = pexpect.spawnu(f'python3 {file}')
         child.sendline(str(day))
         child.sendline(str(f))
-        phrase = f'Today is {days[day]} and the future day is {days[future]}'
-        assess(child, f'ch4_5.py try {i + 1}', phrase)
+        key = f'Today is {days[day]} and the future day is {days[future]}'
+        assess(child, f'ch4_5.py try {i + 1}', key)
         
 
 def ch4_6(file):
@@ -892,7 +867,7 @@ def ch4_6(file):
     feet = random.randint(4, 6)
     inch = random.randint(0, 11)
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(str(weight))
     child.sendline(str(feet))
     child.sendline(str(inch))
@@ -917,8 +892,8 @@ def ch4_6(file):
         s2 = 'Overweight'
     else:
         s2 = 'Obese'
-    phrase = f'{s1}\r\n{s2}'
-    assess(child, f'ch4_6.py', phrase)
+    key = f'{s1}\r\n{s2}'
+    assess(child, f'ch4_6.py', key)
     
 
 def ch4_7(file):
@@ -969,26 +944,26 @@ def ch4_7(file):
     # amount = round(random.uniform(0, 6), 2)
     
     for i in range(3):
-        child = pexpect.spawnu("python3 {}".format(file))
+        child = pexpect.spawnu(f'python3 {file}')
         child.sendline(str(amount[i]))
         money = getMoney(amount[i])
-        phrase = getResult(amount[i], money)
-        assess(child, f'ch4_7.py case {i + 2}', phrase)
+        key = getResult(amount[i], money)
+        assess(child, f'ch4_7.py case {i + 2}', key)
         
     
 def ch4_8(file):
     
     data = [[-8,-5,-2], [8,9,7], [15,13,14]]
     for i in range(3):
-        child = pexpect.spawnu("python3 {}".format(file))
+        child = pexpect.spawnu(f'python3 {file}')
         child.sendline(f'{data[i][0]}, {data[i][1]}, {data[i][2]}')
         greatest = max(data[i])
         lowest = min(data[i])
         for j in range(3):
             if data[i][j] != greatest and data[i][j] != lowest:
                 middle = data[i][j]
-        phrase = f'max: {greatest} middle: {middle} min: {lowest}'
-        assess(child, f'ch4_8.py case {i + 1}', phrase)
+        key = f'max: {greatest} middle: {middle} min: {lowest}'
+        assess(child, f'ch4_8.py case {i + 1}', key)
 
 
 def ch4_9(file):
@@ -1001,7 +976,7 @@ def ch4_9(file):
         return price1, weight1, price2, weight2
     
     # case 1 Package 1 has better price
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     while True:
         price1, weight1, price2, weight2 = getData()
         if price1 / weight1 < price2 / weight2:
@@ -1012,7 +987,7 @@ def ch4_9(file):
     assess(child, f'ch4_9.py case 1', key)
     
     # case 2 Package  has better price       
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     while True:
         price1, weight1, price2, weight2 = getData()
         if price1 / weight1 > price2 / weight2:
@@ -1023,13 +998,89 @@ def ch4_9(file):
     assess(child, f'ch4_9.py case 2', key)
     
     # case 3 packages are same price
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(f'{1}, {1}')
     child.sendline(f'{1}, {1}')
     key = f'Package 1: ${1:.2f}\r\nPackage 2: ${1:.2f}\r\nThey are the same price.\r\n'
     assess(child, f'ch4_9.py case 3', key)
 
 
+def ch4_10(file):
+    child = pexpect.spawnu(f'python3 {file}')
+    inputOutput = child.read_nonblocking(size=10, timeout=-1)
+    operands = getIntegersFromString(inputOutput)
+    child.sendline(str(operands[0] * operands[1]))
+    key = 'correct :)'
+    assess(child, 'ch4_10 .py: case 1', key, inputOutput)
+    
+    child = pexpect.spawnu(f'python3 {file}')
+    inputOutput = child.read_nonblocking(size=10, timeout=-1)
+    operands = getIntegersFromString(inputOutput)
+
+    total =  operands[0] * operands[1] + random.randint(1, 9)
+    child.sendline(str(total))
+    key = 'incorrect :('
+    assess(child, 'ch4_10.py: case 2', key, inputOutput)
+    
+    
+def ch4_12(file):
+    number = random.randint(-1000, 1000)
+    child = pexpect.spawnu(f'python3 {file}')
+    while not (number % 5 == 0 and number % 6 == 0):
+        number = random.randint(-1000, 1000)
+    child.sendline(str(number))
+    key = f'{number} is divisible by 5 and 6'
+    assess(child, 'ch4_12.py case 1', key)
+        
+    child = pexpect.spawnu(f'python3 {file}')
+    while not(number % 5 == 0 and number % 6 != 0):
+        number = random.randint(-1000, 1000)
+    child.sendline(str(number))
+    key = f'{number} is divisible by 5'
+    assess(child, 'ch4_12.py case 2', key)
+    
+    child = pexpect.spawnu(f'python3 {file}') 
+    while not(number % 5 != 0 and number % 6 == 0):
+        number = random.randint(-1000, 1000)
+    child.sendline(str(number))
+    key = f'{number} is divisible by 6'
+    assess(child, 'ch4_12.py case 3', key)
+    
+    child = pexpect.spawnu(f'python3 {file}') 
+    while not(number % 5 != 0 and number % 6 != 0):
+        number = random.randint(-1000, 1000)
+    child.sendline(str(number))
+    key = f'{number} is not divisible by 5 or 6'
+    assess(child, 'ch4_12.py case 4', key)
+    
+
+def ch4_16(file):
+    child = pexpect.spawnu(f'python3 {file}')
+    inputOutput = child.read_nonblocking(size=1, timeout=-1).strip()
+    if 65<= ord(inputOutput) <= 90:
+        print(f'{G}:) ch4_16.py == passed!{X}')
+    else:
+        print(f'{R}:( ch4_16.py failed{X}')
+
+def ch4_24(file):
+    def createDeck():
+        """generates a deck of cards"""
+        cards = []
+        for number in range(2, 11):
+            cards.extend([str(number) + suite for suite in ['\u2664', '\u2661', '\u2662', '\u2667']])
+        for face in 'JQKA':
+            cards.extend([face + suite for suite in  ['\u2664', '\u2661', '\u2662', '\u2667']])
+        random.shuffle(cards)
+        return cards
+    
+    cards = createDeck()
+    child = pexpect.spawnu(f'python3 {file}')
+    inputOutput = child.read_nonblocking(size=5, timeout=-1).strip()
+    print(f'{Y}{inputOutput}{X}')
+    if inputOutput in cards:
+        print(f'{G}:) ch4_24.py == passed!{X}')
+    else:
+        print(f'{R}:( ch4_24.py failed{X}')
 #+++++++++++++++++++++++++++++ Chapter 5 +++++++++++++++++++++++++++++++++++++++
 
 def ch5_1(file):
@@ -1056,24 +1107,24 @@ def ch5_1(file):
     average = total / tally
     
     # generate the output for test case 1
-    phrase = f'The number of positives is {positives}\r\n'
-    phrase += f'The number of negatives is {negatives}\r\n'
-    phrase += f'The total is {total}\r\n'
-    phrase += f'The average is {average:.2f}\r\n'
-    child = pexpect.spawnu("python3 {}".format(file))
+    key = f'The number of positives is {positives}\r\n'
+    key += f'The number of negatives is {negatives}\r\n'
+    key += f'The total is {total}\r\n'
+    key += f'The average is {average:.2f}\r\n'
+    child = pexpect.spawnu(f'python3 {file}')
     # send the input
     for i in integers:
         child.sendline(str(i))
     # test the output
-    assess(child, f'ch5_1.py Case 1', phrase)
+    assess(child, f'ch5_1.py Case 1', key)
     # test case 2
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     # send the input
     child.sendline(str(0))
     # correct output
-    phrase = 'You didn\'t enter any number\r\n'
+    key = 'You didn\'t enter any number\r\n'
     # test the output
-    assess(child, f'ch5_1.py Case 2', phrase)
+    assess(child, f'ch5_1.py Case 2', key)
 
 
 def ch5_2(file):
@@ -1082,7 +1133,7 @@ def ch5_2(file):
     WRONG_LENGTH = 26
     print(f'{BY}!!!+++Time may be off and cause a failure+++!!!{X}')
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     start = time.time()
     for i in range(10):
         # capture child out
@@ -1104,13 +1155,13 @@ def ch5_2(file):
         child.read_nonblocking(size=CORRECT_LENGTH + size, timeout=-1)
 
     duration = time.time() - start -.1
-    phrase = f'You got 10 out of 10 correct\r\nTest time is {duration:.1f} seconds'
-    assess(child, f'ch5_2.py Case 1', phrase)
+    key = f'You got 10 out of 10 correct\r\nTest time is {duration:.1f} seconds'
+    assess(child, f'ch5_2.py Case 1', key)
     child.terminate()
     
     print(f'{BY}!!!+++Time may be off and cause a failure+++!!!{X}')
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     start = time.time()
     for i in range(10):
         # capture child out
@@ -1131,93 +1182,93 @@ def ch5_2(file):
         child.read_nonblocking(size=WRONG_LENGTH + size, timeout=-1)
 
     duration = time.time() - start
-    phrase = f'You got 0 out of 10 correct\r\nTest time is {duration:.1f} seconds'
-    assess(child, f'ch5_2.py Case 2', phrase)
+    key = f'You got 0 out of 10 correct\r\nTest time is {duration:.1f} seconds'
+    assess(child, f'ch5_2.py Case 2', key)
 
 
 def ch5_3(file):
-    phrase = f'{"Kilograms":13}{"Pounds":>6}\r\n'
+    key = f'{"Kilograms":13}{"Pounds":>6}\r\n'
     kilograms = 1
     while kilograms <= 199:
         pounds = kilograms * 2.2
-        phrase += f'{kilograms:<13}{pounds:>6.1f}\r\n'
+        key += f'{kilograms:<13}{pounds:>6.1f}\r\n'
         kilograms += 2
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
-    assess(child, f'ch5_3.py', phrase)
+    child = pexpect.spawnu(f'python3 {file}')
+    assess(child, f'ch5_3.py', key)
     
     
 def ch5_4(file):
-    phrase = f'{"Miles":7}Kilometers\r\n'
+    key = f'{"Miles":7}Kilometers\r\n'
     miles = 1
     while miles <= 10:
         kilometers = miles * 1.609
-        phrase += f'{miles:<7}{kilometers:.3f}\r\n'
+        key += f'{miles:<7}{kilometers:.3f}\r\n'
         miles += 1
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
-    assess(child, f'ch5_4.py', phrase)
+    child = pexpect.spawnu(f'python3 {file}')
+    assess(child, f'ch5_4.py', key)
 
 
 def ch5_5(file):
-    phrase = f'{"Kilograms":<11}{"Pounds":<7}| {"Pounds":<7}{"Kilograms":<9}\r\n'
+    key = f'{"Kilograms":<11}{"Pounds":<7}| {"Pounds":<7}{"Kilograms":<9}\r\n'
     kilograms1 = 1
     pounds2 = 20
     while kilograms1 <= 199:
         pounds1 = kilograms1 * 2.2 
         kilograms2 = pounds2 * .4536
-        phrase += f'{kilograms1:<11}{pounds1:<7.1f}| {pounds2:<7}{kilograms2:<9.2f}\r\n'
+        key += f'{kilograms1:<11}{pounds1:<7.1f}| {pounds2:<7}{kilograms2:<9.2f}\r\n'
         kilograms1 += 2
         pounds2 += 5
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
-    assess(child, f'ch5_5.py', phrase)
+    child = pexpect.spawnu(f'python3 {file}')
+    assess(child, f'ch5_5.py', key)
 
 
 def ch5_6(file):
-    phrase = f'{"Miles":<7}{"Kilometers":<11}| {"Kilometers":<11}{"Miles":<6}\r\n'
+    key = f'{"Miles":<7}{"Kilometers":<11}| {"Kilometers":<11}{"Miles":<6}\r\n'
     miles1 = 1
     kilometers2 = 20
     while miles1 <= 10:
         kilometers1 = miles1 * 1.609 
         miles2 = kilometers2 * .621
-        phrase += f'{miles1:<7}{kilometers1:<11.3f}| {kilometers2:<11}{miles2:<6.3f}\r\n'
+        key += f'{miles1:<7}{kilometers1:<11.3f}| {kilometers2:<11}{miles2:<6.3f}\r\n'
         miles1 += 1
         kilometers2 += 5
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
-    assess(child, f'ch5_6.py', phrase)
+    child = pexpect.spawnu(f'python3 {file}')
+    assess(child, f'ch5_6.py', key)
 
 
 def ch5_7(file):
-    phrase = f'{"Degree":<8}{"Sin":<10}{"Cos":<6}\r\n'
+    key = f'{"Degree":<8}{"Sin":<10}{"Cos":<6}\r\n'
     degree = 0
     while degree <= 360:
         sin = math.sin(math.radians(degree))
         cos = math.cos(math.radians(degree))
-        phrase += f'{degree:<8}{sin:<10.4f}{cos:<6.4f}\r\n'
+        key += f'{degree:<8}{sin:<10.4f}{cos:<6.4f}\r\n'
         degree += 10
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
-    assess(child, f'ch5_7.py', phrase)
+    child = pexpect.spawnu(f'python3 {file}')
+    assess(child, f'ch5_7.py', key)
 
 
 def ch5_8(file):
-    phrase = f'{"Number":<8}{"Square Root":<11}\r\n'
+    key = f'{"Number":<8}{"Square Root":<11}\r\n'
     number = 0
     while number <= 20:
         root = math.sqrt(number)
-        phrase += f'{number:<8}{root:<11.4f}\r\n'
+        key += f'{number:<8}{root:<11.4f}\r\n'
         number += 1
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
-    assess(child, f'ch5_8.py', phrase)
+    child = pexpect.spawnu(f'python3 {file}')
+    assess(child, f'ch5_8.py', key)
 
 
 def ch5_11(file):
     
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     NUM_OF_STUDENTS = random.randint(2, 9)
     child.sendline(str(NUM_OF_STUDENTS))
     grades = []
@@ -1233,20 +1284,20 @@ def ch5_11(file):
         else:
             if i > runnerUp:
                 runnerUp = i
-    phrase = f'High Score: {highScore} Second Highest Score: {runnerUp}'
-    assess(child, f'ch5_11.py Case 1', phrase)
+    key = f'High Score: {highScore} Second Highest Score: {runnerUp}'
+    assess(child, f'ch5_11.py Case 1', key)
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline('0')
-    phrase = '0 was entered for the number of students'
-    assess(child, f'ch5_11.py Case 2', phrase)
+    key = '0 was entered for the number of students'
+    assess(child, f'ch5_11.py Case 2', key)
     
 
 def ch5_12(file):
     
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
-    phrase = ''
+    child = pexpect.spawnu(f'python3 {file}')
+    key = ''
     i = 100
     while i <= 1000:
         count = 0
@@ -1258,19 +1309,19 @@ def ch5_12(file):
                 if count != 10:
                     line += ' '
             i += 1
-        phrase += f'{line}\r\n' 
-    assess(child, f'ch5_12.py', phrase)
+        key += f'{line}\r\n' 
+    assess(child, f'ch5_12.py', key)
     
     
 def ch5_13(file):
     
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
-    phrase = ''
+    child = pexpect.spawnu(f'python3 {file}')
+    key = ''
     i = 100
     while i <= 200:
         count = 0
-        phrase = ''
+        key = ''
         line = ''
         while count < 10 and i <= 200:
             if i % 5 == 0 or i % 6 == 0 and not(i % 5 == 0 and i % 6 == 0):
@@ -1279,38 +1330,38 @@ def ch5_13(file):
                 if count != 10:
                     line += ' '
             i += 1
-        phrase += f'{line}\r\n' 
-    assess(child, f'ch5_13.py', phrase)  
+        key += f'{line}\r\n' 
+    assess(child, f'ch5_13.py', key)  
     
     
 def ch5_14(file):
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
-    phrase = ''
+    child = pexpect.spawnu(f'python3 {file}')
+    key = ''
     n = 0
     while n**2 < 12000:
-        phrase += f'{n} is not the answer\r\n'
+        key += f'{n} is not the answer\r\n'
         n += 1
-    phrase += f'{n} is the answer\r\n'
-    assess(child, f'ch5_14.py', phrase)  
+    key += f'{n} is the answer\r\n'
+    assess(child, f'ch5_14.py', key)  
        
 
 def ch5_15(file):
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
-    phrase = ''
+    child = pexpect.spawnu(f'python3 {file}')
+    key = ''
     n = 1
     while n**3 < 12000:
         n += 1
-    phrase += f'{n - 1}\r\n'
-    assess(child, f'ch5_15.py', phrase)  
+    key += f'{n - 1}\r\n'
+    assess(child, f'ch5_15.py', key)  
 
 
 def ch5_17(file):
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     CHARACTER = 33
-    phrase = ''
+    key = ''
     while CHARACTER <= 126:
         count = 0
         line = ''
@@ -1319,18 +1370,18 @@ def ch5_17(file):
             line += ' '
             count += 1
             CHARACTER += 1
-        phrase += f'{line}\r\n'
-    assess(child, f'ch5_17.py', phrase)
+        key += f'{line}\r\n'
+    assess(child, f'ch5_17.py', key)
 
 
 def ch5_19(file):
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     lines = random.randint(2, 9)
     child.sendline(str(lines))
     spaces = lines * 2 - 2
     digit = 1
-    phrase = ''
+    key = ''
     # loops for the number of rows
     for i in range(lines):
         output = ''
@@ -1351,41 +1402,41 @@ def ch5_19(file):
             output += str(count + 1)
             output += ' '
             count += 1
-        phrase += f'{output}\r\n'
+        key += f'{output}\r\n'
         
         # update counters
         spaces -= 2
         digit += 1
-    assess(child, f'ch5_19.py', phrase)
+    assess(child, f'ch5_19.py', key)
 
 
 def ch5_20(file):
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
-    phrase = ''
+    child = pexpect.spawnu(f'python3 {file}')
+    key = ''
     # pattern A
-    phrase += 'Pattern A\r\n'
+    key += 'Pattern A\r\n'
     for i in range(1, 7):
         line = ''
         for j in range(1, i + 1):
             line += str(j)
             line += ' '
-        phrase += f'{line}\r\n'
+        key += f'{line}\r\n'
         
         
     # pattern B
     digits = 6
-    phrase += 'Pattern B\r\n'
+    key += 'Pattern B\r\n'
     for i in range(1, 7):
         line = ''
         for j in range(1, digits + 1):
             line += str(j)
             line += ' '
         digits -= 1
-        phrase += f'{line}\r\n'
+        key += f'{line}\r\n'
         
     # pattern C
-    phrase += 'Pattern C\r\n'
+    key += 'Pattern C\r\n'
     spaces = 5
     i = 1
     for i in range(1, 7):
@@ -1396,26 +1447,26 @@ def ch5_20(file):
             line += str(j)
             line += ' '
         spaces -= 1
-        phrase += f'{line}\r\n'
+        key += f'{line}\r\n'
         
     # pattern D
     digits = 7
-    phrase += 'Pattern D\r\n'
+    key += 'Pattern D\r\n'
     for i in range(1, 7):
         line = ''
         for j in range(1, digits):
             line += str(j)
             line += ' '
         digits -= 1
-        phrase += f'{line}\r\n'
+        key += f'{line}\r\n'
     
-    assess(child, f'ch5_20.py', phrase)
+    assess(child, f'ch5_20.py', key)
 
 
 def ch5_21(file):
     # generate python instance
-    child = pexpect.spawnu("python3 {}".format(file))
-    phrase = ''
+    child = pexpect.spawnu(f'python3 {file}')
+    key = ''
     LINES = 8
     spaces = LINES * 4 - 4
     # loops for the number of rows
@@ -1437,17 +1488,17 @@ def ch5_21(file):
         for j in range(i - 1):
             output += f'{str(2 ** power):>4}'
             power -= 1
-        phrase += f'{output}\r\n'
+        key += f'{output}\r\n'
         
         # update counters
         spaces -= 4
-    assess(child, f'ch5_21.py', phrase)
+    assess(child, f'ch5_21.py', key)
     
 
 #++++++++++++++++++++++++++Chapter 6++++++++++++++++++++++++++++++++++++++++++++
 
 def ch6_2(file):
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     n = random.randint(0, 9999)
     
     child.sendline(str(n))
@@ -1458,12 +1509,12 @@ def ch6_2(file):
     total += remainder // 10
     total += remainder % 10
     
-    phrase = f'The sum of the numbers is {total}'
-    assess(child, "ch6_2.py", phrase)
+    key = f'The sum of the numbers is {total}'
+    assess(child, "ch6_2.py", key)
 
 
 def ch6_3(file):
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     n = random.randint(1111, 9999)
     
     child.sendline(str(n))
@@ -1474,55 +1525,55 @@ def ch6_3(file):
     tens = remainder // 10
     ones = remainder % 10
     
-    phrase = f'{n} reversed is {ones}{tens}{hundreds}{thousands}'
-    assess(child, "ch6_3.py", phrase)
+    key = f'{n} reversed is {ones}{tens}{hundreds}{thousands}'
+    assess(child, "ch6_3.py", key)
 
 
 def ch6_4(file):
     # Test case 1 no palindrome
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     not_palindrome = str(random.randint(1, 4))
     not_palindrome += str(random.randint(0, 9))
     not_palindrome += str(random.randint(0, 9))
     not_palindrome += str(random.randint(5, 9))
     child.sendline(not_palindrome)
-    phrase = f'No {not_palindrome} is not a palindrome'
-    assess(child, 'ch6_4.py Case 1', phrase)
+    key = f'No {not_palindrome} is not a palindrome'
+    assess(child, 'ch6_4.py Case 1', key)
     
     # Test case 2 palindrome
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     outers = str(random.randint(1, 9))
     inners = str(random.randint(1, 9))
     palindrome = outers + inners * 2 + outers
     child.sendline(palindrome)
-    phrase = f'Yes {palindrome} is a palindrome'
-    assess(child, 'ch6_4.py Case 2', phrase)
+    key = f'Yes {palindrome} is a palindrome'
+    assess(child, 'ch6_4.py Case 2', key)
     
         
 def ch6_5(file):
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     numbers = [random.randint(50, 300), random.randint(-100, 30), random.randint(-200, 200)]
     child.sendline(f'{numbers[0]}, {numbers[1]}, {numbers[2]}')
     numbers.sort()
-    phrase = f'The sorted numbers are {numbers[0]}, {numbers[1]}, {numbers[2]}'
-    assess(child, 'ch6_5.py', phrase)
+    key = f'The sorted numbers are {numbers[0]}, {numbers[1]}, {numbers[2]}'
+    assess(child, 'ch6_5.py', key)
     
 
 def ch6_6(file):
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     rows = random.randint(0, 9)
     child.sendline(str(rows))
     spaces = rows - 1
-    phrase = ''
+    key = ''
     for row in range(rows):
         for spaces in range(spaces):
-            phrase += '  '
+            key += '  '
         digits = row + 1
         for nums in range(row + 1):
-            phrase += f'{digits} '
+            key += f'{digits} '
             digits -= 1
-        phrase += '\r\n'
-    assess(child, 'ch6_6.py', phrase)
+        key += '\r\n'
+    assess(child, 'ch6_6.py', key)
             
 
 def ch6_7(file):
@@ -1544,7 +1595,7 @@ def ch6_7(file):
         return table
     
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     principle = random.randint(1000, 80000)
     rate = random.randint(3, 6)
     years = random.randint(4, 15)
@@ -1565,7 +1616,7 @@ def ch6_8(file):
         # Converts from Fahrenheit to Celsius
         return (5 / 9) * (fahrenheit - 32)
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     fahrenheit = 120.0
     table = ''
     table +=f'{"Celsius":<10}{"Fahrenheit":<12}|  {"Fahrenheit":<12}{"Celsius":<10}\r\n'
@@ -1587,7 +1638,7 @@ def ch6_9(file):
         # Converts from meters to feet
         return meter / 0.305
         
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     meter = 20.0
     table = ''
     table += f'{"Feet":<10}{"Meters":<8}|  {"Meters":<10}{"Feet":<10}\r\n'
@@ -1617,7 +1668,7 @@ def ch6_12(file):
     ch2 = chr(random.randint(81, 133))
     number_per_line = random.randint(5, 15)
     the_string = print_chars(ch1, ch2, number_per_line)
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(ch1)
     child.sendline(ch2)
     child.sendline(str(number_per_line))
@@ -1638,7 +1689,7 @@ def ch6_13(file):
     for i in range(1, 21):
         total = sum_series(i)
         answer_key += f'{i:<10}{total:<10.4f}\r\n'
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     assess(child, 'ch6_13.py', answer_key)
 
 #++++++++++++++++++++++++Chapter 8++++++++++++++++++++++++++++++++++++++++++++++
@@ -1648,7 +1699,7 @@ def ch8_1(file):
             ['123-45-6789', 'Valid SSN'], ['123p45p6789', 'Invalid SSN'],
             ['1234567ok', 'Invalid SSN']]
     for i in range(5):
-        child = pexpect.spawnu("python3 {}".format(file))
+        child = pexpect.spawnu(f'python3 {file}')
         child.sendline(tests[i][0])
         assess(child, f'ch8_1.py case {i + 1}', tests[i][1])
 
@@ -1658,29 +1709,29 @@ def ch8_2(file):
     
     def sub_pass(words):
         key = random.randint(0, len(words) - 1)
-        phrase = words[key]
+        key = words[key]
         for i in range(len(words)):
-            phrase += words[random.randint(0, len(words) - 1)]
-        return words[key], phrase
+            key += words[random.randint(0, len(words) - 1)]
+        return words[key], key
     
     def sub_fail(words):
         key = random.randint(0, len(words) - 1)
-        phrase = ''
+        key = ''
         for i in range(len(words)):
             if i != key:
-                phrase += words[i]
-        return words[key], phrase
+                key += words[i]
+        return words[key], key
     
-    key, phrase = sub_pass(words)
-    child = pexpect.spawnu("python3 {}".format(file))
+    key, key = sub_pass(words)
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(key)
-    child.sendline(phrase)
+    child.sendline(key)
     assess(child, "ch8_2.py Case 1", 'is a substring')
     
-    key, phrase = sub_fail(words)
-    child = pexpect.spawnu("python3 {}".format(file))
+    key, key = sub_fail(words)
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(key)
-    child.sendline(phrase)
+    child.sendline(key)
     assess(child, "ch8_2.py Case 2", 'not a substring')
     
     
@@ -1718,19 +1769,19 @@ def ch8_3(file):
             password += chr(random.randint(65, 90))
         return password
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(valid())
     assess(child, "ch8_3.py Case 1", 'valid password')
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(dig_invalid())
     assess(child, "ch8_3.py Case 2", 'invalid password')
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(char_invalid())
     assess(child, "ch8_3.py Case 3", 'invalid password')
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(len_invalid())
     assess(child, "ch8_3.py Case 4", 'invalid password')
     
@@ -1738,7 +1789,7 @@ def ch8_3(file):
 def ch8_4(file):
     words = [['apparatus', 'a', 3], ['missippi', 'i', 3],
             ['penelope', 'e', 3], ['sassafras', 's', 4]]
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     index = random.randint(0, 3)
     child.sendline(f'{words[index][0]}, {words[index][1]}')
     assess(child, "ch8_4.py", str(words[index][2]))
@@ -1757,7 +1808,7 @@ def ch8_6(file):
         return len(s2)
     
     for i in range(4):
-        child = pexpect.spawnu("python3 {}".format(file))
+        child = pexpect.spawnu(f'python3 {file}')
         test = library[random.randint(0, len(library) - 1)]
         child.sendline(test)
         assess(child, f'ch8_6.py test{i + 1}', str(count_letters(test)))
@@ -1783,7 +1834,7 @@ def ch8_7(file):
             return 9
    
     for i in range(4):
-        child = pexpect.spawnu("python3 {}".format(file))
+        child = pexpect.spawnu(f'python3 {file}')
         test = chr(random.randint(65, 90))
         child.sendline(test)
         assess(child, f'ch8_7.py test{i + 1}', str(get_number(test)))
@@ -1811,7 +1862,7 @@ def ch8_11(file):
         return s2
         
     for i in range(4):
-        child = pexpect.spawnu("python3 {}".format(file))
+        child = pexpect.spawnu(f'python3 {file}')
         test = library[random.randint(0, len(library) - 1)]
         child.sendline(test)
         assess(child, f'ch8_11.py test{i + 1}', str(reverse(test)))
@@ -1837,7 +1888,7 @@ def ch8_13(file):
         tests = ['disinfection', 'distance', 'diolate', 'dissatisfactory', 
                 'dissimilarities', 'dissatisfactory', 'disable', 'disagree',
                 'onynx', 'onion', 'onbaord', 'online']
-        child = pexpect.spawnu("python3 {}".format(file))
+        child = pexpect.spawnu(f'python3 {file}')
         test1 = tests[random.randint(0, len(tests) - 1)]
         while True: 
             test2 = tests[random.randint(0, len(tests) - 1)]
@@ -1869,14 +1920,14 @@ def ch10_1(file):
         else:
             answer_key += f'Student {i} score is {students[i]} and grade is F\r\n'
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(' '.join(str(n) for n in students))
     assess(child, f'ch10_1.py', answer_key)
 
 
 def ch10_2(file):
     integers = [random.randint(1, 99) for each in range(random.randint(4, 9))]
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(' '.join(str(n) for n in integers))
     integers.reverse()
     assess(child, f'ch10_2.py', str(integers))
@@ -1892,7 +1943,7 @@ def ch10_3(file):
         integers.append(num)
     random.shuffle(integers)
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(' '.join(str(n) for n in integers))
     
     integers.sort()
@@ -1940,13 +1991,13 @@ def ch10_4(file):
         return answer_key
     
     reg_scores = [random.randint(30, 100) for each in range(random.randint(6, 10))]
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     answer_key = data_summary(reg_scores)
     child.sendline(' '.join(str(n) for n in reg_scores))
     assess(child, f'ch10_4.py Test 1', answer_key)
     
     equal_scores = [random.randint(75, 78) for each in range(10)]
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     answer_key = data_summary(equal_scores)
     child.sendline(' '.join(str(n) for n in equal_scores))
     assess(child, f'ch10_4.py Test 2', answer_key)
@@ -1962,7 +2013,7 @@ def ch10_5(file):
         numbers.append(n)
     random.shuffle(numbers)
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(' '.join(str(n) for n in numbers))
     numbers.sort()
     aggregator = []
@@ -2006,7 +2057,7 @@ def green1_18(file):
             result += i**4
         return result
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     n = random.randint(0, 9)
     child.sendline(str(n))
     assess(child, 'g1_2018.py', str(fourthsum(n)))
@@ -2065,7 +2116,7 @@ def green2_18(file):
                 return second_symbol  
     
     symbols = ['Rock', 'Paper', 'Scissors', 'Lizard', 'Spock', 'Zombie', 'LargeHadronCollider']
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     first = symbols[random.randint(0, len(symbols) - 1)]
     while True:
         second = symbols[random.randint(0, len(symbols) - 1)]
@@ -2101,7 +2152,7 @@ def green3_18(file):
     duration = get_time(current_time, alarm_time)
     hours = duration // 60
     minutes  = duration % 60
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(str(current_hour))
     child.sendline(str(current_minute))
     child.sendline(str(alarm_hour))
@@ -2125,7 +2176,7 @@ def green4_18(file):
         if i not in indices:
             answer_key += word[i]
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(word)
     child.sendline(str(n))
     for each in range(n):
@@ -2169,7 +2220,7 @@ def green5_18(file):
     for i in range(4):
         first = tests[i][0]
         second = tests[i][1]
-        child = pexpect.spawnu("python3 {}".format(file))
+        child = pexpect.spawnu(f'python3 {file}')
         child.sendline(first)
         child.sendline(second)
         
@@ -2226,7 +2277,7 @@ def green6_18(file):
         return True
     
     
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     while True:
         N = random.randint(4, 1000)
         answer_key = primary(N)
@@ -2278,7 +2329,7 @@ def green7_18(file):
         answer_key += f'{each}\r\n'
        
         
-    child = pexpect.spawnu("python3 {}".format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(str(n))
     for each in test_cards:
         child.sendline(each)
@@ -2301,7 +2352,7 @@ def rock_paper_scissors(file):
         
     tests = ['ROCK', 'PAPER', 'SCISSORS']
     for i in range(3):
-        child = pexpect.spawnu("python3 {}".format(file))
+        child = pexpect.spawnu(f'python3 {file}')
         first = tests[i % 3]
         second =  tests[(i + 1) % 3]
         child.sendline(first)
@@ -2319,10 +2370,10 @@ def slices(file):
         test suite for slices.py
     """
     # creates the child instance
-    child = pexpect.spawnu('python3 {}'.format(file))
-    phrase = 'Be\r\nyourself\r\neveryone\r\nelse\r\nis\r\nalready\r\ntaken\r\n'
+    child = pexpect.spawnu(f'python3 {file}')
+    key = 'Be\r\nyourself\r\neveryone\r\nelse\r\nis\r\nalready\r\ntaken\r\n'
     # check the correctness of the submission
-    assess(child, "slices.py", phrase)
+    assess(child, "slices.py", key)
     if child.isalive:
             child.kill(2)
      
@@ -2336,7 +2387,7 @@ def madlib(file):
         # words to enter
         words = ['<to>', '<adj>', '<verb1>', '<body_part>', '<num>', '<noun>', '<adverb>', '<verb2>', '<verb3>',
                 '<pronouns>', '<author>']
-        phrase = 'Dear <to>,\r\nYou are extremely <adj> and I <verb1> you.\r\n' \
+        key = 'Dear <to>,\r\nYou are extremely <adj> and I <verb1> you.\r\n' \
                  'I want to kiss your <body_part> <num> times.\r\n' \
                  'You make my <noun> burn with desire.\r\n' \
                  'When I first saw you, I <adverb> <verb2> at you and fell in love.\r\n' \
@@ -2344,11 +2395,11 @@ def madlib(file):
                  'Don\'t let your parents discourage you, <pronouns> are just jealous.\r\n' \
                  'Yours forever, <author> :)\r\n'
         # creates the child instance
-        child = pexpect.spawnu('python3 {}'.format(file))
+        child = pexpect.spawnu(f'python3 {file}')
         # enters the words
         for each in words:
             child.sendline(each)
-        assess(child, "madlib.py", phrase)
+        assess(child, "madlib.py", key)
         if child.isalive:
             child.kill(2)
 
@@ -2364,9 +2415,9 @@ def greedy(file):
     data_out = ['15 quarters, 0 dimes, 1 nickels, 4 pennies', '4 quarters, 1 dimes, 0 nickels, 0 pennies', '1 quarters, 0 dimes, 1 nickels, 0 pennies', '0 quarters, 0 dimes, 0 nickels, 4 pennies']
     
     for i, each in enumerate(data_in):
-        child = pexpect.spawnu('python3 {}'.format(file))
+        child = pexpect.spawnu(f'python3 {file}')
         child.sendline(str(each))
-        assess(child, "greedy.py", phrase)
+        assess(child, "greedy.py", key)
         if child.isalive:
                 child.kill(2) 
 
@@ -2377,22 +2428,22 @@ def hypotenuse(file):
     :return None: 
     test suite for hypotenuse.py
     """
-    phrase = ['Enter the side length:', 'The hypotenuse is ']
+    key = ['Enter the side length:', 'The hypotenuse is ']
     data = ['3.1', '4.1', '5.14']
     # creates the child instance
-    child = pexpect.spawnu('python3 {}'.format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(data[0])
     child.sendline(data[1])
     # check the correctness of submission
     try:
-        child.expect_exact(phrase[1] + data[2])
+        child.expect_exact(key[1] + data[2])
         # pass
         print('{}Output is correct!\n\n{}{}{}\n\n{}:) hypotenuse.py == passed{}'
         .format(BY, G, child.before, child.match, BY, X))
     # fail
     except:
         print('{}Expected output of:\n\n{}{}{}\n{}{}\n{}{}\n\n{}Actual output was:\n\n{}{}\n{}:( slices.py == failed{}'
-        .format(BY, R, phrase[0], data[0], phrase[0], data[1], phrase[1], data[2], BY, R, child.before, BY, X))
+        .format(BY, R, key[0], data[0], key[0], data[1], key[1], data[2], BY, R, child.before, BY, X))
     if child.isalive:
             child.kill(2)
 
@@ -2406,7 +2457,7 @@ def average(file):
     grade = ['first', 'second', 'third', 'fourth']
     nums = ['78', '97', '86', '88', '87']
     # creates the child instance
-    child = pexpect.spawnu('python3 {}'.format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(nums[0])
     child.sendline(nums[1])
     child.sendline(nums[2])
@@ -2435,7 +2486,7 @@ def polygon(file):
     test suite for average.py
     """
     # creates the child instance
-    child = pexpect.spawnu('python3 {}'.format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline('6')
     # check the correctness of submission
     try:
@@ -2458,21 +2509,21 @@ def fahrenheit(file):
     test suite for fahrenheit.py
     """
     data = [['0', '0.0'], ['100', '100.0'], ['32', '32.0'], ['212', '212.0']]
-    phrase = ['Hai! Enter the temperature in degrees Fahrenheit: ', '{} degrees Fahrenheit is childroximately {} degrees Celsius.']
+    key = ['Hai! Enter the temperature in degrees Fahrenheit: ', '{} degrees Fahrenheit is childroximately {} degrees Celsius.']
     
     # creates the child instance
-    child = pexpect.spawnu('python3 {}'.format(file))
+    child = pexpect.spawnu(f'python3 {file}')
     child.sendline(data[3][0])
     # check the correctness of submission
     try:
-        child.expect_exact(phrase[1].format(data[3][1], data[1][1]))
+        child.expect_exact(key[1].format(data[3][1], data[1][1]))
         # pass
         print('{}Output is correct!\n\n{}{}{}\n\n{}:) fahrenheit.py == passed{}'
         .format(BY, G, child.before, child.match, BY, X))
     # fail
     except:
         print('{}Expected output of:\n\n{}{}{}\n{}\n{}\nActual output was:\n\n{}{}{}\n:( fahrenheit.py == failed{}'
-        .format(BY, R, phrase[0], data[3][0], phrase[1].format(data[3][1], data[1][1]), BY, R, child.before, BY, X))
+        .format(BY, R, key[0], data[3][0], key[1].format(data[3][1], data[1][1]), BY, R, child.before, BY, X))
     if child.isalive:
             child.kill(2)
             
@@ -2486,7 +2537,7 @@ def report_card(file):
         # words to enter
         data = ['Einstein', '99.8', '98.7', '95.3', '81.4', '75.0', '68.5']
 
-        phrase = 'This is {}\'s report card.\r\n\r\n' \
+        key = 'This is {}\'s report card.\r\n\r\n' \
          '6 sorted grades: [{}, {}, {}, {}, {}, {}]\r\n\r\n' \
          '{}\'s highest grade is {}.\r\n\r\n' \
          'The low grade of {} is being dropped.\r\n\r\n' \
@@ -2495,13 +2546,13 @@ def report_card(file):
                                                      data[0], data[1], data[6], data[0], data[5],
                                                      data[4], data[3], data[2], data[1], data[0])
         # creates the child instance
-        child = pexpect.spawnu('python3 {}'.format(file))
+        child = pexpect.spawnu(f'python3 {file}')
         # enters the words
         for each in data:
             child.sendline(each)
         # check the correctness of submission
         try:
-            child.expect_exact(phrase)
+            child.expect_exact(key)
             # pass
             print('\n{}Output is correct!\n{}{}\n{}{}:) report_card.py == passed\n{}'
             .format(BY, G, child.before, child.match, BY, X))
@@ -2509,7 +2560,7 @@ def report_card(file):
         except:
             print(child.before)
             print('\n{}Expected output of:\n{}{}\n{}Actual output was:\n{}{}{}:( report_card.py == failed{}'
-            .format(BY, R, phrase, BY, R, child.before[225:], BY, X))
+            .format(BY, R, key, BY, R, child.before[225:], BY, X))
         if child.isalive:
             child.kill(2)
             
@@ -2524,7 +2575,7 @@ def even_odd(file):
     test_data = [['2', 'even'], ['3', 'odd'], ['-1', 'odd'], ['-2', 'even']]
     for i in range(4):
         # creates the child instance
-        child = pexpect.spawnu('python3 {}'.format(file))
+        child = pexpect.spawnu(f'python3 {file}')
         child.sendline('{}'.format(test_data[i][0]))
         # check the correctness of submission
         try:
@@ -2552,7 +2603,7 @@ def birth_month(file):
             ['8', 'August'], ['9', 'September'], ['10', 'October'], ['11', 'November'], ['12', 'December']]
     for i in range(checks):
         # creates the child instance
-        child = pexpect.spawnu('python3 {}'.format(file))     
+        child = pexpect.spawnu(f'python3 {file}')     
         child.sendline('{}'.format(data[i][0]))
         # check the correctness of submission
         try:
@@ -2580,7 +2631,7 @@ def grade_book(file):
     data = [['92', 'A'], ['84', 'B'], ['76', 'C'], ['65', 'D'], ['64', 'F']]
     for i in range(checks):
         # creates the child instance
-        child = pexpect.spawnu('python3 {}'.format(file))     
+        child = pexpect.spawnu(f'python3 {file}')     
         child.sendline('{}'.format(data[i][0]))
         # check the correctness of submission
         try:
@@ -2608,7 +2659,7 @@ def temperature(file):
     data = [['C', '212', '100.0'], ['C', '32', '0.0'], ['F', '100', '212.0'], ['F', '0', '32.0']]
     for i in range(checks):
         # creates the child instance
-        child = pexpect.spawnu('python3 {}'.format(file))     
+        child = pexpect.spawnu(f'python3 {file}')     
         child.sendline('{}'.format(data[i][0]))
         child.sendline('{}'.format(data[i][1]))
         # check the correctness of submission
@@ -2638,7 +2689,7 @@ def initials(file): # updated
     data = [['albert percival wulfric brian dumbledore', 'APWBD'], ['ben franklin', 'BF'], ['broomhilda von shaft', 'BVS']]
     for i in range(checks):
         # creates the child instance
-        child = pexpect.spawnu('python3 {}'.format(file))     
+        child = pexpect.spawnu(f'python3 {file}')     
         child.sendline('{}'.format(data[i][0]))
         # check the correctness of submission
         try:
@@ -2680,7 +2731,7 @@ def pyramid_stacks(file):
     
     for i in range(checks):
         # creates the child instance
-        child = pexpect.spawnu('python3 {}'.format(file))     
+        child = pexpect.spawnu(f'python3 {file}')     
         child.sendline('{}'.format(data[i][0]))
         # check the correctness of submission
         try:
@@ -2706,7 +2757,7 @@ def validate(file):
     this needs to be gone over with test cases, still in beta
     """
     # creates the child instance
-    child = pexpect.spawnu('python3 {}'.format(file))  
+    child = pexpect.spawnu(f'python3 {file}')  
     ok = 0
     data = [3, -6, - 8.9, '$', '\r', 'pickles', 'C']
     for i, each in enumerate(data):
@@ -2820,7 +2871,7 @@ def binary_search(file):
 def lottery(file):
 
     def createTest(file):
-        child = pexpect.spawnu("python3 {}".format(file))
+        child = pexpect.spawnu(f'python3 {file}')
         secret = int(child.read_nonblocking(size=2, timeout=-1).strip())
         secret1 = secret // 10 # isolate first digit
         secret2 = secret % 10 # isolate second digit
@@ -2829,16 +2880,16 @@ def lottery(file):
     
     def case1(data):
         data[0].sendline(str(data[1]))
-        phrase = 'You won $10000'
+        key = 'You won $10000'
         print(f'Secret is {data[1]}')
-        assess(data[0], "lottery.py Case 1", phrase)
+        assess(data[0], "lottery.py Case 1", key)
     
             
     def case2(data):
         data[0].sendline(f'{data[3]}{data[2]}')
-        phrase = 'You won $3000'
+        key = 'You won $3000'
         print(f'Secret is {data[1]}')
-        assess(data[0], "lottery.py Case 2", phrase)
+        assess(data[0], "lottery.py Case 2", key)
     
     
     def case3(data):
@@ -2849,9 +2900,9 @@ def lottery(file):
             else:
                 continue
         data[0].sendline(f'{data[3]}{noMatch}')
-        phrase = 'You won $1000'
+        key = 'You won $1000'
         print(f'Secret is {data[1]}')
-        assess(data[0], "lottery.py Case 3", phrase)
+        assess(data[0], "lottery.py Case 3", key)
     
     
     def case4(data):
@@ -2862,9 +2913,9 @@ def lottery(file):
             else:
                 continue
         data[0].sendline(f'{noMatch}{noMatch}')
-        phrase = 'You won $0'
+        key = 'You won $0'
         print(f'Secret is {data[1]}')
-        assess(data[0], "lottery.py Case 4", phrase)
+        assess(data[0], "lottery.py Case 4", key)
 
     
     case1(createTest(file))
