@@ -128,13 +128,16 @@ def getIntegersFromString(theString):
     i, j = 0, 1
     operands = []
     while j < len(theString):
-        while theString[i].isalpha():
+        while theString[i].isalpha() or theString[i].isspace():
             i += 1
         j = i + 1
         while theString[i:j].isdigit():
             j += 1
-        if theString[i:j - 1].isdigit():
-            operands.append(int(theString[i:j - 1]))
+            break
+        if theString[i:j].isdigit():
+            if theString[i:j + 1].isdigit():
+                j += 1
+        operands.append(int(theString[i:j]))
         i, j = j, j + 1
     return operands
     
@@ -233,6 +236,8 @@ def child_selector(option, file):
         return ch4_12(file)
     if option == 'ch4_16.py':
         return ch4_16(file)
+    if option == 'ch4_17.py':
+        return ch4_17(file)
     if option == 'ch4_24.py':
         return ch4_24(file)
     
@@ -1061,6 +1066,65 @@ def ch4_16(file):
         print(f'{G}:) ch4_16.py == passed!{X}')
     else:
         print(f'{R}:( ch4_16.py failed{X}')
+
+
+def ch4_17(file):
+   
+    def testChild(player, file):
+        child = pexpect.spawnu(f'python3 {file}')
+        child.sendline(str(player))
+        child.expect('computer is .*', timeout=-1)
+        output = (child.after).split('\r\n')
+        # Extract computer value
+        computer = getIntegersFromString(output[0])[0]
+        # Extract user submitted output
+        computerOutput = output[1]
+        child.terminate
+        return computer, computerOutput
+    
+    
+    def checkGame(player, computer):
+        if computer == player:
+            return 'it\'s a tie'
+        # player is rock
+        elif player == 0:
+            if computer == 2:
+                return 'rock beats scissors - you win'
+            else:
+                return 'paper beats rock - you lose'
+        # player is paper
+        elif player == 1:
+            if computer == 0:
+                return 'paper beats rock - you win'
+            else:
+                return 'scissor beats paper - you lose'
+        else:
+            if player == 2:
+                if computer == 1:
+                    return 'scissors beat paper'
+                else:
+                    return 'rock beats scissors'
+    
+    
+    def testKey(computerOutput, key):
+        if computerOutput == key:
+            print(f'{BY}Output is correct!')
+            print(f'\n{G}{key}')
+            print(f'\n{BY}:) ch4_17.py == passed!{X}')
+        else:
+            print(f'{BY}Expected output of:\n\n{R}{key}')
+            print(f'\n{BY}Actual output was:\n\n{R}{computerOutput}')
+            print(f'{BY}:( ch4_17.py == failed{X}')
+    
+    for player in range(3):
+        for computerValue in range(3):
+            while True:
+                computer, computerOutput = testChild(player, file)
+                if computer == computerValue:
+                    break
+            key = checkGame(player, computer)
+            testKey(computerOutput, key)
+    
 
 def ch4_24(file):
     def createDeck():
