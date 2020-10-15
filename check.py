@@ -1106,24 +1106,25 @@ def ch4_17(file):
                     return 'rock beats scissors'
     
     
-    def testKey(computerOutput, key):
+    def testKey(computerOutput, key, case):
         if computerOutput == key:
             print(f'{BY}Output is correct!')
             print(f'\n{G}{key}')
-            print(f'\n{BY}:) ch4_17.py == passed!{X}')
+            print(f'\n{BY}:) ch4_17.py case {case} == passed!{X}')
         else:
             print(f'{BY}Expected output of:\n\n{R}{key}')
             print(f'\n{BY}Actual output was:\n\n{R}{computerOutput}')
-            print(f'{BY}:( ch4_17.py == failed{X}')
-    
+            print(f'{BY}:( ch4_17.py test case {case} == failed{X}')
+    case = 0
     for player in range(3):
         for computerValue in range(3):
+            case += 1
             while True:
                 computer, computerOutput = testChild(player, file)
                 if computer == computerValue:
                     break
             key = checkGame(player, computer)
-            testKey(computerOutput, key)
+            testKey(computerOutput, key, case)
     
 
 def ch4_24(file):
