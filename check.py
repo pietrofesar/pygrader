@@ -979,7 +979,7 @@ def ch4_9(file):
     child.sendline(f'{weight1}, {price1}')
     child.sendline(f'{weight2}, {price2}')
     key = f'Package 1: ${price1/weight1:.2f}\r\nPackage 2: ${price2/weight2:.2f}\r\nPackage 1 has the better price.\r\n'
-    assess(child, f'{file} case 1', key)
+    assess(child, f'ch4_9.py Case 1', key)
     
     # case 2 Package  has better price       
     child = pexpect.spawnu(f'python3 {file}')
@@ -990,14 +990,14 @@ def ch4_9(file):
     child.sendline(f'{weight1}, {price1}')
     child.sendline(f'{weight2}, {price2}')
     key = f'Package 1: ${price1/weight1:.2f}\r\nPackage 2: ${price2/weight2:.2f}\r\nPackage 2 has the better price.\r\n'
-    assess(child, f'{file} case 2', key)
+    assess(child, f'ch4_9.py Case 2', key)
     
     # case 3 packages are same price
     child = pexpect.spawnu(f'python3 {file}')
     child.sendline(f'{1}, {1}')
     child.sendline(f'{1}, {1}')
     key = f'Package 1: ${1:.2f}\r\nPackage 2: ${1:.2f}\r\nThey are the same price.\r\n'
-    assess(child, f'{file} case 3', key)
+    assess(child, f'ch4_9.py Case 3', key)
 
 
 def ch4_10(file):
@@ -1006,7 +1006,7 @@ def ch4_10(file):
     operands = getOperands(inputOutput)
     child.sendline(str(operands[0] * operands[1]))
     key = 'correct :)'
-    assess(child, f'{file} case 1', key, inputOutput)
+    assess(child, f'ch4_10.py Case 1', key, inputOutput)
     
     child = pexpect.spawnu(f'python3 {file}')
     inputOutput = child.read_nonblocking(size=10, timeout=-1)
@@ -1014,7 +1014,7 @@ def ch4_10(file):
     total =  operands[0] * operands[1] + random.randint(1, 9)
     child.sendline(str(total))
     key = 'incorrect :('
-    assess(child, f'{file} case 2', key, inputOutput)
+    assess(child, f'ch4_10.py Case 2', key, inputOutput)
 
     
 def ch4_12(file):
