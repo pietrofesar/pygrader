@@ -275,8 +275,14 @@ def child_selector(option, file):
         return ch5_18(file)
     if option == 'ch5_19.py':
         return ch5_19(file)
-    if option == 'ch5_20.py':
-        return ch5_20(file)
+    if option == 'ch5_20A.py':
+        return ch5_20A(file)
+    if option == 'ch5_20B.py':
+        return ch5_20B(file)
+    if option == 'ch5_20C.py':
+        return ch5_20C(file)
+    if option == 'ch5_20D.py':
+        return ch5_20D(file)
     if option == 'ch5_21.py':
         return ch5_21(file)
         
@@ -401,9 +407,15 @@ def child_selector(option, file):
         return temperature(file) 
     if option == 'initials.py':
         return initials(file)
-    options = ('left_stack', 'right_stack', 'pyramid')
+    if option == 'leftStack.py':
+        return leftStack(file)
+    if option == 'rightStack.py':
+        return rightStack(file)
+    '''
+    options = ('leftStack.py', 'rightStack.py', 'pyramid.py')
     if any(routine in option for routine in options):
-        return pyramid_stacks(file)
+        return pyramidStacks(file)
+        '''
     if option == 'binary_search.py': 
         return binary_search(file)
     if option == 'validate.py':
@@ -1013,9 +1025,12 @@ def ch4_9(file):
 def ch4_10(file):
     child = pexpect.spawnu(f'python3 {file}')
     inputOutput = child.read_nonblocking(size=10, timeout=-1)
+    print(inputOutput)
     operands = getIntegersFromString(inputOutput)
+    print(operands)
+    '''
     child.sendline(str(operands[0] * operands[1]))
-    key = 'correct :)'
+    key = 'correct :)
     assess(child, 'ch4_10 .py: case 1', key, inputOutput)
     
     child = pexpect.spawnu(f'python3 {file}')
@@ -1026,7 +1041,7 @@ def ch4_10(file):
     child.sendline(str(total))
     key = 'incorrect :('
     assess(child, 'ch4_10.py: case 2', key, inputOutput)
-    
+    '''
     
 def ch4_12(file):
     number = random.randint(-1000, 1000)
@@ -1423,111 +1438,60 @@ def ch5_15(file):
 
 
 def ch5_17(file):
-    # generate python instance
     child = pexpect.spawnu(f'python3 {file}')
-    CHARACTER = 33
     key = ''
-    while CHARACTER <= 126:
-        count = 0
-        line = ''
-        while count < 10:
-            line += chr(CHARACTER)
-            line += ' '
-            count += 1
-            CHARACTER += 1
-        key += f'{line}\r\n'
-    assess(child, f'ch5_17.py', key)
+    for char in range(33, 127, 10):
+        for each in range(10):
+            key += f'{chr(char)} '
+            char += 1
+        key += '\r\n'
+    assess(child, f'{file}', key)
 
 
 def ch5_19(file):
-    # generate python instance
     child = pexpect.spawnu(f'python3 {file}')
-    lines = random.randint(2, 9)
-    child.sendline(str(lines))
-    spaces = lines * 2 - 2
-    digit = 1
+    height = random.randint(2, 9)
+    child.sendline(str(height))
+    spaces = height * 2 - 2
     key = ''
-    # loops for the number of rows
-    for i in range(lines):
-        output = ''
-        # creates the spaces part of the row
-        for j in range(spaces):
-            output += ' '
-        
-        # creates the left digits decreasing part of a row
-        count = digit
-        while count != 0:
-            output += str(count)
-            output += ' '
-            count -= 1
-        
-        # creates the right digits increasing part of a row
-        count = 1
-        while count < digit:
-            output += str(count + 1)
-            output += ' '
-            count += 1
-        key += f'{output}\r\n'
-        
-        # update counters
+    for digit in range(1, height + 1):
+        for space in range(spaces):
+            key +=' '
+        digitCopy = digit
+        while digitCopy > 1:
+            key += f'{digitCopy} '
+            digitCopy -= 1
+        while digitCopy <= digit:
+            key += f'{digitCopy} '
+            digitCopy += 1
         spaces -= 2
-        digit += 1
-    assess(child, f'ch5_19.py', key)
+        key += '\r\n'
+    assess(child, file, key)
 
 
-def ch5_20(file):
-    # generate python instance
+def ch5_20A(file):
     child = pexpect.spawnu(f'python3 {file}')
     key = ''
-    # pattern A
-    key += 'Pattern A\r\n'
-    for i in range(1, 7):
-        line = ''
-        for j in range(1, i + 1):
-            line += str(j)
-            line += ' '
-        key += f'{line}\r\n'
-        
-        
-    # pattern B
-    digits = 6
-    key += 'Pattern B\r\n'
-    for i in range(1, 7):
-        line = ''
-        for j in range(1, digits + 1):
-            line += str(j)
-            line += ' '
-        digits -= 1
-        key += f'{line}\r\n'
-        
-    # pattern C
-    key += 'Pattern C\r\n'
-    spaces = 5
-    i = 1
-    for i in range(1, 7):
-        line = ''
-        for j in range(spaces * 2):
-            line += ' '
-        for j in range(i, 0, -1):
-            line += str(j)
-            line += ' '
-        spaces -= 1
-        key += f'{line}\r\n'
-        
-    # pattern D
-    digits = 7
-    key += 'Pattern D\r\n'
-    for i in range(1, 7):
-        line = ''
-        for j in range(1, digits):
-            line += str(j)
-            line += ' '
-        digits -= 1
-        key += f'{line}\r\n'
-    
-    assess(child, f'ch5_20.py', key)
+    for row in range(1, 7):
+        for digit in range(row):
+           key += f'{digit + 1} '
+        key += '\r\n'
+    assess(child, file, key)
+   
 
+def ch5_20B(file):
+    child = pexpect.spawnu(f'python3 {file}')
+    height = 6
+    key = ''
+    for row in range(1, 7):
+        for digit in range(1, height + 1):
+            key += f'{digit} '
+        height -= 1
+        key += '\r\n'
+    assess(child, file, key)   
 
+#def ch5_20C(file):
+#def ch5_20D(file):
 def ch5_21(file):
     # generate python instance
     child = pexpect.spawnu(f'python3 {file}')
@@ -2662,32 +2626,17 @@ def even_odd(file):
 
 def birth_month(file):
     """ birth_month.py autograder """
-    ok = 0
-    checks = 12
-    data = [['1', 'January'], ['2', 'February'], ['3', 'March'], ['4', 'April'], ['5', 'May'], ['6', 'June'], ['7', 'July'],
-            ['8', 'August'], ['9', 'September'], ['10', 'October'], ['11', 'November'], ['12', 'December']]
-    for i in range(checks):
-        # creates the child instance
-        child = pexpect.spawnu(f'python3 {file}')     
-        child.sendline('{}'.format(data[i][0]))
-        # check the correctness of submission
-        try:
-            child.expect_exact('You were born in {}.'.format(data[i][1]))
-            # pass
-            print('{}{}{}{}'.format(child.before, G, child.match, X))
-            ok += 1
-        # fail
-        except:
-            print(child.before[:53])
-            print('{}:( Expected output of:\n{}You were born in {}.{}'.format(BY, R, data[i][1], X))
-            print('{}Actual output was:{}{}{}'.format(BY, R, child.before[53:len(child.before)-2], X))
-        if child.isalive:
-            child.kill(2)
-    if ok == checks:
-        print('{}\n:) {} == passed{}'.format(BY, file, X))
-    else:
-        print('{}\n:( {} == failed{}'.format(BY, file, X))
-
+    samples = random.randint(2, 6)
+    birthMonths = {1:'January', 2:'February', 3:'March', 4:'April', 5:'May', 6:'June', 7:'July', 8:'August', 9:'September', 10:'October', 11:'November', 12:'December'}
+    
+    for sample in range(samples):
+        child = pexpect.spawnu(f'python3 {file}')   
+        birthMonth = random.choice(list(birthMonths))
+        child.sendline(str(birthMonth))
+        
+        key = f'You were born in {birthMonths[birthMonth]}'
+        assess(child, f'{file} case {sample + 1}', key)
+        
 
 def grade_book(file):
     """ grade_book.py autograder """
@@ -2776,22 +2725,57 @@ def initials(file): # updated
         print('{}:( {} == failed{}'.format(BY, file, X))
 
 
-def pyramid_stacks(file):
-    """pyramid_stacks.py autograder """
+def leftStack(file):
+    height = random.randint(3, 8)
+    key = ''
+    for row in range(1, height + 1):
+        key += row * '#' + '\r\n'
+    child = pexpect.spawnu(f'python3 {file}')     
+    child.sendline(str(height))
+    assess(child, f'{file}', key)
+    
+
+def rightStack(file):
+    height = random.randint(3, 8)
+    spaces = height - 1
+    key = ''
+    for row in range(1, height + 1):
+        for space in range(spaces):
+            key += ' '
+        spaces -= 1    
+        key += row * '#' + '\r\n'
+    child = pexpect.spawnu(f'python3 {file}')     
+    child.sendline(str(height))
+    assess(child, f'{file}', key)
+    
+def pyramidStacks(file):
+    """pyramidStacks.py autograder """
     ok = 0
     checks = 2
     
-    if file == 'left_stack.py':
+    if file == 'leftStack.py':
+        def getKey(height):
+            key = ''
+            for row in range(1, height + 1):
+                key += row * '#' + '\r\n'
+            return key
+        height = random.randint(3, 10)
+        child = pexpect.spawnu(f'python3 {file}')     
+        child.sendline(str(height))
+        key = getKey(height)
+        assess(child, f'{file}', key)
+    '''
+    if file == 'leftStack.py':
         data = [[3, '#\r\n##\r\n###\r\n'], [6, '#\r\n##\r\n###\r\n####\r\n#####\r\n######\r\n']]
-    if file == 'left_stacks.py': 
+    if file == 'leftStacks.py': 
         data = [[3, '##\r\n###\r\n####\r\n'], [6, '##\r\n###\r\n####\r\n#####\r\n######\r\n#######\r\n']]
-    if file == 'right_stack.py':
+    if file == 'rightStack.py':
         data = [[3, '  #\r\n ##\r\n###\r\n'], [6, '     #\r\n    ##\r\n   ###\r\n  ####\r\n #####\r\n######\r\n']]
-    if file == 'right_stacks.py':
+    if file == 'rightStacks.py':
         data = [[3, '  ##\r\n ###\r\n####\r\n'], [6, '     ##\r\n    ###\r\n   ####\r\n  #####\r\n ######\r\n#######\r\n']]
     if file == 'pyramid.py':
         data = [[3, '  ##\r\n ####\r\n######\r\n'], [6, '     ##\r\n    ####\r\n   ######\r\n  ########\r\n ##########\r\n############\r\n']]
-    if file == 'pyramid_hacker.py':
+    if file == 'pyramidHacker.py':
         data = [[3, '  /\\\r\n /  \\\r\n/____\\\r\n'], [6, '     /\\\r\n    /  \\\r\n   /    \\\r\n  /      \\\r\n /        \\\r\n/__________\\\r\n']]
     
     for i in range(checks):
@@ -2815,8 +2799,8 @@ def pyramid_stacks(file):
         print('{}:) {} == passed{}'.format(BY, file, X))
     else:
         print('{}:( {} == failed{}'.format(BY, file, X))
-
-        
+    '''
+    
 def validate(file):
     """validate.py autograder 
     this needs to be gone over with test cases, still in beta
