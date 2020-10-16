@@ -978,7 +978,7 @@ def ch4_9(file):
             break
     child.sendline(f'{weight1}, {price1}')
     child.sendline(f'{weight2}, {price2}')
-    key = f'Package 1: ${price1/weight1:.2f}\r\nPackage 2: ${price2/weight2:.2f}\r\nPackage 1 has the better price.\r\n'
+    key = f'Package 1: ${price1/weight1:.2f}\r\nPackage 2: ${price2/weight2:.2f}\r\nPackage 1 has the better price.'
     assess(child, f'ch4_9.py Case 1', key)
     
     # case 2 Package  has better price       
@@ -989,14 +989,14 @@ def ch4_9(file):
             break
     child.sendline(f'{weight1}, {price1}')
     child.sendline(f'{weight2}, {price2}')
-    key = f'Package 1: ${price1/weight1:.2f}\r\nPackage 2: ${price2/weight2:.2f}\r\nPackage 2 has the better price.\r\n'
+    key = f'Package 1: ${price1/weight1:.2f}\r\nPackage 2: ${price2/weight2:.2f}\r\nPackage 2 has the better price.'
     assess(child, f'ch4_9.py Case 2', key)
     
     # case 3 packages are same price
     child = pexpect.spawnu(f'python3 {file}')
     child.sendline(f'{1}, {1}')
     child.sendline(f'{1}, {1}')
-    key = f'Package 1: ${1:.2f}\r\nPackage 2: ${1:.2f}\r\nThey are the same price.\r\n'
+    key = f'Package 1: ${1:.2f}\r\nPackage 2: ${1:.2f}\r\nThey are the same price.'
     assess(child, f'ch4_9.py Case 3', key)
 
 
