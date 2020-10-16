@@ -90,57 +90,36 @@ def b_sanitize(before):
         pass
     return parts
 
-def assess(child, pset, answer_key, read=""):
+def assess(child, pset, answerKey, read=""):
     """
     assesses the output of the calling function for correctness, reports the output
     """
     # check the correctness of the submission
     try:
-        child.expect_exact(answer_key)
+        child.expect_exact(answerKey)
         # pass
         print(f'{BY}Output is correct!')
         print(f'\n{G}{read}{child.before}')
-        print(f'{answer_key}')
+        print(f'{answerKey}')
         print(f'\n{BY}:) {pset} == passed!{X}')
         child.terminate
     # fail
     except:
-        print(f'{BY}Expected output of:\n\n{R}{answer_key}')
+        print(f'{BY}Expected output of:\n\n{R}{answerKey}')
         print(f'\n{BY}Actual output was:\n\n{R}{read}{child.before}')
         print(f'{BY}:( {pset} == failed{X}')
         child.terminate
-   
-   
-def getNumbers(string):
-    '''extracts numbers from a string'''
-    numbers = []
-    for each in string.split():
-        if '?' in each:
-            numbers.append(int(each[0:each.index('?')]))
-        else:
-            if each.isdigit():
-                numbers.append(int(each))
-    return numbers
 
 
-def getIntegersFromString(theString):
-    """Extracts integers from a string"""
-    i, j = 0, 1
-    operands = []
-    while j < len(theString):
-        while theString[i].isalpha() or theString[i].isspace():
-            i += 1
-        j = i + 1
-        while theString[i:j].isdigit():
-            j += 1
-            break
-        if theString[i:j].isdigit():
-            if theString[i:j + 1].isdigit():
-                j += 1
-        operands.append(int(theString[i:j]))
-        i, j = j, j + 1
+def getOperands(theString):   
+    while len(theString) != 0 and not theString[0].isdigit():
+        theString = theString[1:]
+    while len(theString) != 0 and not theString[-1].isdigit():
+        theString = theString[:-1]
+        print()
+    operands = [int(i) for i in theString.split() if i.isdigit()]
     return operands
-    
+
     
 def child_selector(option, file):
     """ input is name of program to grade, output is call to relevant autograde function
@@ -851,19 +830,18 @@ def ch4_3(file):
 def ch4_4(file):
     child = pexpect.spawnu(f'python3 {file}')
     inputOutput = child.read_nonblocking(size=18, timeout=-1)
-    operands = getIntegersFromString(inputOutput)
+    operands = getOperands(inputOutput)
     child.sendline(str(sum(operands)))
     key = f'{operands[0]} + {operands[1]} + {operands[2]} = {sum(operands)} is True'
-    assess(child, 'ch4_4 .py: case 1', key, inputOutput)
+    assess(child, f'{file}: case 2', key, inputOutput)
     
     child = pexpect.spawnu(f'python3 {file}')
     inputOutput = child.read_nonblocking(size=18, timeout=-1).strip()
-    operands = getIntegersFromString(inputOutput)
-
+    operands = getOperands(inputOutput)
     total = sum(operands) + random.randint(-5, 5)
     child.sendline(str(total))
     key = f'{operands[0]} + {operands[1]} + {operands[2]} = {total} is False'
-    assess(child, "ch4_4.py: case 2", key, inputOutput)
+    assess(child, f'{file}: case 2', key, inputOutput)
     
 
 def ch4_5(file):
@@ -1001,7 +979,7 @@ def ch4_9(file):
     child.sendline(f'{weight1}, {price1}')
     child.sendline(f'{weight2}, {price2}')
     key = f'Package 1: ${price1/weight1:.2f}\r\nPackage 2: ${price2/weight2:.2f}\r\nPackage 1 has the better price.\r\n'
-    assess(child, f'ch4_9.py case 1', key)
+    assess(child, f'{file} case 1', key)
     
     # case 2 Package  has better price       
     child = pexpect.spawnu(f'python3 {file}')
@@ -1012,36 +990,32 @@ def ch4_9(file):
     child.sendline(f'{weight1}, {price1}')
     child.sendline(f'{weight2}, {price2}')
     key = f'Package 1: ${price1/weight1:.2f}\r\nPackage 2: ${price2/weight2:.2f}\r\nPackage 2 has the better price.\r\n'
-    assess(child, f'ch4_9.py case 2', key)
+    assess(child, f'{file} case 2', key)
     
     # case 3 packages are same price
     child = pexpect.spawnu(f'python3 {file}')
     child.sendline(f'{1}, {1}')
     child.sendline(f'{1}, {1}')
     key = f'Package 1: ${1:.2f}\r\nPackage 2: ${1:.2f}\r\nThey are the same price.\r\n'
-    assess(child, f'ch4_9.py case 3', key)
+    assess(child, f'{file} case 3', key)
 
 
 def ch4_10(file):
     child = pexpect.spawnu(f'python3 {file}')
     inputOutput = child.read_nonblocking(size=10, timeout=-1)
-    print(inputOutput)
-    operands = getIntegersFromString(inputOutput)
-    print(operands)
-    '''
+    operands = getOperands(inputOutput)
     child.sendline(str(operands[0] * operands[1]))
-    key = 'correct :)
-    assess(child, 'ch4_10 .py: case 1', key, inputOutput)
+    key = 'correct :)'
+    assess(child, f'{file} case 1', key, inputOutput)
     
     child = pexpect.spawnu(f'python3 {file}')
     inputOutput = child.read_nonblocking(size=10, timeout=-1)
-    operands = getIntegersFromString(inputOutput)
-
+    operands = getOperands(inputOutput)
     total =  operands[0] * operands[1] + random.randint(1, 9)
     child.sendline(str(total))
     key = 'incorrect :('
-    assess(child, 'ch4_10.py: case 2', key, inputOutput)
-    '''
+    assess(child, f'{file} case 2', key, inputOutput)
+
     
 def ch4_12(file):
     number = random.randint(-1000, 1000)
