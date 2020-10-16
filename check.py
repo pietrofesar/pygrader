@@ -2982,10 +2982,10 @@ def main():
             child_selector(sys.argv[1], student_file)
             
         except IOError as e:
-            print('{}ERROR\n{}{}{} doesn\'t exist or is incorrectly named'.format(BR, Y, sys.argv[1], X))
+            print(f'{BR}ERROR\n{Y}{sys.argv[1]}{X} doesn\'t exist or is incorrectly named')
             
     else:
-        print('{}ERROR\n{}Expected 2 arguments\n{}<terminal>{}$ python3 grader.py filename.py'.format(BR, X, BB, X))
+        print(f'{BR}ERROR\n{X}Expected 1 argument\n{BB}<terminal>{X}$ testMe filename.py')
         
 if __name__ == "__main__":
     main()
