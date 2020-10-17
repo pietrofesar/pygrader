@@ -380,8 +380,8 @@ def child_selector(option, file):
         return birth_month(file) 
     if option == 'greedy.py': 
         return greedy(file)   
-    if option == 'grade_book.py': 
-        return grade_book(file) 
+    if option == 'gradeBook.py': 
+        return gradeBook(file) 
     if option == 'temperature.py': 
         return temperature(file) 
     if option == 'initials.py':
@@ -2612,63 +2612,35 @@ def birth_month(file):
         assess(child, f'{file} case {sample + 1}', key)
         
 
-def grade_book(file):
-    """ grade_book.py autograder """
-    ok = 0
-    checks = 5
-    data = [['92', 'A'], ['84', 'B'], ['76', 'C'], ['65', 'D'], ['64', 'F']]
-    for i in range(checks):
+def gradeBook(file):
+    """ gradeBook.py autograder """
+  
+    grades = [['92', 'A'], ['84', 'B'], ['76', 'C'], ['65', 'D'], ['64', 'F']]
+    for i in range(len(grades)):
         # creates the child instance
         child = pexpect.spawnu(f'python3 {file}')     
-        child.sendline('{}'.format(data[i][0]))
+        child.sendline('{}'.format(grades[i][0]))
         # check the correctness of submission
-        try:
-            child.expect_exact('{} is your letter grade.'.format(data[i][1]))
-            # pass
-            print('{}{}{}{}'.format(child.before, G, child.match, X))
-            ok += 1
-        # fail
-        except:
-            print(child.before[:27])
-            print('{}Expected output of:\n{}{} is your letter grade.{}'.format(BY, R, data[i][1], X))
-            print('{}Actual output was:\n{}{}{}'.format(BY, R, child.before[29:len(child.before)-2], X))
-        if child.isalive:
-            child.kill(2)
-    if ok == checks:
-        print('\n{}:) {} == passed{}'.format(BY, file, X))
-    else:
-        print('\n{}:( {} == failed{}'.format(BY, file, X))
-
-
+        key = f'{grades[i][1]} is your letter grade.'
+        assess(child, f'gradeBook.py case{i + 1}', key)
+        
 def temperature(file): 
     """ temperature.py autograder """
-    ok = 0
-    checks = 4
-    data = [['C', '212', '100.0'], ['C', '32', '0.0'], ['F', '100', '212.0'], ['F', '0', '32.0']]
-    for i in range(checks):
-        # creates the child instance
-        child = pexpect.spawnu(f'python3 {file}')     
-        child.sendline('{}'.format(data[i][0]))
-        child.sendline('{}'.format(data[i][1]))
-        # check the correctness of submission
-        try:
-            child.expect_exact('{}'.format(data[i][2]))
-            # pass
-            print('{}{}{}{}'.format(child.before, G, child.match, X))
-            ok += 1
-        # fail
-        except:
-            before = b_sanitize(child.before)
-            print('{}\n{}'.format(before[0], before[1]))
-            print('{}Expected output of:\n{}{}'.format(BY, R, data[i][2]))
-            print('{}Actual output was:\n{}{}{}'.format(BY, R, before[2], X))
-        if child.isalive:
-            child.kill(2)
-    if ok == checks:
-        print('{}:) {} == passed{}'.format(BY, file, X))
-    else:
-        print('{}:( {} == failed{}'.format(BY, file, X))
-  
+    # check conversion to Fahrenheit
+    tempC = random.randint(0, 100)
+    child = pexpect.spawnu(f'python3 {file}')
+    child.sendline('F')
+    child.sendline(str(tempC))
+    key = f'{tempC * (9/5) + 32:.1f}'
+    assess(child, 'temperature.py case: 1', key)
+    # check conversion to Celsius
+    tempF = random.randint(32, 212)
+    child = pexpect.spawnu(f'python3 {file}')
+    child.sendline('C')
+    child.sendline(str(tempF))
+    key = f'{(tempF - 32) * (5/9):.1f}'
+    assess(child, 'temperature.py case: 2', key)
+    
 
 def initials(file): # updated
     """initials.py autograder """
