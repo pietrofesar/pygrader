@@ -375,9 +375,9 @@ def child_selector(option, file):
     if option == 'report_card.py': 
         return report_card(file)
     if option == 'even_odd.py': 
-        return even_odd(file)  
+        return evenOdd(file)  
     if option == 'birth_month.py': 
-        return birth_month(file) 
+        return birthMonth(file) 
     if option == 'greedy.py': 
         return greedy(file)   
     if option == 'gradeBook.py': 
@@ -2568,7 +2568,7 @@ def report_card(file):
             child.kill(2)
             
 
-def even_odd(file):
+def evenOdd(file):
     """
     :param file: the python file passed as a command line argument 
     :return None: 
@@ -2598,7 +2598,7 @@ def even_odd(file):
         print('{} even_odd.py == failed{}'.format(BY, X))
 
 
-def birth_month(file):
+def birthMonth(file):
     """ birth_month.py autograder """
     samples = random.randint(2, 6)
     birthMonths = {1:'January', 2:'February', 3:'March', 4:'April', 5:'May', 6:'June', 7:'July', 8:'August', 9:'September', 10:'October', 11:'November', 12:'December'}
