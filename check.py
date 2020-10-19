@@ -372,11 +372,11 @@ def child_selector(option, file):
         return polygon(file)
     if option == 'fahrenheit.py': 
         return fahrenheit(file)
-    if option == 'report_card.py': 
-        return report_card(file)
-    if option == 'even_odd.py': 
+    if option == 'reportCard.py': 
+        return reportCard(file)
+    if option == 'evenOdd.py': 
         return evenOdd(file)  
-    if option == 'birth_month.py': 
+    if option == 'birthMonth.py': 
         return birthMonth(file) 
     if option == 'greedy.py': 
         return greedy(file)   
@@ -1090,9 +1090,9 @@ def ch4_17(file):
         else:
             if player == 2:
                 if computer == 1:
-                    return 'scissors beat paper'
+                    return 'scissors beat paper - you win'
                 else:
-                    return 'rock beats scissors'
+                    return 'rock beats scissors - you lose'
     
     
     def testKey(computerOutput, key, case):
